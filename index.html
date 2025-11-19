@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mango Automotive - Employee Links</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f8f9fa;
+            min-height: 100vh;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 680px;
+            margin: 0 auto;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 50px;
+            background: white;
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .logo {
+            max-width: 400px;
+            width: 100%;
+            height: auto;
+            margin-bottom: 16px;
+        }
+
+        .header p {
+            color: #6c757d;
+            font-size: 18px;
+            font-weight: 500;
+        }
+
+        .section {
+            margin-bottom: 32px;
+        }
+
+        .section-title {
+            color: #212529;
+            font-size: 13px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 16px;
+            padding-left: 4px;
+        }
+
+        .link-card {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: white;
+            border-radius: 16px;
+            padding: 20px 28px;
+            margin-bottom: 12px;
+            text-decoration: none;
+            color: #212529;
+            font-weight: 600;
+            font-size: 17px;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            border: 2px solid transparent;
+            cursor: pointer;
+        }
+
+        .link-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(245, 166, 35, 0.2);
+            border-color: #F5A623;
+        }
+
+        .link-card:active {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(245, 166, 35, 0.2);
+        }
+
+        .link-icon {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, #F5A623 0%, #E89B1D 100%);
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            flex-shrink: 0;
+            margin-right: 16px;
+        }
+
+        .link-content {
+            flex: 1;
+        }
+
+        .link-arrow {
+            color: #F5A623;
+            font-size: 24px;
+            font-weight: 700;
+            transition: transform 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .link-card:hover .link-arrow {
+            transform: translateX(4px);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 50px;
+            padding: 30px;
+            background: white;
+            border-radius: 24px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+        }
+
+        .footer-text {
+            color: #6c757d;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        @media (max-width: 640px) {
+            .header {
+                padding: 30px 20px;
+            }
+            
+            .logo {
+                max-width: 280px;
+            }
+            
+            .link-card {
+                padding: 18px 20px;
+                font-size: 16px;
+            }
+            
+            .link-icon {
+                width: 28px;
+                height: 28px;
+                font-size: 16px;
+                margin-right: 12px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <img src="logo.png" alt="Mango Automotive" class="logo">
+            <p>Welcome to the Mango Intranet™ (Est. 2021)</p>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Productivity Tools</div>
+            <a href="https://shop.tekmetric.com" class="link-card" target="_blank">
+                <div class="link-icon">🔧</div>
+                <div class="link-content">Tekmetric</div>
+                <div class="link-arrow">→</div>
+            </a>
+            <a href="https://app.shopgenie.io/dashboard/inbox" class="link-card" target="_blank">
+                <div class="link-icon">💬</div>
+                <div class="link-content">ShopGenie</div>
+                <div class="link-arrow">→</div>
+            </a>
+            <a href="https://repairpal.com/shop-dashboard" class="link-card" target="_blank">
+                <div class="link-icon">🛠️</div>
+                <div class="link-content">RepairPal</div>
+                <div class="link-arrow">→</div>
+            </a>
+            <a href="https://www.motovisuals.com/#!/bhome" class="link-card" target="_blank">
+                <div class="link-icon">📸</div>
+                <div class="link-content">Motovisuals</div>
+                <div class="link-arrow">→</div>
+            </a>
+            <a href="https://rsp.national.aaa.com/" class="link-card" target="_blank">
+                <div class="link-icon">🚗</div>
+                <div class="link-content">AAA (push the button)</div>
+                <div class="link-arrow">→</div>
+            </a>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Playbooks</div>
+            <a href="https://mangoautomotive.notion.site/SOPs-for-SAs-451f7f4172a54f04be34be19c67daeca?source=copy_link" class="link-card" target="_blank">
+                <div class="link-icon">📋</div>
+                <div class="link-content">SOPs for Service Advisors</div>
+                <div class="link-arrow">→</div>
+            </a>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Policies & Handbooks</div>
+            <a href="https://www.notion.so/mangoautomotive/Policies-Handbook-10de8f2d40b74400bad9e3f4a84b9c19?source=copy_link" class="link-card" target="_blank">
+                <div class="link-icon">📖</div>
+                <div class="link-content">Employee Handbook</div>
+                <div class="link-arrow">→</div>
+            </a>
+        </div>
+
+        <div class="footer">
+            <div class="footer-text">You're not just fixing cars—you're getting families where they need to go, keeping people safe, and building trust one customer at a time. Thank you for showing up, working hard, and being the reason Mango Automotive stands out. We're grateful for you. 🥭</div>
+        </div>
+    </div>
+</body>
+</html>
