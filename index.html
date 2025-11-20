@@ -1,10 +1,90 @@
-<!DOCTYPE html>
+// Cloudflare Worker - News Ticker Admin Portal with Cache Fix
+// Deploy this at: mango-intranet.jesse-3d9.workers.dev
+
+// CONFIGURATION
+const ADMIN_PASSWORD = "I AM A BADASS!!!"; // Change this!
+const KV_NAMESPACE = "MANGO_NEWS"; // You'll bind this in Cloudflare dashboard
+
+export default {
+  async fetch(request, env) {
+    const url = new URL(request.url);
+    
+    // Enable CORS with cache control
+    const corsHeaders = {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': 'GET, POST, OPTIONS',
+      'Access-Control-Allow-Headers': 'Content-Type, Cache-Control, Pragma, Expires',
+      // 🔧 FIX: Prevent caching of news data
+      'Cache-Control': 'no-cache, no-store, must-revalidate, max-age=0',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    };
+
+    if (request.method === 'OPTIONS') {
+      return new Response(null, { headers: corsHeaders });
+    }
+
+    // GET /api/news - Get current news items (public)
+    if (url.pathname === '/api/news' && request.method === 'GET') {
+      try {
+        const news = await env.MANGO_NEWS.get('news_items');
+        return new Response(news || JSON.stringify([]), {
+          headers: { 
+            ...corsHeaders, 
+            'Content-Type': 'application/json'
+          }
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({ error: 'Failed to fetch news' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+    }
+
+    // POST /api/news - Update news items (protected)
+    if (url.pathname === '/api/news' && request.method === 'POST') {
+      const body = await request.json();
+      
+      // Check password
+      if (body.password !== ADMIN_PASSWORD) {
+        return new Response(JSON.stringify({ error: 'Invalid password' }), {
+          status: 401,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+
+      try {
+        await env.MANGO_NEWS.put('news_items', JSON.stringify(body.news));
+        return new Response(JSON.stringify({ success: true }), {
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      } catch (error) {
+        return new Response(JSON.stringify({ error: 'Failed to save news' }), {
+          status: 500,
+          headers: { ...corsHeaders, 'Content-Type': 'application/json' }
+        });
+      }
+    }
+
+    // Admin portal UI
+    if (url.pathname === '/' || url.pathname === '/admin') {
+      return new Response(getAdminHTML(), {
+        headers: { 'Content-Type': 'text/html' }
+      });
+    }
+
+    return new Response('Not Found', { status: 404 });
+  }
+};
+
+function getAdminHTML() {
+  return `<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mango Automotive - Employee Portal</title>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <title>Mango News Admin</title>
     <style>
         * {
             margin: 0;
@@ -13,729 +93,688 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
-            background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
             min-height: 100vh;
-            padding: 0;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
+            padding: 40px 20px;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 800px;
             margin: 0 auto;
-            padding: 0 32px 100px;
-        }
-
-        /* Clean header - no gimmicks */
-        .header-container {
-            background: white;
-            border-bottom: 1px solid #e5e7eb;
-            padding: 24px 0;
-            margin-bottom: 48px;
-            position: relative;
-        }
-
-        .logo-stamp {
-            width: 200px;
-            height: auto;
-            position: absolute;
-            right: 20px;
-            top: -30px;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
         }
 
         .header {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 32px;
+            text-align: center;
+            margin-bottom: 40px;
+            background: linear-gradient(180deg, #ffffff 0%, #fafafa 100%);
+            padding: 40px;
+            border-radius: 24px;
+            box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+            border: 1px solid rgba(0, 0, 0, 0.05);
+            position: relative;
         }
 
-        .news-badge {
-            background: linear-gradient(135deg, #FF8C00, #F5A623);
-            color: white;
-            padding: 6px 16px;
-            border-radius: 6px;
-            font-size: 12px;
-            font-weight: 600;
-            letter-spacing: 0.5px;
-            display: inline-block;
-            margin-top: 10px;
+        .header::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            height: 3px;
+            background: linear-gradient(90deg, #FF8C00 0%, #F5A623 50%, #2C722C 100%);
+            opacity: 0.8;
+            border-radius: 0 0 24px 24px;
         }
 
-        .retro-title {
+        .header h1 {
             font-size: 28px;
             font-weight: 800;
             background: linear-gradient(135deg, #FF8C00, #F5A623, #2C722C);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
             background-clip: text;
+            margin-bottom: 8px;
             letter-spacing: -0.02em;
-            margin-bottom: 6px;
         }
 
-        .retro-subtitle {
-            font-size: 14px;
+        .subtitle {
             color: #6b7280;
+            font-size: 14px;
             font-weight: 600;
-            letter-spacing: 0.5px;
         }
 
-        .news-badge {
-            background: linear-gradient(135deg, #FF8C00, #F5A623);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            box-shadow: 0 4px 12px rgba(245, 166, 35, 0.25);
-            text-transform: uppercase;
-        }
-
-        /* Greeting with weather inline */
-        .greeting-weather-row {
-            display: flex;
-            align-items: center;
-            gap: 16px;
-            margin-bottom: 40px;
-            flex-wrap: wrap;
-        }
-
-        .greeting-text {
-            font-size: 18px;
-            font-weight: 600;
-            color: #374151;
-            letter-spacing: -0.01em;
-        }
-
-        .weather-widget {
-            display: flex;
-            align-items: center;
-            gap: 8px;
+        .card {
             background: white;
-            padding: 8px 16px;
-            border-radius: 12px;
-            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.06);
+            border-radius: 20px;
+            padding: 32px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+            margin-bottom: 24px;
             border: 1px solid rgba(0, 0, 0, 0.05);
         }
 
-        .weather-widget h3 {
-            font-size: 14px;
-            color: #6b7280;
-            font-weight: 600;
-            margin: 0;
-        }
-
-        .weather-temp {
-            font-size: 16px;
-            font-weight: 700;
-            color: #F5A623;
-            line-height: 1;
-        }
-
-        /* Sections */
-        .section {
-            margin-bottom: 48px;
-            animation: fadeInUp 0.6s ease-out;
-        }
-
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .section-title {
-            font-size: 20px;
-            font-weight: 800;
-            color: #111827;
-            margin-bottom: 24px;
-            display: flex;
-            align-items: center;
-            gap: 12px;
-            letter-spacing: -0.02em;
-        }
-
-        .section-title span {
-            font-size: 24px;
-        }
-
-        /* Link Grids */
-        .link-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-            gap: 20px;
-        }
-
-        #quickActionsGrid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 20px;
-        }
-
-        @media (max-width: 968px) {
-            #quickActionsGrid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 640px) {
-            #quickActionsGrid {
-                grid-template-columns: 1fr;
-            }
-            
-            .link-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        /* Sophisticated Cards with Depth */
-        .link-card {
-            background: white;
-            border-radius: 16px;
-            padding: 24px;
-            text-decoration: none;
-            color: #111827;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 
-                0 1px 3px rgba(0, 0, 0, 0.06),
-                0 1px 2px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            text-align: center;
-            gap: 14px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .link-card::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 3px;
-            background: linear-gradient(90deg, #FF8C00, #F5A623);
-            transform: scaleX(0);
-            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .link-card:hover::before {
-            transform: scaleX(1);
-        }
-
-        .link-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 
-                0 12px 24px rgba(0, 0, 0, 0.1),
-                0 4px 8px rgba(0, 0, 0, 0.06);
-            border-color: rgba(245, 166, 35, 0.2);
-        }
-
-        .link-card:active {
-            transform: translateY(-2px);
-            transition-duration: 0.1s;
-        }
-
-        .pin-button {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: none;
-            border: none;
-            cursor: pointer;
-            font-size: 16px;
-            transition: all 0.2s;
-            opacity: 0;
-            padding: 4px;
-        }
-
-        .link-card:hover .pin-button {
-            opacity: 1;
-        }
-
-        .pin-button.pinned {
-            opacity: 1;
-        }
-
-        .pin-button:hover {
-            transform: scale(1.1);
-        }
-
-        .link-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-            overflow: hidden;
-            background: linear-gradient(135deg, #f9fafb 0%, #ffffff 100%);
-            border: 1px solid rgba(0, 0, 0, 0.06);
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            transition: all 0.3s;
-        }
-
-        .link-card:hover .link-icon {
-            transform: scale(1.05);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
-        }
-
-        .link-icon img {
-            width: 36px;
-            height: 36px;
-            object-fit: contain;
-        }
-
-        .link-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .link-title {
-            font-size: 15px;
-            font-weight: 700;
-            letter-spacing: -0.01em;
-            color: #111827;
-        }
-
-        .link-stat {
-            font-size: 11px;
-            color: #9ca3af;
-            font-weight: 600;
-        }
-
-        /* Video Section with Glass Effect */
-        .video-section {
-            background: white;
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 
-                0 4px 16px rgba(0, 0, 0, 0.08),
-                0 2px 4px rgba(0, 0, 0, 0.04);
-            margin-bottom: 48px;
-            border: 1px solid rgba(0, 0, 0, 0.04);
-        }
-
-        .video-wrapper {
-            position: relative;
-            padding-bottom: 56.25%;
-            height: 0;
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Team Appreciation Callout */
-        .appreciation-section {
-            background: linear-gradient(135deg, #FF8C00 0%, #F5A623 100%);
-            color: white;
-            padding: 48px 40px;
-            border-radius: 24px;
-            box-shadow: 0 8px 24px rgba(245, 166, 35, 0.25);
-            margin-bottom: 48px;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .appreciation-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
-            opacity: 0.3;
-        }
-
-        .appreciation-content {
-            position: relative;
-            z-index: 1;
-            max-width: 800px;
-            margin: 0 auto;
-            text-align: center;
-        }
-
-        .appreciation-title {
-            font-size: 18px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            opacity: 0.95;
-        }
-
-        .appreciation-message {
-            font-size: 18px;
-            line-height: 1.7;
-            font-weight: 500;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
-        }
-
-        /* Sophisticated Ticker */
-        .ticker-bottom {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
+        .ticker-preview {
             background: linear-gradient(135deg, #134414 0%, #2C722C 100%);
             color: white;
-            padding: 14px 24px;
-            box-shadow: 0 -4px 16px rgba(0, 0, 0, 0.12);
-            z-index: 1000;
-            border-top: 2px solid rgba(255, 255, 255, 0.1);
+            padding: 20px;
+            border-radius: 16px;
+            margin-bottom: 32px;
+            overflow: hidden;
+            box-shadow: 0 4px 16px rgba(44, 114, 44, 0.3);
+        }
+
+        .ticker-label {
+            font-size: 11px;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            margin-bottom: 12px;
+            opacity: 0.9;
         }
 
         .ticker-wrapper {
             overflow: hidden;
-            max-width: 1200px;
-            margin: 0 auto;
+            position: relative;
         }
 
         .ticker-content {
             display: inline-block;
             white-space: nowrap;
-            padding-left: 0;
-            animation: ticker 15s linear infinite;
+            padding-left: 100%;
+            animation: scroll 30s linear infinite;
+            font-size: 16px;
+            font-weight: 600;
+        }
+
+        @keyframes scroll {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(-100%, 0); }
+        }
+
+        input[type="password"],
+        input[type="text"].password-input {
+            width: 100%;
+            padding: 16px 50px 16px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 15px;
+            margin-bottom: 0;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        input[type="password"]:focus,
+        input[type="text"].password-input:focus,
+        input[type="text"]#password:focus {
+            outline: none;
+            border-color: #2C722C;
+            box-shadow: 0 0 0 3px rgba(44, 114, 44, 0.1);
+        }
+
+        .password-wrapper {
+            position: relative;
+            width: 100%;
+            margin-bottom: 16px;
+        }
+
+        .password-toggle {
+            position: absolute;
+            right: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-size: 18px;
+            padding: 8px;
+            color: #6b7280;
+            transition: color 0.2s;
+            line-height: 1;
+        }
+
+        .password-toggle:hover {
+            color: #2C722C;
+        }
+
+        .news-list {
+            margin-bottom: 24px;
+        }
+
+        .news-item {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+            align-items: start;
+            margin-bottom: 20px;
+            padding: 20px;
+            background: #f9fafb;
+            border-radius: 16px;
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s;
+        }
+
+        .news-item.stale {
+            border-color: #FF8C00;
+            background: #fff7ed;
+        }
+
+        .news-item-content {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .news-item input {
+            width: 100%;
+            padding: 16px 18px;
+            border: 2px solid #e5e7eb;
+            border-radius: 12px;
+            font-size: 15px;
+            transition: all 0.2s;
+            font-family: inherit;
+        }
+
+        .news-item input:focus {
+            outline: none;
+            border-color: #2C722C;
+            box-shadow: 0 0 0 3px rgba(44, 114, 44, 0.1);
+        }
+
+        .news-meta {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .news-age {
+            font-size: 12px;
+            color: #6b7280;
+            font-weight: 600;
+        }
+
+        .stale-warning {
+            font-size: 12px;
+            color: #F57C00;
+            font-weight: 700;
+            background: #FFE0B2;
+            padding: 6px 12px;
+            border-radius: 8px;
+        }
+
+        .btn {
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: linear-gradient(135deg, #2C722C 0%, #134414 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(44, 114, 44, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 114, 44, 0.4);
+        }
+
+        .btn-secondary {
+            background: #f3f4f6;
+            color: #6b7280;
+        }
+
+        .btn-secondary:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-delete {
+            background: none;
+            border: none;
+            color: #9ca3af;
+            padding: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: all 0.2s;
+            border-radius: 8px;
+            line-height: 1;
+            margin-top: 8px;
+        }
+
+        .btn-delete:hover {
+            color: #ef4444;
+            background: #fee2e2;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 24px;
+            padding-top: 24px;
+            border-top: 2px solid #f3f4f6;
+        }
+
+        .btn-save {
+            background: #f3f4f6;
+            color: #6b7280;
+            padding: 14px 24px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            font-family: inherit;
+        }
+
+        .btn-save:hover {
+            background: #e5e7eb;
+        }
+
+        .btn-save.has-changes {
+            background: linear-gradient(135deg, #2C722C 0%, #134414 100%);
+            color: white;
+            box-shadow: 0 4px 12px rgba(44, 114, 44, 0.3);
+        }
+
+        .btn-save.has-changes:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(44, 114, 44, 0.4);
+        }
+
+        .btn-add-inline {
+            background: transparent;
+            color: #2C722C;
+            padding: 8px 16px;
+            border: 2px solid #2C722C;
+            border-radius: 8px;
             font-size: 14px;
             font-weight: 600;
-            letter-spacing: 0.3px;
+            cursor: pointer;
+            transition: all 0.2s;
+            font-family: inherit;
         }
 
-        @keyframes ticker {
-            0% { transform: translate(0, 0); }
-            100% { transform: translate(-50%, 0); }
+        .btn-add-inline:hover {
+            background: #2C722C;
+            color: white;
         }
 
-        /* Mobile Adjustments */
-        @media (max-width: 768px) {
-            .logo-stamp {
-                width: 100px;
-                right: 10px;
-                top: -15px;
-            }
+        .message {
+            padding: 16px 20px;
+            border-radius: 12px;
+            margin-bottom: 20px;
+            display: none;
+            font-size: 15px;
+            font-weight: 600;
+        }
 
-            .retro-title {
-                font-size: 24px;
-            }
+        .message.success {
+            background: #dcfce7;
+            color: #166534;
+            border: 2px solid #86efac;
+        }
 
-            .greeting-weather-row {
-                flex-direction: column;
-                align-items: flex-start;
-            }
+        .message.error {
+            background: #fee2e2;
+            color: #991b1b;
+            border: 2px solid #fca5a5;
+        }
 
-            .appreciation-section {
-                padding: 32px 24px;
-            }
+        .tips {
+            background: linear-gradient(135deg, #fffbf5 0%, #fff7ed 100%);
+            border-left: 4px solid #F5A623;
+            padding: 24px;
+            border-radius: 12px;
+            margin-top: 24px;
+        }
 
-            .appreciation-title {
-                font-size: 16px;
-            }
+        .tips h3 {
+            color: #E89B1D;
+            font-size: 14px;
+            margin-bottom: 12px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 700;
+        }
 
-            .appreciation-message {
-                font-size: 16px;
-            }
+        .tips ul {
+            margin-left: 20px;
+            color: #6b7280;
+            line-height: 1.8;
+        }
 
-            body {
-                padding-bottom: 80px;
-            }
+        .empty-state {
+            text-align: center;
+            padding: 40px;
+            color: #9ca3af;
+        }
 
-            .container {
-                padding: 0 20px 100px;
-            }
+        .login-card {
+            display: block;
+        }
+
+        .edit-card {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <div class="header-container">
-        <img src="logo.png" alt="Mango" class="logo-stamp">
-        <div class="header">
-            <div class="retro-title">MANGO INTRANET</div>
-            <div class="retro-subtitle">Your Digital Garage • Est. 2021</div>
-            <div class="news-badge">Mango News</div>
-        </div>
-    </div>
-
     <div class="container">
-        <!-- Greeting and Weather in one row -->
-        <div class="greeting-weather-row">
-            <div class="greeting-text" id="greetingText">Let's make this a sweet day! 🥭</div>
-            <div class="weather-widget">
-                <h3 id="weatherLabel">📍 Your Local Weather</h3>
-                <div class="weather-temp" id="weatherTemp">--°</div>
-            </div>
+        <div class="header">
+            <h1>MANGO NEWS ADMIN</h1>
+            <p class="subtitle">Manage Your Employee Homepage Ticker</p>
         </div>
 
-        <!-- Quick Actions -->
-        <div class="section">
-            <h2 class="section-title"><span>⚡</span> Quick Actions</h2>
-            <div class="link-grid" id="quickActionsGrid">
-                <!-- Dynamically populated -->
+        <div id="message" class="message"></div>
+
+        <!-- Login Card -->
+        <div id="loginCard" class="card login-card">
+            <h2 style="margin-bottom: 20px; font-size: 20px;">Admin Login</h2>
+            <div class="password-wrapper">
+                <input type="password" id="password" placeholder="Enter admin password" autocomplete="off" data-form-type="other" onkeypress="if(event.key==='Enter') login()">
+                <button type="button" class="password-toggle" onclick="togglePassword()">👁️</button>
             </div>
+            <button class="btn btn-primary" onclick="login()" style="width: 100%;">Login</button>
         </div>
 
-        <!-- All Links -->
-        <div class="section" id="allLinksSection">
-            <h2 class="section-title"><span>🔗</span> All Links</h2>
-            <div class="link-grid" id="allLinksGrid">
-                <!-- Dynamically populated -->
+        <!-- Edit Card -->
+        <div id="editCard" class="edit-card">
+            <!-- Live Ticker Preview -->
+            <div class="ticker-preview">
+                <div class="ticker-label">🔥 LIVE PREVIEW</div>
+                <div class="ticker-wrapper">
+                    <div class="ticker-content" id="tickerPreview">Loading...</div>
+                </div>
             </div>
-        </div>
 
-        <!-- Team Appreciation -->
-        <div class="appreciation-section">
-            <div class="appreciation-content">
-                <div class="appreciation-title">You Make the Difference</div>
-                <div class="appreciation-message" id="thankYouMessage"></div>
+            <div class="card">
+                <h2 style="margin-bottom: 20px; font-size: 20px;">News Items</h2>
+                
+                <div id="newsList" class="news-list"></div>
+
+                <div class="actions">
+                    <button class="btn-add-inline" onclick="addNewsItem()">+ Add Item</button>
+                    <button class="btn-save" id="saveBtn" onclick="saveNews()">💾 Save Changes</button>
+                    <button class="btn btn-secondary" onclick="logout()">Logout</button>
+                </div>
+
+                <div class="tips">
+                    <h3>💡 Tips for Great News</h3>
+                    <ul>
+                        <li>Keep it short - under 80 characters works best</li>
+                        <li>Use emojis to grab attention 🎉 📚 🏆</li>
+                        <li>Celebrate wins and recognize your team</li>
+                        <li>Mix announcements with motivation</li>
+                        <li>Remove anything >7 days old (at least retype it with a new flair, our minds ignore what we see over and over again)</li>
+                    </ul>
+                </div>
             </div>
-        </div>
-
-        <!-- Video -->
-        <div class="video-section">
-            <div class="video-wrapper">
-                <iframe src="https://player.vimeo.com/video/1138936304?badge=0&autopause=0" 
-                        frameborder="0" 
-                        allow="autoplay; fullscreen; picture-in-picture" 
-                        title="Mango Automotive">
-                </iframe>
-            </div>
-        </div>
-    </div>
-
-    <!-- Ticker at bottom -->
-    <div class="ticker-bottom">
-        <div class="ticker-wrapper">
-            <div class="ticker-content" id="ticker">Loading...</div>
         </div>
     </div>
 
     <script>
-        // 🔧 FIX: Add cache-busting to prevent stale ticker data
-        const NEWS_API_URL = 'https://mango-intranet.jesse-3d9.workers.dev/api/news';
+        let newsItems = [];
+        let newsTimestamps = {};
+        let originalNewsItems = [];
+        let hasUnsavedChanges = false;
+        const API_URL = window.location.origin + '/api/news';
 
-        const ALL_LINKS = [
-            { id: 'tekmetric', title: 'Tekmetric', url: 'https://shop.tekmetric.com' },
-            { id: 'slack', title: 'Slack', url: 'https://MangoAutmomotive.slack.com' },
-            { id: 'shopgenie', title: 'ShopGenie', url: 'https://app.shopgenie.io/dashboard/inbox' },
-            { id: 'guava', title: 'Guava Coach', url: 'https://chromewebstore.google.com/detail/ppaiipibgjjnadokahpjakhbneodpfdm' },
-            { id: 'repairpal', title: 'RepairPal', url: 'https://repairpal.com/shop-dashboard' },
-            { id: 'alldata', title: 'AllData', url: 'https://my.alldata.com/' },
-            { id: 'motovisuals', title: 'Motovisuals', url: 'https://www.motovisuals.com/#!/bhome' },
-            { id: 'aaa', title: 'AAA Portal', url: 'https://rsp.national.aaa.com/' },
-            { id: 'sops', title: 'Service Advisor SOPs', url: 'https://mangoautomotive.notion.site/SOPs-for-SAs-451f7f4172a54f04be34be19c67daeca' },
-            { id: 'handbook', title: 'Employee Handbook', url: 'https://www.notion.so/mangoautomotive/Policies-Handbook-10de8f2d40b74400bad9e3f4a84b9c19' }
-        ];
-
-        const DEFAULT_PINS = ['tekmetric', 'slack', 'shopgenie', 'guava'];
-
-        function getPinnedLinks() {
-            const stored = localStorage.getItem('pinnedLinks');
-            return stored ? JSON.parse(stored) : DEFAULT_PINS;
-        }
-
-        function setPinnedLinks(pins) {
-            localStorage.setItem('pinnedLinks', JSON.stringify(pins));
-        }
-
-        function togglePin(linkId) {
-            let pinned = getPinnedLinks();
-            if (pinned.includes(linkId)) {
-                pinned = pinned.filter(id => id !== linkId);
+        function togglePassword() {
+            const passwordInput = document.getElementById('password');
+            const toggleBtn = document.querySelector('.password-toggle');
+            
+            if (passwordInput.type === 'password') {
+                passwordInput.type = 'text';
+                toggleBtn.textContent = '🙈';
             } else {
-                pinned.push(linkId);
+                passwordInput.type = 'password';
+                toggleBtn.textContent = '👁️';
             }
-            setPinnedLinks(pinned);
-            renderLinks();
         }
 
-        function createLinkCard(link, isPinned) {
-            const clicks = parseInt(localStorage.getItem(`clicks_${link.id}`) || 0);
-            
-            // Special handling for Slack to get proper favicon
-            let domain = new URL(link.url).hostname;
-            if (link.id === 'slack') {
-                domain = 'slack.com';
+        function markAsChanged() {
+            hasUnsavedChanges = true;
+            updateSaveButton();
+        }
+
+        function updateSaveButton() {
+            const saveBtn = document.getElementById('saveBtn');
+            if (hasUnsavedChanges) {
+                saveBtn.classList.add('has-changes');
+            } else {
+                saveBtn.classList.remove('has-changes');
             }
+        }
+
+        async function login() {
+            const password = document.getElementById('password').value;
             
-            const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
-            
-            return `
-                <a href="${link.url}" class="link-card" data-id="${link.id}" target="_blank">
-                    <button class="pin-button ${isPinned ? 'pinned' : ''}" onclick="event.preventDefault(); togglePin('${link.id}')">
-                        📌
-                    </button>
-                    <div class="link-icon">
-                        <img src="${faviconUrl}" alt="${link.title}">
-                    </div>
-                    <div class="link-content">
-                        <div class="link-title">${link.title}</div>
-                        <div class="link-stat">Clicked <span class="click-count">${clicks}</span> times</div>
-                    </div>
-                </a>
-            `;
-        }
+            if (!password) {
+                showMessage('Please enter a password', 'error');
+                return;
+            }
 
-        function renderLinks() {
-            const pinnedIds = getPinnedLinks();
-            const quickActionsGrid = document.getElementById('quickActionsGrid');
-            const allLinksGrid = document.getElementById('allLinksGrid');
-
-            const pinnedLinks = ALL_LINKS.filter(link => pinnedIds.includes(link.id));
-            quickActionsGrid.innerHTML = pinnedLinks.map(link => createLinkCard(link, true)).join('');
-
-            const unpinnedLinks = ALL_LINKS.filter(link => !pinnedIds.includes(link.id));
-            allLinksGrid.innerHTML = unpinnedLinks.map(link => createLinkCard(link, false)).join('');
-
-            attachClickHandlers();
-        }
-
-        function attachClickHandlers() {
-            document.querySelectorAll('.link-card').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    if (e.target.closest('.pin-button')) return;
-                    
-                    const id = this.getAttribute('data-id');
-                    const clicks = parseInt(localStorage.getItem(`clicks_${id}`) || 0);
-                    localStorage.setItem(`clicks_${id}`, clicks + 1);
-                    updateClickCounts();
-                });
-            });
-        }
-
-        function updateClickCounts() {
-            document.querySelectorAll('.link-card').forEach(card => {
-                const id = card.getAttribute('data-id');
-                const clicks = parseInt(localStorage.getItem(`clicks_${id}`) || 0);
-                const countSpan = card.querySelector('.click-count');
-                if (countSpan) {
-                    countSpan.textContent = clicks;
-                }
-            });
-        }
-
-        const thankYouMessages = [
-            "You're not just fixing cars—you're getting families where they need to go, keeping people safe, and building trust one customer at a time. Thank you for showing up, working hard, and being the reason Mango Automotive stands out. We're grateful for you. 🥭",
-            "Every repair you complete, every customer you help—it all matters. You're the heart of Mango Automotive, and we appreciate everything you do. Thank you for being amazing! 🥭",
-            "Your dedication doesn't go unnoticed. You're building something special here, one customer at a time. We're lucky to have you on the team! 🥭",
-            "Behind every satisfied customer is your hard work and expertise. Thank you for making Mango Automotive a name people trust. 🥭",
-            "You show up, you work hard, you care—and it makes all the difference. Thank you for being the reason our customers keep coming back! 🥭"
-        ];
-
-        function rotateThankYou() {
-            const messageIndex = new Date().getDate() % thankYouMessages.length;
-            document.getElementById('thankYouMessage').textContent = thankYouMessages[messageIndex];
-        }
-
-        async function getWeather() {
-            if (!navigator.geolocation) return;
-
-            navigator.geolocation.getCurrentPosition(async (position) => {
-                const { latitude, longitude } = position.coords;
-                
-                try {
-                    const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${latitude}&longitude=${longitude}&current=temperature_2m,weather_code&temperature_unit=fahrenheit&timezone=auto`);
-                    const data = await response.json();
-                    
-                    const temp = Math.round(data.current.temperature_2m);
-                    const weatherCode = data.current.weather_code;
-                    
-                    const weatherEmojis = {
-                        0: '☀️', 1: '🌤️', 2: '⛅', 3: '☁️',
-                        45: '🌫️', 48: '🌫️',
-                        51: '🌦️', 53: '🌧️', 55: '🌧️',
-                        61: '🌧️', 63: '🌧️', 65: '⛈️',
-                        71: '🌨️', 73: '🌨️', 75: '❄️',
-                        95: '⛈️', 96: '⛈️', 99: '⛈️'
-                    };
-                    
-                    const emoji = weatherEmojis[weatherCode] || '🌡️';
-                    
-                    document.getElementById('weatherTemp').textContent = `${temp}°`;
-                    
-                    try {
-                        const geoResponse = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
-                        const geoData = await geoResponse.json();
-                        const city = geoData.city || geoData.locality || 'Your';
-                        document.getElementById('weatherLabel').textContent = `${emoji} ${city} Weather`;
-                    } catch {
-                        document.getElementById('weatherLabel').textContent = `${emoji} Your Local Weather`;
-                    }
-                } catch (error) {}
-            });
-        }
-
-        async function loadNews() {
-            const tickerDiv = document.getElementById('ticker');
-            
-            const defaultNews = [
-                "Welcome to the Mango Intranet! 🥭",
-                "Check out our latest training videos in the SOPs section 📚",
-                "Don't forget to use Guava Coach for better customer conversations 💬",
-                "Great job on last month's numbers! Keep it up! 📈"
-            ];
-            
             try {
-                // 🔧 FIX: Add cache-busting timestamp + no-cache headers
+                const testResponse = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password, news: [] })
+                });
+
+                if (!testResponse.ok) {
+                    const result = await testResponse.json();
+                    showMessage(result.error || 'Invalid password', 'error');
+                    return;
+                }
+
+                // 🔧 FIX: Add cache-busting to initial load
                 const cacheBuster = Date.now();
-                const response = await fetch(`${NEWS_API_URL}?t=${cacheBuster}`, {
-                    method: 'GET',
+                const response = await fetch(\`\${API_URL}?t=\${cacheBuster}\`, {
                     headers: {
                         'Cache-Control': 'no-cache, no-store, must-revalidate',
-                        'Pragma': 'no-cache',
-                        'Expires': '0'
+                        'Pragma': 'no-cache'
                     }
                 });
+                newsItems = await response.json();
+                originalNewsItems = JSON.parse(JSON.stringify(newsItems)); // Deep copy
+                hasUnsavedChanges = false;
                 
+                const storedTimestamps = localStorage.getItem('newsTimestamps');
+                if (storedTimestamps) {
+                    newsTimestamps = JSON.parse(storedTimestamps);
+                } else {
+                    const now = Date.now();
+                    newsItems.forEach(item => {
+                        if (!newsTimestamps[item]) {
+                            newsTimestamps[item] = now;
+                        }
+                    });
+                    localStorage.setItem('newsTimestamps', JSON.stringify(newsTimestamps));
+                }
+                
+                sessionStorage.setItem('adminPassword', password);
+                
+                document.getElementById('loginCard').style.display = 'none';
+                document.getElementById('editCard').style.display = 'block';
+                renderNewsList();
+                updatePreview();
+                updateSaveButton();
+            } catch (error) {
+                showMessage('Failed to login', 'error');
+            }
+        }
+
+        function logout() {
+            sessionStorage.removeItem('adminPassword');
+            document.getElementById('loginCard').style.display = 'block';
+            document.getElementById('editCard').style.display = 'none';
+            document.getElementById('password').value = '';
+        }
+
+        function getDaysOld(timestamp) {
+            const days = Math.floor((Date.now() - timestamp) / (1000 * 60 * 60 * 24));
+            if (days === 0) return 'Updated today';
+            if (days === 1) return 'Updated 1 day ago';
+            return \`Updated \${days} days ago\`;
+        }
+
+        function isStale(timestamp) {
+            const days = (Date.now() - timestamp) / (1000 * 60 * 60 * 24);
+            return days > 7;
+        }
+
+        function renderNewsList() {
+            const list = document.getElementById('newsList');
+            
+            if (newsItems.length === 0) {
+                list.innerHTML = '<div class="empty-state">No news items yet. Add your first one below! 🎉</div>';
+                return;
+            }
+            
+            list.innerHTML = newsItems.map((item, index) => {
+                const timestamp = newsTimestamps[item] || Date.now();
+                const age = getDaysOld(timestamp);
+                const stale = isStale(timestamp);
+                const staleClass = stale ? 'stale' : '';
+                const staleWarning = stale ? '⚠️ This news is getting old!' : '';
+                
+                return \`
+                <div class="news-item \${staleClass}">
+                    <div class="news-item-content">
+                        <input type="text" value="\${escapeHtml(item)}" 
+                               data-index="\${index}"
+                               placeholder="Enter news item...">
+                        <div class="news-meta">
+                            <span class="news-age">\${age}</span>
+                            \${staleWarning ? \`<span class="stale-warning">\${staleWarning}</span>\` : ''}
+                        </div>
+                    </div>
+                    <button class="btn-delete" data-index="\${index}" title="Delete this item">🗑️</button>
+                </div>
+            \`;
+            }).join('');
+            
+            // Attach event listeners after rendering
+            list.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', (e) => {
+                    const index = parseInt(e.target.getAttribute('data-index'));
+                    updateNewsItem(index, e.target.value);
+                });
+            });
+            
+            list.querySelectorAll('.btn-delete').forEach(btn => {
+                btn.addEventListener('click', (e) => {
+                    const index = parseInt(e.target.getAttribute('data-index'));
+                    deleteNewsItem(index);
+                });
+            });
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function updatePreview() {
+            const preview = document.getElementById('tickerPreview');
+            if (newsItems.length === 0) {
+                preview.textContent = 'Add some news items to see them here! 👇';
+            } else {
+                const newsText = newsItems.join(' • ') + ' • ';
+                preview.textContent = newsText + newsText + newsText;
+            }
+        }
+
+        function addNewsItem() {
+            const newItem = 'New announcement here 🎉';
+            newsItems.push(newItem);
+            newsTimestamps[newItem] = Date.now();
+            localStorage.setItem('newsTimestamps', JSON.stringify(newsTimestamps));
+            markAsChanged();
+            renderNewsList();
+            updatePreview();
+        }
+
+        function updateNewsItem(index, value) {
+            const oldItem = newsItems[index];
+            newsItems[index] = value;
+            
+            // Only update timestamp if text changed significantly (not on every keystroke)
+            if (oldItem !== value && value.trim() !== oldItem.trim()) {
+                delete newsTimestamps[oldItem];
+                newsTimestamps[value] = Date.now();
+                localStorage.setItem('newsTimestamps', JSON.stringify(newsTimestamps));
+                markAsChanged();
+            }
+            
+            updatePreview();
+        }
+
+        function deleteNewsItem(index) {
+            if (confirm('Delete this news item?')) {
+                const item = newsItems[index];
+                delete newsTimestamps[item];
+                newsItems.splice(index, 1);
+                localStorage.setItem('newsTimestamps', JSON.stringify(newsTimestamps));
+                markAsChanged();
+                renderNewsList();
+                updatePreview();
+            }
+        }
+
+        async function saveNews() {
+            const password = sessionStorage.getItem('adminPassword');
+            
+            if (!password) {
+                showMessage('Please login first', 'error');
+                logout();
+                return;
+            }
+
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ password, news: newsItems })
+                });
+
+                const result = await response.json();
+
                 if (response.ok) {
-                    const newsItems = await response.json();
-                    
-                    if (newsItems && newsItems.length > 0) {
-                        const newsText = newsItems.join(' • ') + ' • ';
-                        tickerDiv.textContent = newsText + newsText;
-                        return;
+                    showMessage('✅ News updated successfully! Changes are now live.', 'success');
+                    localStorage.setItem('newsTimestamps', JSON.stringify(newsTimestamps));
+                    originalNewsItems = JSON.parse(JSON.stringify(newsItems)); // Update original
+                    hasUnsavedChanges = false;
+                    updateSaveButton();
+                } else {
+                    showMessage(result.error || 'Failed to save', 'error');
+                    if (response.status === 401) {
+                        logout();
                     }
                 }
             } catch (error) {
-                console.error('Failed to load news:', error);
+                showMessage('Failed to save changes', 'error');
             }
-            
-            const defaultText = defaultNews.join(' • ') + ' • ';
-            tickerDiv.textContent = defaultText + defaultText;
         }
 
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if (e.key === '1') window.open('https://shop.tekmetric.com', '_blank');
-            if (e.key === '2') window.open('https://MangoAutmomotive.slack.com', '_blank');
-            if (e.key === '3') window.open('https://app.shopgenie.io/dashboard/inbox', '_blank');
-            if (e.key === '4') window.open('https://chromewebstore.google.com/detail/ppaiipibgjjnadokahpjakhbneodpfdm', '_blank');
-        });
-
-        // Initialize
-        rotateThankYou();
-        getWeather();
-        loadNews();
-        renderLinks();
-        
-        // Auto-refresh ticker every 30 seconds
-        setInterval(loadNews, 30000);
+        function showMessage(text, type) {
+            const msg = document.getElementById('message');
+            msg.textContent = text;
+            msg.className = 'message ' + type;
+            msg.style.display = 'block';
+            setTimeout(() => {
+                msg.style.display = 'none';
+            }, 5000);
+        }
     </script>
 </body>
-</html>
+</html>`;
+}
