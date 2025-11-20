@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mango Automotive - Employee Portal</title>
-    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="icon" type="image/png" href="/favicon.png">
     <style>
         * {
             margin: 0;
@@ -55,21 +55,17 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            position: relative;
         }
 
         .logo-stamp {
-            position: absolute;
-            top: -10px;
-            right: 32px;
-            width: 60px;
+            width: 140px;
             height: auto;
-            filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.1));
-            opacity: 0.9;
+            filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.08));
         }
 
         .header-title {
             flex: 1;
+            margin-left: 40px;
         }
 
         .retro-title {
@@ -361,19 +357,51 @@
             height: 100%;
         }
 
-        /* Footer */
-        .footer {
-            text-align: center;
-            padding: 40px 32px;
-            color: #6b7280;
-            font-size: 15px;
-            line-height: 1.7;
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
-            border: 1px solid rgba(0, 0, 0, 0.04);
-            max-width: 900px;
+        /* Team Appreciation Callout */
+        .appreciation-section {
+            background: linear-gradient(135deg, #FF8C00 0%, #F5A623 100%);
+            color: white;
+            padding: 48px 40px;
+            border-radius: 24px;
+            box-shadow: 0 8px 24px rgba(245, 166, 35, 0.25);
+            margin-bottom: 48px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .appreciation-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            opacity: 0.3;
+        }
+
+        .appreciation-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
             margin: 0 auto;
+            text-align: center;
+        }
+
+        .appreciation-title {
+            font-size: 18px;
+            font-weight: 800;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            opacity: 0.95;
+        }
+
+        .appreciation-message {
+            font-size: 18px;
+            line-height: 1.7;
+            font-weight: 500;
+            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
         }
 
         /* Sophisticated Ticker */
@@ -420,9 +448,11 @@
             }
 
             .logo-stamp {
-                width: 50px;
-                right: 20px;
-                top: -8px;
+                width: 120px;
+            }
+
+            .header-title {
+                margin-left: 0;
             }
 
             .retro-title {
@@ -432,6 +462,18 @@
             .greeting-weather-row {
                 flex-direction: column;
                 align-items: flex-start;
+            }
+
+            .appreciation-section {
+                padding: 32px 24px;
+            }
+
+            .appreciation-title {
+                font-size: 16px;
+            }
+
+            .appreciation-message {
+                font-size: 16px;
             }
 
             body {
@@ -482,8 +524,13 @@
             </div>
         </div>
 
-        <!-- Footer -->
-        <div class="footer" id="thankYouMessage"></div>
+        <!-- Team Appreciation -->
+        <div class="appreciation-section">
+            <div class="appreciation-content">
+                <div class="appreciation-title">You Make the Difference</div>
+                <div class="appreciation-message" id="thankYouMessage"></div>
+            </div>
+        </div>
 
         <!-- Video -->
         <div class="video-section">
