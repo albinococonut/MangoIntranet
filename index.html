@@ -24,6 +24,18 @@
             margin: 0 auto;
         }
 
+        .logo-container {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+
+        .logo {
+            max-width: 280px;
+            width: 100%;
+            height: auto;
+            filter: drop-shadow(4px 4px 0px rgba(0, 0, 0, 0.15));
+        }
+
         .header {
             text-align: center;
             margin-bottom: 50px;
@@ -496,8 +508,12 @@
 </head>
 <body>
     <div class="container">
-        <div class="header">
+        <!-- Logo outside the box -->
+        <div class="logo-container">
             <img src="logo.png" alt="Mango Automotive" class="logo">
+        </div>
+
+        <div class="header">
             <div class="retro-title">🌐 MANGO INTRANET™ 🌐</div>
             <div class="retro-subtitle">Your Digital Garage <span class="blink">●</span> Est. 2021</div>
         </div>
@@ -684,20 +700,13 @@
             });
         }
 
-        // News Ticker - Simple Google Sheets Integration
-        // HOW TO SET UP FOR YOUR DM:
-        // 1. Create a Google Sheet with one column called "News"
-        // 2. Each row is a news item
-        // 3. Share it as "Anyone with the link can view"
-        // 4. Go to File > Share > Publish to web > Select the sheet > Publish as CSV
-        // 5. Replace the URL below with your published CSV URL
-        
-        const NEWS_SHEET_URL = 'https://docs.google.com/spreadsheets/d/e/YOUR_SHEET_ID/pub?output=csv';
+        // News Ticker - Loads from Cloudflare Worker
+        const NEWS_API_URL = 'https://YOUR-WORKER-NAME.workers.dev/api/news';
         
         async function loadNews() {
             const tickerDiv = document.getElementById('ticker');
             
-            // Default news if sheet isn't set up yet
+            // Default news while loading
             const defaultNews = [
                 "Welcome to the Mango Intranet! 🥭",
                 "Check out our latest training videos in the SOPs section 📚",
@@ -706,14 +715,11 @@
             ];
             
             try {
-                // Try to load from Google Sheets
-                const response = await fetch(NEWS_SHEET_URL);
+                const response = await fetch(NEWS_API_URL);
                 if (response.ok) {
-                    const csv = await response.text();
-                    const lines = csv.split('\n').slice(1).filter(line => line.trim()); // Skip header
-                    const newsItems = lines.map(line => line.replace(/"/g, '').trim());
+                    const newsItems = await response.json();
                     
-                    if (newsItems.length > 0) {
+                    if (newsItems && newsItems.length > 0) {
                         tickerDiv.textContent = newsItems.join(' • ') + ' • ';
                         return;
                     }
@@ -808,11 +814,11 @@
 
         // Random motivation
         const motivations = [
-            "Let's make today count! 🚀",
+            "Let's have a sweet day! 🥭",
+            "Time to make it happen! 🚀",
             "Another day to be awesome! ⭐",
             "Ready to crush it? Let's go! 💪",
             "You've got this! 🔥",
-            "Time to shine! ✨",
             "Let's do great work today! 🎯"
         ];
 
