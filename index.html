@@ -33,25 +33,29 @@
         .header-container {
             background: white;
             border-bottom: 1px solid #e5e7eb;
-            padding: 40px 0 32px 0;
+            padding: 24px 0;
             margin-bottom: 48px;
             position: relative;
-            overflow: visible;
-        }
-
-        .logo-stamp {
-            width: 160px;
-            height: auto;
-            position: absolute;
-            right: 32px;
-            top: 30px;
-            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
         }
 
         .header {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-text {
+            flex: 1;
+        }
+
+        .logo-stamp {
+            width: 140px;
+            height: auto;
+            margin-left: 32px;
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
         }
 
         .news-badge {
@@ -468,11 +472,13 @@
 </head>
 <body>
     <div class="header-container">
-        <img src="logo.png" alt="Mango" class="logo-stamp">
         <div class="header">
-            <div class="retro-title">MANGO INTRANET</div>
-            <div class="retro-subtitle">Your Digital Garage • Est. 2021</div>
-            <div class="news-badge">Mango News</div>
+            <div class="header-text">
+                <div class="retro-title">MANGO INTRANET</div>
+                <div class="retro-subtitle">Your Digital Garage • Est. 2021</div>
+                <div class="news-badge">Mango News</div>
+            </div>
+            <img src="logo.png" alt="Mango" class="logo-stamp">
         </div>
     </div>
 
