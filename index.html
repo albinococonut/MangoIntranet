@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mango Automotive - Employee Portal</title>
-    <link rel="icon" type="image/png" href="/favicon.png">
+    <link rel="icon" type="image/png" href="favicon.png">
     <style>
         * {
             margin: 0;
@@ -28,20 +28,6 @@
         }
 
         /* Clean header - no gimmicks */
-        .news-badge {
-            background: linear-gradient(135deg, #FF8C00, #F5A623);
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 700;
-            letter-spacing: 0.5px;
-            text-transform: uppercase;
-            display: inline-block;
-            margin-bottom: 12px;
-            box-shadow: 0 4px 12px rgba(245, 166, 35, 0.25);
-        }
-
         .header-container {
             background: white;
             border-bottom: 1px solid #e5e7eb;
@@ -51,18 +37,31 @@
         }
 
         .logo-stamp {
-            width: 120px;
+            width: 200px;
             height: auto;
             position: absolute;
-            right: 50px;
-            top: 10px;
+            right: 20px;
+            top: -30px;
             transform: rotate(15deg);
+            filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
         }
 
         .header {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 32px;
+        }
+
+        .news-badge {
+            background: linear-gradient(135deg, #FF8C00, #F5A623);
+            color: white;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 12px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            display: inline-block;
+            margin-top: 10px;
         }
 
         .retro-title {
@@ -273,9 +272,6 @@
 
         .pin-button.pinned {
             opacity: 1;
-            background: white;
-            border-color: #2C722C;
-            border-top: 4px solid #2C722C;
         }
 
         .pin-button:hover {
@@ -476,17 +472,12 @@
     </style>
 </head>
 <body>
-    <!-- News badge above header -->
-    <div class="news-badge">
-        <div class="news-label">Mango News</div>
-    </div>
-
-    <!-- Header with diagonal stamp -->
     <div class="header-container">
         <img src="logo.png" alt="Mango" class="logo-stamp">
         <div class="header">
             <div class="retro-title">MANGO INTRANET</div>
             <div class="retro-subtitle">Your Digital Garage • Est. 2021</div>
+            <div class="news-badge">Mango News</div>
         </div>
     </div>
 
