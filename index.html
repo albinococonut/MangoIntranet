@@ -14,122 +14,106 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #f8f9fa;
+            background: #fafafa;
             min-height: 100vh;
-            padding: 40px 20px 80px;
+            padding: 0;
         }
 
         .container {
-            max-width: 900px;
+            max-width: 1200px;
             margin: 0 auto;
+            padding: 0 32px 80px;
         }
 
-        /* News above header */
-        .news-badge {
-            text-align: center;
-            margin-bottom: 24px;
-        }
-
-        .news-label {
-            display: inline-block;
-            background: #F5A623;
-            color: white;
-            padding: 8px 20px;
-            border-radius: 20px;
-            font-size: 12px;
-            font-weight: 800;
-            text-transform: uppercase;
-            letter-spacing: 1.5px;
-            box-shadow: 0 2px 8px rgba(245, 166, 35, 0.3);
-        }
-
-        /* Header with diagonal stamp */
+        /* Clean header - no gimmicks */
         .header-container {
-            position: relative;
-            margin-bottom: 32px;
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 24px 0;
+            margin-bottom: 48px;
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 32px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
         }
 
         .logo-stamp {
-            position: absolute;
-            top: -60px;
-            right: 30px;
-            width: 600px;
-            transform: rotate(15deg);
-            filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
-            z-index: 10;
+            width: 120px;
+            height: auto;
+            transform: none;
+            filter: none;
         }
 
-        .header {
-            background: white;
-            padding: 50px 40px 40px;
-            border-radius: 24px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            border: 3px solid #F5A623;
-            position: relative;
-        }
-
-        .header::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: repeating-linear-gradient(90deg, #F5A623 0px, #F5A623 20px, #E89B1D 20px, #E89B1D 40px, #666 40px, #666 60px);
-        }
-
-        .header::after {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            height: 6px;
-            background: repeating-linear-gradient(90deg, #F5A623 0px, #F5A623 20px, #E89B1D 20px, #E89B1D 40px, #666 40px, #666 60px);
+        .header-title {
+            flex: 1;
+            text-align: left;
+            margin-left: 32px;
         }
 
         .retro-title {
-            font-family: 'Arial Black', sans-serif;
-            font-size: 28px;
-            font-weight: 900;
-            color: #F5A623;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            text-shadow: 2px 2px 0px #666;
-            margin-bottom: 8px;
+            font-size: 24px;
+            font-weight: 700;
+            color: #111827;
+            text-transform: none;
+            letter-spacing: -0.5px;
+            text-shadow: none;
+            margin-bottom: 4px;
         }
 
         .retro-subtitle {
             font-size: 14px;
-            color: #666;
+            color: #6b7280;
+            font-weight: 500;
+        }
+
+        .news-badge {
+            background: #F5A623;
+            color: white;
+            padding: 6px 16px;
+            border-radius: 6px;
+            font-size: 12px;
             font-weight: 600;
+            letter-spacing: 0.5px;
         }
 
-        /* Simple greeting text */
+        .header::before,
+        .header::after {
+            display: none;
+        }
+
+        /* Greeting as subheader */
         .greeting-text {
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
-            margin-bottom: 16px;
-            text-align: center;
+            font-size: 16px;
+            font-weight: 500;
+            color: #6b7280;
+            margin-bottom: 32px;
+            text-align: left;
         }
 
-        /* Weather widget - no box, just text */
+        /* Weather inline with greeting */
         .weather-widget {
-            margin-bottom: 48px;
-            text-align: center;
+            display: inline;
+            margin: 0;
+            text-align: left;
         }
 
         .weather-widget h3 {
-            font-size: 14px;
-            color: #999;
-            margin-bottom: 8px;
-            font-weight: 600;
+            display: inline;
+            font-size: 16px;
+            color: #6b7280;
+            font-weight: 500;
+            margin: 0;
         }
 
         .weather-temp {
-            font-size: 48px;
-            font-weight: 900;
+            display: inline;
+            font-size: 16px;
+            font-weight: 600;
             color: #F5A623;
             line-height: 1;
         }
@@ -225,27 +209,33 @@
         }
 
         .link-icon {
-            width: 56px;
-            height: 56px;
-            border-radius: 14px;
+            width: 48px;
+            height: 48px;
+            border-radius: 10px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
             flex-shrink: 0;
+            overflow: hidden;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
         }
 
-        /* Individual icon colors */
-        .icon-tekmetric { background: linear-gradient(135deg, #4A90E2, #357ABD); }
-        .icon-slack { background: linear-gradient(135deg, #611F69, #4A154B); }
-        .icon-shopgenie { background: linear-gradient(135deg, #10B981, #059669); }
-        .icon-guava { background: linear-gradient(135deg, #FF8C00, #F5A623); }
-        .icon-repairpal { background: linear-gradient(135deg, #EF4444, #DC2626); }
-        .icon-alldata { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
-        .icon-motovisuals { background: linear-gradient(135deg, #F59E0B, #D97706); }
-        .icon-aaa { background: linear-gradient(135deg, #3B82F6, #2563EB); }
-        .icon-sops { background: linear-gradient(135deg, #14B8A6, #0D9488); }
-        .icon-handbook { background: linear-gradient(135deg, #EC4899, #DB2777); }
+        .link-icon img {
+            width: 32px;
+            height: 32px;
+            object-fit: contain;
+        }
+
+        /* Fallback for when favicon doesn't load */
+        .link-icon::before {
+            content: attr(data-fallback);
+            font-size: 24px;
+        }
+
+        .link-icon img + ::before {
+            display: none;
+        }
 
         .link-content {
             flex: 1;
@@ -455,12 +445,18 @@
 
         function createLinkCard(link, isPinned) {
             const clicks = parseInt(localStorage.getItem(`clicks_${link.id}`) || 0);
+            // Extract domain for favicon
+            const domain = new URL(link.url).hostname;
+            const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
+            
             return `
                 <a href="${link.url}" class="link-card" data-id="${link.id}" target="_blank">
                     <button class="pin-button ${isPinned ? 'pinned' : ''}" onclick="event.preventDefault(); togglePin('${link.id}')">
                         📌
                     </button>
-                    <div class="link-icon icon-${link.id}">${link.icon}</div>
+                    <div class="link-icon" data-fallback="${link.icon}">
+                        <img src="${faviconUrl}" alt="${link.title}" onerror="this.style.display='none'">
+                    </div>
                     <div class="link-content">
                         <div class="link-title">${link.title}</div>
                         <div class="link-stat">Clicked <span class="click-count">${clicks}</span> times</div>
