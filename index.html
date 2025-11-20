@@ -33,17 +33,17 @@
         .header-container {
             background: white;
             border-bottom: 1px solid #e5e7eb;
-            padding: 24px 0;
+            padding: 32px 0;
             margin-bottom: 48px;
             position: relative;
         }
 
         .logo-stamp {
-            width: 200px;
+            width: 180px;
             height: auto;
             position: absolute;
-            right: 20px;
-            top: 0px;
+            right: 32px;
+            top: 20px;
             filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
         }
 
@@ -712,10 +712,10 @@
                         const newsText = newsItems.join(' • ') + ' • ';
                         tickerDiv.textContent = newsText + newsText;
                         
-                        // Calculate duration for constant speed (100px per second)
+                        // Calculate duration for constant speed (60px per second - slower)
                         setTimeout(() => {
                             const textWidth = tickerDiv.scrollWidth / 2;
-                            const duration = textWidth / 100;
+                            const duration = textWidth / 60;
                             tickerDiv.style.animationDuration = `${duration}s`;
                         }, 50);
                         return;
@@ -731,7 +731,7 @@
             // Calculate duration for constant speed
             setTimeout(() => {
                 const textWidth = tickerDiv.scrollWidth / 2;
-                const duration = textWidth / 100;
+                const duration = textWidth / 60;
                 tickerDiv.style.animationDuration = `${duration}s`;
             }, 50);
         }
