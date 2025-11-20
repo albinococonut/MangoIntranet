@@ -413,7 +413,7 @@
             display: inline-block;
             white-space: nowrap;
             padding-left: 0;
-            animation: ticker 30.8s linear infinite;
+            animation: ticker 15s linear infinite;
             font-size: 14px;
             font-weight: 600;
             letter-spacing: 0.3px;
@@ -733,6 +733,9 @@
         getWeather();
         loadNews();
         renderLinks();
+        
+        // Auto-refresh ticker every 30 seconds
+        setInterval(loadNews, 30000);
     </script>
 </body>
 </html>
