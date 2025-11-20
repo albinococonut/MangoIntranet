@@ -51,9 +51,9 @@
 
         .logo-stamp {
             position: absolute;
-            top: -30px;
+            top: -60px;
             right: 30px;
-            width: 300px;
+            width: 600px;
             transform: rotate(15deg);
             filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
             z-index: 10;
@@ -164,6 +164,12 @@
         }
 
         @media (max-width: 768px) {
+            .logo-stamp {
+                width: 200px;
+                right: 10px;
+                top: -20px;
+            }
+
             #quickActionsGrid {
                 grid-template-columns: repeat(2, 1fr);
             }
@@ -452,7 +458,7 @@
             return `
                 <a href="${link.url}" class="link-card" data-id="${link.id}" target="_blank">
                     <button class="pin-button ${isPinned ? 'pinned' : ''}" onclick="event.preventDefault(); togglePin('${link.id}')">
-                        ${isPinned ? '📌' : '📍'}
+                        📌
                     </button>
                     <div class="link-icon icon-${link.id}">${link.icon}</div>
                     <div class="link-content">
