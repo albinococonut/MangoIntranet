@@ -27,7 +27,7 @@
         /* News above header */
         .news-badge {
             text-align: center;
-            margin-bottom: 16px;
+            margin-bottom: 24px;
         }
 
         .news-label {
@@ -46,14 +46,14 @@
         /* Header with diagonal stamp */
         .header-container {
             position: relative;
-            margin-bottom: 50px;
+            margin-bottom: 32px;
         }
 
         .logo-stamp {
             position: absolute;
-            top: -20px;
-            right: 20px;
-            width: 140px;
+            top: -30px;
+            right: 30px;
+            width: 300px;
             transform: rotate(15deg);
             filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.2));
             z-index: 10;
@@ -107,22 +107,17 @@
 
         /* Simple greeting text */
         .greeting-text {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+            margin-bottom: 16px;
             text-align: center;
-            font-size: 22px;
-            font-weight: 600;
-            color: #666;
-            margin-bottom: 40px;
         }
 
-        /* Weather widget */
+        /* Weather widget - no box, just text */
         .weather-widget {
-            background: white;
-            border-radius: 16px;
-            padding: 20px;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
-            margin-bottom: 40px;
+            margin-bottom: 48px;
             text-align: center;
-            border: 2px solid #e0e0e0;
         }
 
         .weather-widget h3 {
@@ -133,9 +128,10 @@
         }
 
         .weather-temp {
-            font-size: 36px;
+            font-size: 48px;
             font-weight: 900;
             color: #F5A623;
+            line-height: 1;
         }
 
         /* Section */
@@ -156,62 +152,114 @@
         /* Links */
         .link-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
             gap: 16px;
+        }
+
+        /* Quick Actions - 4 squares in a row */
+        #quickActionsGrid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 16px;
+        }
+
+        @media (max-width: 768px) {
+            #quickActionsGrid {
+                grid-template-columns: repeat(2, 1fr);
+            }
         }
 
         .link-card {
             background: white;
             border-radius: 16px;
-            padding: 20px;
+            padding: 24px;
             text-decoration: none;
             color: #1a1a1a;
             transition: all 0.2s;
             box-shadow: 0 1px 3px rgba(0, 0, 0, 0.08);
-            border: 2px solid transparent;
+            border: 1px solid #f0f0f0;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 16px;
+            text-align: center;
+            gap: 12px;
+            position: relative;
         }
 
         .link-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12);
-            border-color: #F5A623;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            border-color: #e0e0e0;
         }
 
-        .link-icon {
-            width: 48px;
-            height: 48px;
-            background: linear-gradient(135deg, #FF8C00, #F5A623);
-            border-radius: 12px;
+        .pin-button {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 28px;
+            height: 28px;
+            background: transparent;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 24px;
+            font-size: 16px;
+            transition: all 0.2s;
+            opacity: 0;
+        }
+
+        .link-card:hover .pin-button {
+            opacity: 1;
+        }
+
+        .pin-button.pinned {
+            opacity: 1;
+        }
+
+        .link-icon {
+            width: 56px;
+            height: 56px;
+            border-radius: 14px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
             flex-shrink: 0;
         }
 
+        /* Individual icon colors */
+        .icon-tekmetric { background: linear-gradient(135deg, #4A90E2, #357ABD); }
+        .icon-slack { background: linear-gradient(135deg, #611F69, #4A154B); }
+        .icon-shopgenie { background: linear-gradient(135deg, #10B981, #059669); }
+        .icon-guava { background: linear-gradient(135deg, #FF8C00, #F5A623); }
+        .icon-repairpal { background: linear-gradient(135deg, #EF4444, #DC2626); }
+        .icon-alldata { background: linear-gradient(135deg, #8B5CF6, #7C3AED); }
+        .icon-motovisuals { background: linear-gradient(135deg, #F59E0B, #D97706); }
+        .icon-aaa { background: linear-gradient(135deg, #3B82F6, #2563EB); }
+        .icon-sops { background: linear-gradient(135deg, #14B8A6, #0D9488); }
+        .icon-handbook { background: linear-gradient(135deg, #EC4899, #DB2777); }
+
         .link-content {
             flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
         }
 
         .link-title {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 700;
-            margin-bottom: 4px;
         }
 
         .link-stat {
-            font-size: 12px;
+            font-size: 11px;
             color: #999;
         }
 
         .link-arrow {
-            color: #F5A623;
-            font-size: 20px;
-            font-weight: 900;
-            flex-shrink: 0;
+            display: none;
         }
 
         /* Video */
@@ -268,15 +316,15 @@
         .ticker-content {
             display: inline-block;
             white-space: nowrap;
-            padding-left: 100%;
-            animation: ticker 30s linear infinite;
+            padding-left: 0;
+            animation: ticker 30.8s linear infinite;
             font-size: 14px;
             font-weight: 600;
         }
 
         @keyframes ticker {
             0% { transform: translate(0, 0); }
-            100% { transform: translate(-100%, 0); }
+            100% { transform: translate(-50%, 0); }
         }
 
         @media (max-width: 768px) {
@@ -324,101 +372,16 @@
         <!-- Quick Actions -->
         <div class="section">
             <h2 class="section-title"><span>⚡</span> Quick Actions</h2>
-            <div class="link-grid">
-                <a href="https://shop.tekmetric.com" class="link-card" data-id="tekmetric" target="_blank">
-                    <div class="link-icon">🔧</div>
-                    <div class="link-content">
-                        <div class="link-title">Tekmetric</div>
-                        <div class="link-stat">Clicked <span class="click-count">0</span> times</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-                <a href="https://MangoAutmomotive.slack.com" class="link-card" data-id="slack" target="_blank">
-                    <div class="link-icon">💼</div>
-                    <div class="link-content">
-                        <div class="link-title">Slack</div>
-                        <div class="link-stat">Clicked <span class="click-count">0</span> times</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-                <a href="https://app.shopgenie.io/dashboard/inbox" class="link-card" data-id="shopgenie" target="_blank">
-                    <div class="link-icon">💬</div>
-                    <div class="link-content">
-                        <div class="link-title">ShopGenie</div>
-                        <div class="link-stat">Clicked <span class="click-count">0</span> times</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-                <a href="https://chromewebstore.google.com/detail/ppaiipibgjjnadokahpjakhbneodpfdm" class="link-card" data-id="guava" target="_blank">
-                    <div class="link-icon">🥭</div>
-                    <div class="link-content">
-                        <div class="link-title">Guava Coach</div>
-                        <div class="link-stat">Clicked <span class="click-count">0</span> times</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
+            <div class="link-grid" id="quickActionsGrid">
+                <!-- Dynamically populated -->
             </div>
         </div>
 
         <!-- Shop Tools -->
-        <div class="section">
-            <h2 class="section-title"><span>🛠️</span> Shop Tools</h2>
-            <div class="link-grid">
-                <a href="https://repairpal.com/shop-dashboard" class="link-card" data-id="repairpal" target="_blank">
-                    <div class="link-icon">🛠️</div>
-                    <div class="link-content">
-                        <div class="link-title">RepairPal</div>
-                        <div class="link-stat">Clicked <span class="click-count">0</span> times</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-                <a href="https://my.alldata.com/" class="link-card" data-id="alldata" target="_blank">
-                    <div class="link-icon">📊</div>
-                    <div class="link-content">
-                        <div class="link-title">AllData</div>
-                        <div class="link-stat">Clicked <span class="click-count">0</span> times</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-                <a href="https://www.motovisuals.com/#!/bhome" class="link-card" data-id="motovisuals" target="_blank">
-                    <div class="link-icon">📸</div>
-                    <div class="link-content">
-                        <div class="link-title">Motovisuals</div>
-                        <div class="link-stat">Clicked <span class="click-count">0</span> times</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-                <a href="https://rsp.national.aaa.com/" class="link-card" data-id="aaa" target="_blank">
-                    <div class="link-icon">🚗</div>
-                    <div class="link-content">
-                        <div class="link-title">AAA Portal</div>
-                        <div class="link-stat">Clicked <span class="click-count">0</span> times</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-            </div>
-        </div>
-
-        <!-- Training -->
-        <div class="section">
-            <h2 class="section-title"><span>📚</span> Training & Resources</h2>
-            <div class="link-grid">
-                <a href="https://mangoautomotive.notion.site/SOPs-for-SAs-451f7f4172a54f04be34be19c67daeca" class="link-card" data-id="sops" target="_blank">
-                    <div class="link-icon">📋</div>
-                    <div class="link-content">
-                        <div class="link-title">Service Advisor SOPs</div>
-                        <div class="link-stat">Clicked <span class="click-count">0</span> times</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
-                <a href="https://www.notion.so/mangoautomotive/Policies-Handbook-10de8f2d40b74400bad9e3f4a84b9c19" class="link-card" data-id="handbook" target="_blank">
-                    <div class="link-icon">📖</div>
-                    <div class="link-content">
-                        <div class="link-title">Employee Handbook</div>
-                        <div class="link-stat">Clicked <span class="click-count">0</span> times</div>
-                    </div>
-                    <div class="link-arrow">→</div>
-                </a>
+        <div class="section" id="allLinksSection">
+            <h2 class="section-title"><span>🔗</span> All Links</h2>
+            <div class="link-grid" id="allLinksGrid">
+                <!-- Dynamically populated -->
             </div>
         </div>
 
@@ -446,6 +409,101 @@
 
     <script>
         const NEWS_API_URL = 'https://mango-intranet.jesse-3d9.workers.dev/api/news';
+
+        // All available links
+        const ALL_LINKS = [
+            { id: 'tekmetric', icon: '🔧', title: 'Tekmetric', url: 'https://shop.tekmetric.com' },
+            { id: 'slack', icon: '💼', title: 'Slack', url: 'https://MangoAutmomotive.slack.com' },
+            { id: 'shopgenie', icon: '💬', title: 'ShopGenie', url: 'https://app.shopgenie.io/dashboard/inbox' },
+            { id: 'guava', icon: '🍐', title: 'Guava Coach', url: 'https://chromewebstore.google.com/detail/ppaiipibgjjnadokahpjakhbneodpfdm' },
+            { id: 'repairpal', icon: '🛠️', title: 'RepairPal', url: 'https://repairpal.com/shop-dashboard' },
+            { id: 'alldata', icon: '📊', title: 'AllData', url: 'https://my.alldata.com/' },
+            { id: 'motovisuals', icon: '📸', title: 'Motovisuals', url: 'https://www.motovisuals.com/#!/bhome' },
+            { id: 'aaa', icon: '🚗', title: 'AAA Portal', url: 'https://rsp.national.aaa.com/' },
+            { id: 'sops', icon: '📋', title: 'Service Advisor SOPs', url: 'https://mangoautomotive.notion.site/SOPs-for-SAs-451f7f4172a54f04be34be19c67daeca' },
+            { id: 'handbook', icon: '📖', title: 'Employee Handbook', url: 'https://www.notion.so/mangoautomotive/Policies-Handbook-10de8f2d40b74400bad9e3f4a84b9c19' }
+        ];
+
+        // Default pinned links
+        const DEFAULT_PINS = ['tekmetric', 'slack', 'shopgenie', 'guava'];
+
+        function getPinnedLinks() {
+            const stored = localStorage.getItem('pinnedLinks');
+            return stored ? JSON.parse(stored) : DEFAULT_PINS;
+        }
+
+        function setPinnedLinks(pins) {
+            localStorage.setItem('pinnedLinks', JSON.stringify(pins));
+        }
+
+        function togglePin(linkId) {
+            let pinned = getPinnedLinks();
+            if (pinned.includes(linkId)) {
+                pinned = pinned.filter(id => id !== linkId);
+            } else {
+                pinned.push(linkId);
+            }
+            setPinnedLinks(pinned);
+            renderLinks();
+        }
+
+        function createLinkCard(link, isPinned) {
+            const clicks = parseInt(localStorage.getItem(`clicks_${link.id}`) || 0);
+            return `
+                <a href="${link.url}" class="link-card" data-id="${link.id}" target="_blank">
+                    <button class="pin-button ${isPinned ? 'pinned' : ''}" onclick="event.preventDefault(); togglePin('${link.id}')">
+                        ${isPinned ? '📌' : '📍'}
+                    </button>
+                    <div class="link-icon icon-${link.id}">${link.icon}</div>
+                    <div class="link-content">
+                        <div class="link-title">${link.title}</div>
+                        <div class="link-stat">Clicked <span class="click-count">${clicks}</span> times</div>
+                    </div>
+                </a>
+            `;
+        }
+
+        function renderLinks() {
+            const pinnedIds = getPinnedLinks();
+            const quickActionsGrid = document.getElementById('quickActionsGrid');
+            const allLinksGrid = document.getElementById('allLinksGrid');
+
+            // Render pinned links in Quick Actions
+            const pinnedLinks = ALL_LINKS.filter(link => pinnedIds.includes(link.id));
+            quickActionsGrid.innerHTML = pinnedLinks.map(link => createLinkCard(link, true)).join('');
+
+            // Render only UNPINNED links in All Links section
+            const unpinnedLinks = ALL_LINKS.filter(link => !pinnedIds.includes(link.id));
+            allLinksGrid.innerHTML = unpinnedLinks.map(link => createLinkCard(link, false)).join('');
+
+            // Re-attach click handlers
+            attachClickHandlers();
+        }
+
+        function attachClickHandlers() {
+            document.querySelectorAll('.link-card').forEach(card => {
+                card.addEventListener('click', function(e) {
+                    // Don't track if clicking the pin button
+                    if (e.target.closest('.pin-button')) return;
+                    
+                    const id = this.getAttribute('data-id');
+                    const clicks = parseInt(localStorage.getItem(`clicks_${id}`) || 0);
+                    localStorage.setItem(`clicks_${id}`, clicks + 1);
+                    updateClickCounts();
+                });
+            });
+        }
+
+        function updateClickCounts() {
+            document.querySelectorAll('.link-card').forEach(card => {
+                const id = card.getAttribute('data-id');
+                const clicks = parseInt(localStorage.getItem(`clicks_${id}`) || 0);
+                const countSpan = card.querySelector('.click-count');
+                if (countSpan) {
+                    countSpan.textContent = clicks;
+                }
+            });
+        }
 
         const thankYouMessages = [
             "You're not just fixing cars—you're getting families where they need to go, keeping people safe, and building trust one customer at a time. Thank you for showing up, working hard, and being the reason Mango Automotive stands out. We're grateful for you. 🥭",
@@ -484,8 +542,17 @@
                     
                     const emoji = weatherEmojis[weatherCode] || '🌡️';
                     
-                    document.getElementById('weatherTemp').textContent = `${temp}°F`;
-                    document.getElementById('weatherLabel').textContent = `${emoji} Your Local Weather`;
+                    document.getElementById('weatherTemp').textContent = `${temp}°`;
+                    
+                    // Get city name from coordinates
+                    try {
+                        const geoResponse = await fetch(`https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`);
+                        const geoData = await geoResponse.json();
+                        const city = geoData.city || geoData.locality || 'Your';
+                        document.getElementById('weatherLabel').textContent = `${emoji} ${city} Weather`;
+                    } catch {
+                        document.getElementById('weatherLabel').textContent = `${emoji} Your Local Weather`;
+                    }
                 } catch (error) {}
             });
         }
@@ -507,35 +574,16 @@
                     
                     if (newsItems && newsItems.length > 0) {
                         const newsText = newsItems.join(' • ') + ' • ';
-                        tickerDiv.textContent = newsText + newsText + newsText;
+                        // Repeat 2 times for seamless loop (animates to -50%)
+                        tickerDiv.textContent = newsText + newsText;
                         return;
                     }
                 }
             } catch (error) {}
             
             const defaultText = defaultNews.join(' • ') + ' • ';
-            tickerDiv.textContent = defaultText + defaultText + defaultText;
+            tickerDiv.textContent = defaultText + defaultText;
         }
-
-        function updateClickCounts() {
-            document.querySelectorAll('.link-card').forEach(card => {
-                const id = card.getAttribute('data-id');
-                const clicks = parseInt(localStorage.getItem(`clicks_${id}`) || 0);
-                const countSpan = card.querySelector('.click-count');
-                if (countSpan) {
-                    countSpan.textContent = clicks;
-                }
-            });
-        }
-
-        document.querySelectorAll('.link-card').forEach(card => {
-            card.addEventListener('click', function() {
-                const id = this.getAttribute('data-id');
-                const clicks = parseInt(localStorage.getItem(`clicks_${id}`) || 0);
-                localStorage.setItem(`clicks_${id}`, clicks + 1);
-                updateClickCounts();
-            });
-        });
 
         document.addEventListener('keydown', (e) => {
             if (e.key === '1') window.open('https://shop.tekmetric.com', '_blank');
@@ -547,7 +595,7 @@
         rotateThankYou();
         getWeather();
         loadNews();
-        updateClickCounts();
+        renderLinks();
     </script>
 </body>
 </html>
