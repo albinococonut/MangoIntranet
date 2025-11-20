@@ -42,7 +42,6 @@
             position: absolute;
             right: 20px;
             top: -30px;
-            transform: rotate(15deg);
             filter: drop-shadow(2px 2px 4px rgba(0,0,0,0.1));
         }
 
@@ -568,7 +567,13 @@
 
         function createLinkCard(link, isPinned) {
             const clicks = parseInt(localStorage.getItem(`clicks_${link.id}`) || 0);
-            const domain = new URL(link.url).hostname;
+            
+            // Special handling for Slack to get proper favicon
+            let domain = new URL(link.url).hostname;
+            if (link.id === 'slack') {
+                domain = 'slack.com';
+            }
+            
             const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
             
             return `
