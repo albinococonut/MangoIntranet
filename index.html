@@ -518,7 +518,7 @@
         <!-- Video -->
         <div class="video-section">
             <div class="video-wrapper">
-                <iframe src="https://player.vimeo.com/video/1138936304?badge=0&autopause=0&byline=0&portrait=0&title=0&sidedock=0" 
+                <iframe src="https://player.vimeo.com/video/1138936304?badge=0&autopause=0&byline=0&portrait=0&title=0&sidedock=0&outro=nothing" 
                         frameborder="0" 
                         allow="autoplay; fullscreen; picture-in-picture" 
                         title="Mango Automotive">
@@ -543,6 +543,8 @@
             { id: 'slack', title: 'Slack', url: 'https://MangoAutmomotive.slack.com' },
             { id: 'shopgenie', title: 'ShopGenie', url: 'https://app.shopgenie.io/dashboard/inbox' },
             { id: 'guava', title: 'Guava Coach', url: 'https://chromewebstore.google.com/detail/ppaiipibgjjnadokahpjakhbneodpfdm' },
+            { id: 'chatgpt', title: 'ChatGPT', url: 'https://chatgpt.com/' },
+            { id: 'lyft', title: 'Lyft', url: 'https://account.lyft.com/auth/email?v=lyft-for-business&next=https%3A%2F%2Fbusiness.lyft.com%2Flogin' },
             { id: 'repairpal', title: 'RepairPal', url: 'https://repairpal.com/shop-dashboard' },
             { id: 'alldata', title: 'AllData', url: 'https://my.alldata.com/' },
             { id: 'motovisuals', title: 'Motovisuals', url: 'https://www.motovisuals.com/#!/bhome' },
@@ -609,6 +611,8 @@
             quickActionsGrid.innerHTML = pinnedLinks.map(link => createLinkCard(link, true)).join('');
 
             const unpinnedLinks = ALL_LINKS.filter(link => !pinnedIds.includes(link.id));
+            // Sort alphabetically by title
+            unpinnedLinks.sort((a, b) => a.title.localeCompare(b.title));
             allLinksGrid.innerHTML = unpinnedLinks.map(link => createLinkCard(link, false)).join('');
 
             attachClickHandlers();
