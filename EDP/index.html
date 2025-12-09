@@ -51,13 +51,13 @@
         input, select { padding: 16px 18px; border: 2px solid #e8e8e8; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1rem; transition: all 0.3s ease; background: var(--light-gray); }
         input:focus, select:focus { outline: none; border-color: var(--mango); background: white; box-shadow: 0 0 0 4px rgba(233, 163, 25, 0.15); }
         .quarter-selector select:focus { background: rgba(255,255,255,0.25); color: white; border-color: var(--mango-light); }
-        input:focus, select:focus { outline: none; border-color: var(--mango); background: white; box-shadow: 0 0 0 4px rgba(233, 163, 25, 0.15); }
         .resources-section { margin-top: 36px; }
         .section-title { font-family: 'Playfair Display', serif; font-size: 1.4rem; color: var(--charcoal); margin-bottom: 8px; display: flex; align-items: center; gap: 12px; }
         .section-title::before { content: ''; width: 5px; height: 32px; background: var(--mango); border-radius: 3px; }
         .section-subtitle { color: var(--gray); margin-bottom: 24px; }
         .section-subtitle strong { color: var(--leaf-dark); }
         .category-section { margin-bottom: 32px; transition: all 0.3s ease; }
+        .category-section.hidden { display: none; }
         .category-header { background: var(--light-gray); padding: 12px 20px; border-radius: 10px; margin-bottom: 16px; font-weight: 600; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1px; color: var(--dark); }
         .category-header.active { background: linear-gradient(135deg, var(--mango) 0%, var(--mango-dark) 100%); color: var(--charcoal); }
         .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
@@ -107,6 +107,18 @@
         .success-message .commitment-reminder { background: linear-gradient(135deg, var(--leaf) 0%, var(--leaf-dark) 100%); color: white; padding: 22px 36px; border-radius: 14px; margin-top: 28px; display: inline-block; font-weight: 600; font-size: 1.1rem; box-shadow: 0 8px 24px rgba(46, 125, 50, 0.3); }
         footer { background: var(--charcoal); color: white; padding: 36px; text-align: center; }
         footer p { opacity: 0.7; font-size: 0.9rem; }
+        .select-quarter-prompt { text-align: center; padding: 40px; color: var(--gray); font-size: 1.1rem; }
+        .format-selector { display: flex; gap: 8px; margin-top: 10px; }
+        .format-btn { padding: 6px 12px; border: 2px solid #ddd; border-radius: 6px; background: white; font-size: 0.75rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; color: var(--gray); }
+        .format-btn:hover { border-color: var(--mango-light); }
+        .format-btn.selected { background: var(--mango); border-color: var(--mango); color: var(--charcoal); }
+        .format-btn.selected::before { content: '✓ '; }
+        .show-all-section { background: var(--light-gray); border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .show-all-section.hidden { display: none; }
+        .show-all-text { color: var(--dark); font-size: 0.95rem; }
+        .show-all-btn { background: white; border: 2px solid var(--mango); color: var(--charcoal); padding: 10px 20px; border-radius: 8px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
+        .show-all-btn:hover { background: var(--mango); }
+        .show-all-btn.active { background: var(--mango); }
         @media (max-width: 768px) {
             header { padding: 28px 20px 36px; }
             .form-container { padding: 28px; }
@@ -147,12 +159,13 @@
                 <div class="quarter-selector">
                     <label for="quarter">🗓️ Select Your Quarter</label>
                     <select id="quarter" name="quarter" required>
-                        <option value="Q1 2026" data-theme="Mindset & Optimism" data-deadline="March 31, 2026" selected>Q1 2026 — Mindset & Optimism</option>
+                        <option value="" data-theme="" data-deadline="" selected>Select a Quarter...</option>
+                        <option value="Q1 2026" data-theme="Mindset & Optimism" data-deadline="March 31, 2026">Q1 2026 — Mindset & Optimism</option>
                         <option value="Q2 2026" data-theme="Ownership & Accountability" data-deadline="June 30, 2026">Q2 2026 — Ownership & Accountability</option>
                         <option value="Q3 2026" data-theme="Vision & Impact" data-deadline="September 30, 2026">Q3 2026 — Vision & Impact</option>
                         <option value="Q4 2026" data-theme="Action & Execution" data-deadline="December 31, 2026">Q4 2026 — Action & Execution</option>
                     </select>
-                    <div class="quarter-theme" id="quarterTheme">This Quarter's Focus: <strong>Mindset & Optimism</strong> — Build the mental foundation that drives everything else</div>
+                    <div class="quarter-theme" id="quarterTheme">Select a quarter above to see the theme and available books</div>
                 </div>
                 <div class="form-row">
                     <div class="form-group">
@@ -174,6 +187,7 @@
                             <option value="El Paso (Pellicano Dr)">El Paso (Pellicano Dr)</option>
                             <option value="El Paso (Montana Ave)">El Paso (Montana Ave)</option>
                             <option value="Yuma (Florence Ln)">Yuma (Florence Ln)</option>
+                            <option value="Corporate Team">Corporate Team</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -195,9 +209,18 @@
                     <h4 class="section-title">Build Your Learning Path</h4>
                     <p class="section-subtitle">Choose <strong>at least one resource</strong> — or stack multiple for maximum growth! 🚀</p>
                     
+                    <div id="selectQuarterPrompt" class="select-quarter-prompt">
+                        👆 Please select a quarter above to see available books
+                    </div>
+
+                    <div id="showAllSection" class="show-all-section hidden">
+                        <span class="show-all-text">📚 These books specifically focus on the <strong id="quarterThemeText">Q1</strong> themes.</span>
+                        <button type="button" class="show-all-btn" id="showAllBtn">Show all available books instead</button>
+                    </div>
+
                     <div id="categoriesContainer">
                         <!-- Q1: MINDSET & OPTIMISM -->
-                        <div class="category-section" data-theme="Mindset & Optimism">
+                        <div class="category-section hidden" data-theme="Mindset & Optimism">
                             <div class="category-header active">🧠 Q1: Mindset & Optimism</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
@@ -288,7 +311,7 @@
                         </div>
 
                         <!-- Q2: OWNERSHIP & ACCOUNTABILITY -->
-                        <div class="category-section" data-theme="Ownership & Accountability">
+                        <div class="category-section hidden" data-theme="Ownership & Accountability">
                             <div class="category-header">💪 Q2: Ownership & Accountability</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
@@ -298,7 +321,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg" alt="Atomic Habits" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">📚 Book<span class="recommender-tag">Michelle</span></span>
                                             <div class="resource-title">Atomic Habits</div>
                                             <div class="resource-author">James Clear</div>
                                             <p class="resource-description">Tiny changes, remarkable results. The proven framework for building good habits.</p>
@@ -365,7 +388,7 @@
                         </div>
 
                         <!-- Q3: VISION & IMPACT -->
-                        <div class="category-section" data-theme="Vision & Impact">
+                        <div class="category-section hidden" data-theme="Vision & Impact">
                             <div class="category-header">🎯 Q3: Vision & Impact</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
@@ -442,7 +465,7 @@
                         </div>
 
                         <!-- Q4: ACTION & EXECUTION -->
-                        <div class="category-section" data-theme="Action & Execution">
+                        <div class="category-section hidden" data-theme="Action & Execution">
                             <div class="category-header">🚀 Q4: Action & Execution</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
@@ -546,28 +569,32 @@
                             </div>
                         </div>
 
-                        <!-- ONLINE COURSES -->
+                        <!-- ONLINE COURSES - Always visible -->
                         <div class="category-section" data-theme="Courses">
                             <div class="category-header">🎓 Online Courses — All Quarters</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
-                                    <input type="checkbox" name="selections" value="Course: Developing a Growth Mindset (LinkedIn Learning)">
+                                    <input type="checkbox" name="selections" value="Course: Cultivating a Growth Mindset (LinkedIn Learning) - ~$40/mo subscription">
                                     <div class="resource-card">
-                                        <div class="course-cover linkedin"><div class="icon">💼</div><span>LinkedIn<br>Learning</span></div>
+                                        <a href="https://www.linkedin.com/learning/cultivating-a-growth-mindset" target="_blank" class="book-cover-link" onclick="event.stopPropagation();">
+                                            <div class="course-cover linkedin"><div class="icon">💼</div><span>LinkedIn<br>Learning</span></div>
+                                        </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">🎓 Course</span>
-                                            <div class="resource-title">Developing a Growth Mindset</div>
-                                            <div class="resource-author">LinkedIn Learning</div>
+                                            <span class="resource-type">🎓 Course — ~$40/mo</span>
+                                            <div class="resource-title">Cultivating a Growth Mindset</div>
+                                            <div class="resource-author">Gemma Leigh Roberts • LinkedIn Learning</div>
                                             <p class="resource-description">Apply Carol Dweck's research to your leadership. ~1 hour.</p>
                                         </div>
                                     </div>
                                 </label>
                                 <label class="resource-option">
-                                    <input type="checkbox" name="selections" value="Course: Foundations of Positive Psychology - UPenn (Coursera)">
+                                    <input type="checkbox" name="selections" value="Course: Foundations of Positive Psychology - UPenn (Coursera) - Free to audit or ~$49/course">
                                     <div class="resource-card">
-                                        <div class="course-cover coursera"><div class="icon">🎓</div><span>UPenn<br>Coursera</span></div>
+                                        <a href="https://www.coursera.org/specializations/positivepsychology" target="_blank" class="book-cover-link" onclick="event.stopPropagation();">
+                                            <div class="course-cover coursera"><div class="icon">🎓</div><span>UPenn<br>Coursera</span></div>
+                                        </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">🎓 Course</span>
+                                            <span class="resource-type">🎓 Course — Free to Audit</span>
                                             <div class="resource-title">Foundations of Positive Psychology</div>
                                             <div class="resource-author">Dr. Martin Seligman • UPenn</div>
                                             <p class="resource-description">From the founder of positive psychology. 5-course specialization.</p>
@@ -575,26 +602,30 @@
                                     </div>
                                 </label>
                                 <label class="resource-option">
-                                    <input type="checkbox" name="selections" value="Course: Inspiring and Motivating Individuals - University of Michigan (Coursera)">
+                                    <input type="checkbox" name="selections" value="Course: Inspiring and Motivating Individuals - University of Michigan (Coursera) - Free to audit or ~$49/course">
                                     <div class="resource-card">
-                                        <div class="course-cover coursera"><div class="icon">🎓</div><span>U of Michigan<br>Coursera</span></div>
+                                        <a href="https://www.coursera.org/learn/motivate-people-teams" target="_blank" class="book-cover-link" onclick="event.stopPropagation();">
+                                            <div class="course-cover coursera"><div class="icon">🎓</div><span>U of Michigan<br>Coursera</span></div>
+                                        </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">🎓 Course</span>
+                                            <span class="resource-type">🎓 Course — Free to Audit</span>
                                             <div class="resource-title">Inspiring & Motivating Individuals</div>
                                             <div class="resource-author">University of Michigan</div>
-                                            <p class="resource-description">Part of Leading People & Teams specialization.</p>
+                                            <p class="resource-description">Part of Leading People & Teams specialization. ~4 weeks.</p>
                                         </div>
                                     </div>
                                 </label>
                                 <label class="resource-option">
                                     <input type="checkbox" name="selections" value="Course: The Science of Well-Being - Yale University (Coursera, Free)">
                                     <div class="resource-card">
-                                        <div class="course-cover yale"><div class="icon">🎓</div><span>Yale<br>Coursera</span></div>
+                                        <a href="https://www.coursera.org/learn/the-science-of-well-being" target="_blank" class="book-cover-link" onclick="event.stopPropagation();">
+                                            <div class="course-cover yale"><div class="icon">🎓</div><span>Yale<br>Coursera</span></div>
+                                        </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">🎓 Course — Free</span>
+                                            <span class="resource-type">🎓 Course — 100% Free</span>
                                             <div class="resource-title">The Science of Well-Being</div>
                                             <div class="resource-author">Prof. Laurie Santos • Yale</div>
-                                            <p class="resource-description">Yale's most popular course ever. ~19 hours, self-paced.</p>
+                                            <p class="resource-description">Yale's most popular course ever. 4M+ learners. ~19 hours, self-paced.</p>
                                         </div>
                                     </div>
                                 </label>
@@ -639,8 +670,44 @@
         const selectionCount = document.getElementById('selectionCount');
         const selectionWarning = document.getElementById('selectionWarning');
         const selectionSuccess = document.getElementById('selectionSuccess');
-        const checkboxes = document.querySelectorAll('input[name="selections"]');
         const categoriesContainer = document.getElementById('categoriesContainer');
+        const selectQuarterPrompt = document.getElementById('selectQuarterPrompt');
+        const showAllSection = document.getElementById('showAllSection');
+        const showAllBtn = document.getElementById('showAllBtn');
+        const quarterThemeText = document.getElementById('quarterThemeText');
+        
+        let showingAllBooks = false;
+        let currentTheme = '';
+        
+        // Store book formats: { checkboxValue: 'hardcopy' | 'audible' }
+        const bookFormats = {};
+        
+        // Book Amazon links mapping
+        const bookLinks = {
+            'Book: Be Obsessed or Be Average by Grant Cardone': 'https://www.amazon.com/Be-Obsessed-Average-Grant-Cardone/dp/1101981059?linkCode=ll1&tag=albinococon0c-20',
+            'Book: Mindset by Carol S. Dweck': 'https://www.amazon.com/dp/0345472322',
+            'Book: The Energy Bus by Jon Gordon': 'https://www.amazon.com/dp/0470100281',
+            'Book: The Happiness Advantage by Shawn Achor': 'https://www.amazon.com/dp/0307591549',
+            'Book: The Obstacle Is the Way by Ryan Holiday': 'https://www.amazon.com/dp/1591846358',
+            'Book: The Psychology of Money by Morgan Housel': 'https://www.amazon.com/Morgan-Housel-Psychology-Money-Paperback/dp/B08HZ7DWM1?linkCode=ll1&tag=albinococon0c-20',
+            'Book: Atomic Habits by James Clear': 'https://www.amazon.com/Atomic-Habits-James-Clear-audiobook/dp/B07RFSSYBH?linkCode=ll1&tag=albinococon0c-20',
+            'Book: Grit by Angela Duckworth': 'https://www.amazon.com/dp/1501111108',
+            'Book: High Performance Habits by Brendon Burchard': 'https://www.amazon.com/High-Performance-Habits-Extraordinary-People/dp/1401964117?linkCode=ll1&tag=albinococon0c-20',
+            'Book: No Excuses! by Brian Tracy': 'https://www.amazon.com/Excuses-Power-Self-discipline-Brian-Hardcover/dp/B00ZLW9C1U?linkCode=ll1&tag=albinococon0c-20',
+            'Book: The 7 Habits of Highly Effective People by Stephen Covey': 'https://www.amazon.com/Habits-Highly-Effective-People-Anniversary/dp/B086DD5KSJ?linkCode=ll1&tag=albinococon0c-20',
+            'Book: Aspire by Kevin Hall': 'https://www.amazon.com/dp/B09MGFPBM1?linkCode=ll1&tag=albinococon0c-20',
+            'Book: Customers for Life by Carl Sewell': 'https://www.amazon.com/dp/0385504454?linkCode=ll1&tag=albinococon0c-20',
+            'Book: Start with Why by Simon Sinek': 'https://www.amazon.com/dp/B077B1WF85?linkCode=ll1&tag=albinococon0c-20',
+            'Book: The Infinite Game by Simon Sinek': 'https://www.amazon.com/The-Infinite-Game-Simon-Sinek-audiobook/dp/B07DKHFTB7?linkCode=ll1&tag=albinococon0c-20',
+            'Book: Unreasonable Hospitality by Will Guidara': 'https://www.amazon.com/Unreasonable-Hospitality-Remarkable-Giving-People/dp/B09S4MDZHZ?linkCode=ll1&tag=albinococon0c-20',
+            'Book: Dare to Lead by Brené Brown': 'https://a.co/d/0MCg2sn',
+            'Book: Leaders Eat Last by Simon Sinek': 'https://www.amazon.com/Leaders-Eat-Last-Together-Others/dp/B084D1NZGL?linkCode=ll1&tag=albinococon0c-20',
+            'Book: Multi-Unit Leadership by Jim Sullivan': 'https://www.amazon.com/Multi-Unit-Leadership-Building-Profitable-2018-01-18/dp/B00NBNGU0C?linkCode=ll1&tag=albinococon0c-20',
+            'Book: The 17 Indisputable Laws of Teamwork by John Maxwell': 'https://www.amazon.com/dp/B082DN49JH?linkCode=ll1&tag=albinococon0c-20',
+            'Book: The 21 Irrefutable Laws of Leadership by John Maxwell': 'https://www.amazon.com/dp/B0032Z3KPC?linkCode=ll1&tag=albinococon0c-20',
+            'Book: The Culture Code by Daniel Coyle': 'https://www.amazon.com/dp/B0F71Z69DF?linkCode=ll1&tag=albinococon0c-20',
+            'Book: The Dichotomy of Leadership by Jocko Willink': 'https://www.amazon.com/Dichotomy-Leadership-Balancing-Challenges-Ownership/dp/B0CW47SGJ6?linkCode=ll1&tag=albinococon0c-20'
+        };
         
         const themeDescriptions = {
             'Mindset & Optimism': 'Build the mental foundation that drives everything else',
@@ -649,42 +716,173 @@
             'Action & Execution': 'Turn your strategy into measurable wins'
         };
 
-        function reorderCategories(selectedTheme) {
-            const sections = Array.from(categoriesContainer.querySelectorAll('.category-section'));
+        // Add format selectors to all book cards
+        function initFormatSelectors() {
+            document.querySelectorAll('.resource-option').forEach(option => {
+                const checkbox = option.querySelector('input[type="checkbox"]');
+                const card = option.querySelector('.resource-card');
+                const resourceInfo = card.querySelector('.resource-info');
+                
+                // Only add to books, not courses
+                if (checkbox.value.startsWith('Book:')) {
+                    const formatDiv = document.createElement('div');
+                    formatDiv.className = 'format-selector';
+                    formatDiv.style.display = 'none';
+                    formatDiv.innerHTML = `
+                        <button type="button" class="format-btn" data-format="hardcopy">Hard Copy</button>
+                        <button type="button" class="format-btn" data-format="audible">Audible</button>
+                    `;
+                    resourceInfo.appendChild(formatDiv);
+                    
+                    // Handle format button clicks
+                    formatDiv.querySelectorAll('.format-btn').forEach(btn => {
+                        btn.addEventListener('click', (e) => {
+                            e.preventDefault();
+                            e.stopPropagation();
+                            formatDiv.querySelectorAll('.format-btn').forEach(b => b.classList.remove('selected'));
+                            btn.classList.add('selected');
+                            bookFormats[checkbox.value] = btn.dataset.format;
+                            validateForm();
+                        });
+                    });
+                }
+            });
+        }
+
+        function filterCategories(selectedTheme, showAll = false) {
+            const sections = categoriesContainer.querySelectorAll('.category-section');
             const headers = document.querySelectorAll('.category-header');
             
             // Remove active class from all headers
             headers.forEach(h => h.classList.remove('active'));
             
-            // Find matching section and move to top
-            const matchingSection = sections.find(s => s.dataset.theme === selectedTheme);
-            if (matchingSection) {
-                categoriesContainer.insertBefore(matchingSection, categoriesContainer.firstChild);
-                matchingSection.querySelector('.category-header').classList.add('active');
+            if (!selectedTheme) {
+                // No quarter selected - hide all book sections, show prompt
+                sections.forEach(section => {
+                    if (section.dataset.theme !== 'Courses') {
+                        section.classList.add('hidden');
+                    }
+                });
+                selectQuarterPrompt.style.display = 'block';
+                showAllSection.classList.add('hidden');
+                return;
             }
+            
+            // Quarter selected - hide prompt, show "show all" section
+            selectQuarterPrompt.style.display = 'none';
+            showAllSection.classList.remove('hidden');
+            quarterThemeText.textContent = selectedTheme;
+            
+            if (showAll) {
+                // Show all book sections
+                sections.forEach(section => {
+                    section.classList.remove('hidden');
+                    if (section.dataset.theme === selectedTheme) {
+                        section.querySelector('.category-header').classList.add('active');
+                    }
+                });
+                showAllBtn.textContent = 'Show only ' + selectedTheme + ' books';
+                showAllBtn.classList.add('active');
+            } else {
+                // Show only the selected quarter's books and courses
+                sections.forEach(section => {
+                    if (section.dataset.theme === selectedTheme || section.dataset.theme === 'Courses') {
+                        section.classList.remove('hidden');
+                        if (section.dataset.theme === selectedTheme) {
+                            section.querySelector('.category-header').classList.add('active');
+                        }
+                    } else {
+                        section.classList.add('hidden');
+                        // Uncheck any hidden checkboxes and clear their formats
+                        section.querySelectorAll('input[type="checkbox"]').forEach(cb => {
+                            if (cb.checked) {
+                                cb.checked = false;
+                                delete bookFormats[cb.value];
+                                const formatSelector = cb.closest('.resource-option').querySelector('.format-selector');
+                                if (formatSelector) {
+                                    formatSelector.style.display = 'none';
+                                    formatSelector.querySelectorAll('.format-btn').forEach(b => b.classList.remove('selected'));
+                                }
+                            }
+                        });
+                    }
+                });
+                showAllBtn.textContent = 'Show all available books instead';
+                showAllBtn.classList.remove('active');
+            }
+            
+            updateSelectionCount();
         }
+
+        showAllBtn.addEventListener('click', function() {
+            showingAllBooks = !showingAllBooks;
+            filterCategories(currentTheme, showingAllBooks);
+        });
 
         quarterSelect.addEventListener('change', function() {
             const selected = this.options[this.selectedIndex];
             const theme = selected.dataset.theme;
-            quarterTheme.innerHTML = `This Quarter's Focus: <strong>${theme}</strong> — ${themeDescriptions[theme]}`;
-            reorderCategories(theme);
+            currentTheme = theme;
+            showingAllBooks = false;
+            
+            if (theme) {
+                quarterTheme.innerHTML = `This Quarter's Focus: <strong>${theme}</strong> — ${themeDescriptions[theme]}`;
+            } else {
+                quarterTheme.textContent = 'Select a quarter above to see the theme and available books';
+            }
+            
+            filterCategories(theme, false);
         });
 
         function updateSelectionCount() {
             const checkedCount = document.querySelectorAll('input[name="selections"]:checked').length;
             selectionCount.textContent = checkedCount;
-            if (checkedCount > 0) { selectionWarning.style.display = 'none'; selectionSuccess.style.display = 'inline'; }
-            else { selectionWarning.style.display = 'inline'; selectionSuccess.style.display = 'none'; }
+            if (checkedCount > 0) { 
+                selectionWarning.style.display = 'none'; 
+                selectionSuccess.style.display = 'inline'; 
+            } else { 
+                selectionWarning.style.display = 'inline'; 
+                selectionSuccess.style.display = 'none'; 
+            }
             validateForm();
         }
 
-        checkboxes.forEach(cb => cb.addEventListener('change', updateSelectionCount));
+        // Handle checkbox changes - show/hide format selector
+        categoriesContainer.addEventListener('change', function(e) {
+            if (e.target.name === 'selections') {
+                const checkbox = e.target;
+                const formatSelector = checkbox.closest('.resource-option').querySelector('.format-selector');
+                
+                if (checkbox.value.startsWith('Book:')) {
+                    if (checkbox.checked) {
+                        if (formatSelector) formatSelector.style.display = 'flex';
+                    } else {
+                        if (formatSelector) {
+                            formatSelector.style.display = 'none';
+                            formatSelector.querySelectorAll('.format-btn').forEach(b => b.classList.remove('selected'));
+                        }
+                        delete bookFormats[checkbox.value];
+                    }
+                }
+                updateSelectionCount();
+            }
+        });
 
         function validateForm() {
-            const hasSelection = document.querySelectorAll('input[name="selections"]:checked').length > 0;
+            const hasQuarter = quarterSelect.value !== '';
+            const checkedBoxes = document.querySelectorAll('input[name="selections"]:checked');
+            const hasSelection = checkedBoxes.length > 0;
             const hasCommitment = commitmentCheck.checked;
-            submitBtn.disabled = !(hasSelection && hasCommitment);
+            
+            // Check that all selected books have a format chosen
+            let allBooksHaveFormat = true;
+            checkedBoxes.forEach(cb => {
+                if (cb.value.startsWith('Book:') && !bookFormats[cb.value]) {
+                    allBooksHaveFormat = false;
+                }
+            });
+            
+            submitBtn.disabled = !(hasQuarter && hasSelection && hasCommitment && allBooksHaveFormat);
         }
 
         commitmentCheck.addEventListener('change', validateForm);
@@ -700,29 +898,77 @@
             const email = document.getElementById('email').value;
             const location = document.getElementById('location').value;
             const role = document.getElementById('role').value;
-            const selections = Array.from(document.querySelectorAll('input[name="selections"]:checked')).map(cb => cb.value).join('\n• ');
+            
+            // Build selections with format and links
+            const checkedBoxes = document.querySelectorAll('input[name="selections"]:checked');
+            let selectionsForEmail = [];
+            let selectionsForUser = [];
+            
+            checkedBoxes.forEach(cb => {
+                if (cb.value.startsWith('Book:')) {
+                    const format = bookFormats[cb.value] || 'not specified';
+                    const formatLabel = format === 'hardcopy' ? 'Hard Copy' : 'Audible';
+                    const link = bookLinks[cb.value] || '';
+                    selectionsForEmail.push(`${cb.value} (${formatLabel})\n   Amazon: ${link}`);
+                    selectionsForUser.push(`${cb.value} (${formatLabel})`);
+                } else {
+                    selectionsForEmail.push(cb.value);
+                    selectionsForUser.push(cb.value);
+                }
+            });
+            
             submitBtn.innerHTML = 'Submitting... ⏳';
             submitBtn.disabled = true;
-            const emailBody = `🎯 ${quarter.toUpperCase()} EMPLOYEE DEVELOPMENT COMMITMENT\nTheme: ${theme}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nTEAM MEMBER INFORMATION\nName: ${name}\nEmail: ${email}\nLocation: ${location}\nRole: ${role}\n\nSELECTED RESOURCE(S):\n• ${selections}\n\nCOMMITMENT CONFIRMED ✓\nDeadline: ${deadline}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSubmitted: ${new Date().toLocaleString()}`;
-            const userEmailBody = `Hi ${name.split(' ')[0]}! 🎉\n\nYou're officially enrolled in the Mango Automotive Employee Development Program for ${quarter}!\n\nYOUR COMMITMENT:\n• ${selections}\n\nDEADLINE: ${deadline}\n\nYour resources will be ordered within 48 hours.\n\nLet's grow together,\nMango Automotive Leadership Team`;
+            const emailBody = `🎯 ${quarter.toUpperCase()} EMPLOYEE DEVELOPMENT COMMITMENT\nTheme: ${theme}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nTEAM MEMBER INFORMATION\nName: ${name}\nEmail: ${email}\nLocation: ${location}\nRole: ${role}\n\nSELECTED RESOURCE(S):\n• ${selectionsForEmail.join('\n\n• ')}\n\nCOMMITMENT CONFIRMED ✓\nDeadline: ${deadline}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSubmitted: ${new Date().toLocaleString()}`;
+            const userEmailBody = `Hi ${name.split(' ')[0]}! 🎉\n\nYou're officially enrolled in the Mango Automotive Employee Development Program for ${quarter}!\n\nYOUR COMMITMENT:\n• ${selectionsForUser.join('\n• ')}\n\nDEADLINE: ${deadline}\n\nYour resources will be ordered within 48 hours.\n\nLet's grow together,\nMango Automotive Leadership Team`;
             try {
                 const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({ access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de', subject: `${quarter} Development Commitment - ${name} (${location})`, from_name: 'Employee Development Program', to: 'accounting@mangoautomotive.com', cc: 'jesse@mangoautomotive.com', message: emailBody, replyto: email })
+                    body: JSON.stringify({ 
+                        access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de', 
+                        subject: `${quarter} Development Commitment - ${name} (${location})`, 
+                        from_name: 'Employee Development Program', 
+                        to: 'accounting@mangoautomotive.com', 
+                        cc: 'jesse@mangoautomotive.com, mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com', 
+                        message: emailBody, 
+                        replyto: email 
+                    })
                 });
-                await fetch('https://api.web3forms.com/submit', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de', subject: `You're In! ${quarter} Development Program Confirmation`, from_name: 'Mango Automotive', to: email, message: userEmailBody }) });
-                if (response.ok) { document.getElementById('deadlineReminder').textContent = `📅 Your Deadline: ${deadline}`; form.style.display = 'none'; document.getElementById('successMessage').classList.add('show'); }
-                else { throw new Error('Form submission failed'); }
+                await fetch('https://api.web3forms.com/submit', { 
+                    method: 'POST', 
+                    headers: { 'Content-Type': 'application/json' }, 
+                    body: JSON.stringify({ 
+                        access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de', 
+                        subject: `You're In! ${quarter} Development Program Confirmation`, 
+                        from_name: 'Mango Automotive', 
+                        to: email, 
+                        message: userEmailBody 
+                    }) 
+                });
+                if (response.ok) { 
+                    document.getElementById('deadlineReminder').textContent = `📅 Your Deadline: ${deadline}`; 
+                    form.style.display = 'none'; 
+                    document.getElementById('successMessage').classList.add('show'); 
+                } else { 
+                    throw new Error('Form submission failed'); 
+                }
             } catch (error) {
-                const mailtoLink = `mailto:accounting@mangoautomotive.com,jesse@mangoautomotive.com?subject=${encodeURIComponent(`${quarter} Development Commitment - ${name}`)}&body=${encodeURIComponent(emailBody)}`;
+                const mailtoLink = `mailto:accounting@mangoautomotive.com,jesse@mangoautomotive.com,mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com?subject=${encodeURIComponent(`${quarter} Development Commitment - ${name}`)}&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = mailtoLink;
-                setTimeout(() => { document.getElementById('deadlineReminder').textContent = `📅 Your Deadline: ${deadline}`; form.style.display = 'none'; document.getElementById('successMessage').classList.add('show'); }, 500);
+                setTimeout(() => { 
+                    document.getElementById('deadlineReminder').textContent = `📅 Your Deadline: ${deadline}`; 
+                    form.style.display = 'none'; 
+                    document.getElementById('successMessage').classList.add('show'); 
+                }, 500);
             }
             submitBtn.innerHTML = originalText;
         });
 
+        // Initialize
+        initFormatSelectors();
         updateSelectionCount();
+        filterCategories(''); // Start with no quarter selected
     </script>
 </body>
 </html>
