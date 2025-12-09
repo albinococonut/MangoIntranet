@@ -1,1 +1,401 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mango Kudos | Mango Automotive</title>
+    <link rel="icon" type="image/png" href="../favicon.png">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --mango: #E9A319;
+            --mango-light: #F5B942;
+            --mango-dark: #D4920F;
+            --leaf: #2E7D32;
+            --leaf-dark: #1B5E20;
+            --charcoal: #1a1a1a;
+            --dark: #2c2c2c;
+            --cream: #FFFBF5;
+            --warm-white: #FFF9F0;
+            --gray: #666;
+            --light-gray: #f5f5f5;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'DM Sans', sans-serif; background: var(--cream); color: var(--charcoal); line-height: 1.6; min-height: 100vh; }
+        
+        header { background: linear-gradient(135deg, var(--mango) 0%, var(--mango-light) 100%); color: white; padding: 40px 24px 60px; text-align: center; position: relative; overflow: hidden; }
+        header::before { content: ''; position: absolute; top: 0; left: 0; right: 0; bottom: 0; background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Ccircle cx='30' cy='30' r='4' fill='%23ffffff' fill-opacity='0.1'/%3E%3C/svg%3E"); background-size: 30px 30px; }
+        header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 5px; background: white; }
+        header > * { position: relative; z-index: 1; }
+        
+        .mia-container { margin-bottom: 20px; }
+        .mia-img { height: 120px; filter: drop-shadow(0 8px 24px rgba(0,0,0,0.15)); animation: wave 2s ease-in-out infinite; }
+        @keyframes wave {
+            0%, 100% { transform: rotate(-3deg); }
+            50% { transform: rotate(3deg); }
+        }
+        
+        h1 { font-family: 'Playfair Display', serif; font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 700; margin-bottom: 12px; text-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .header-subtitle { font-size: 1.2rem; max-width: 600px; margin: 0 auto; line-height: 1.7; }
+        
+        .reward-banner { background: white; color: var(--charcoal); padding: 16px 24px; text-align: center; font-weight: 600; font-size: 1rem; display: flex; align-items: center; justify-content: center; gap: 12px; flex-wrap: wrap; box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .reward-banner .amount { background: var(--mango); color: white; padding: 6px 14px; border-radius: 20px; font-size: 1.1rem; }
+        
+        main { max-width: 800px; margin: 0 auto; padding: 50px 24px; }
+        
+        .intro-card { background: white; border-radius: 20px; padding: 36px; margin-bottom: 32px; box-shadow: 0 4px 24px rgba(0,0,0,0.06); border-left: 6px solid var(--mango); }
+        .intro-card h2 { font-family: 'Playfair Display', serif; font-size: 1.5rem; color: var(--charcoal); margin-bottom: 16px; }
+        .intro-card p { color: var(--dark); margin-bottom: 16px; line-height: 1.8; }
+        .intro-card ul { margin-left: 24px; color: var(--dark); }
+        .intro-card li { margin-bottom: 10px; }
+        .intro-card li strong { color: var(--mango-dark); }
+        
+        .warning-box { background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%); border: 2px solid var(--mango); border-radius: 12px; padding: 20px; margin-top: 20px; }
+        .warning-box p { margin: 0; font-weight: 500; color: var(--charcoal); }
+        .warning-box strong { color: var(--mango-dark); }
+        
+        .form-container { background: white; border-radius: 24px; padding: 44px; box-shadow: 0 12px 48px rgba(0,0,0,0.08); }
+        
+        .form-section { margin-bottom: 36px; }
+        .form-section-title { font-family: 'Playfair Display', serif; font-size: 1.3rem; color: var(--charcoal); margin-bottom: 20px; padding-bottom: 12px; border-bottom: 3px solid var(--mango); display: flex; align-items: center; gap: 10px; }
+        .form-section-title .icon { font-size: 1.5rem; }
+        
+        .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 20px; }
+        .form-group { display: flex; flex-direction: column; }
+        
+        label { font-weight: 600; font-size: 0.85rem; color: var(--charcoal); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+        input, select, textarea { padding: 16px 18px; border: 2px solid #e8e8e8; border-radius: 12px; font-family: 'DM Sans', sans-serif; font-size: 1rem; transition: all 0.3s ease; background: var(--light-gray); }
+        input:focus, select:focus, textarea:focus { outline: none; border-color: var(--mango); background: white; box-shadow: 0 0 0 4px rgba(233, 163, 25, 0.15); }
+        
+        textarea { min-height: 200px; resize: vertical; line-height: 1.7; }
+        .char-count { text-align: right; font-size: 0.8rem; color: var(--gray); margin-top: 8px; }
+        .char-count.warning { color: #c62828; }
+        
+        .story-help { background: var(--light-gray); border-radius: 10px; padding: 16px; margin-top: 12px; font-size: 0.9rem; color: var(--gray); }
+        .story-help strong { color: var(--charcoal); display: block; margin-bottom: 8px; }
+        
+        .acknowledgment-section { background: linear-gradient(135deg, var(--warm-white) 0%, rgba(233, 163, 25, 0.1) 100%); border: 3px solid var(--mango); border-radius: 16px; padding: 28px; margin-top: 36px; position: relative; }
+        .acknowledgment-section::before { content: '✋ Before You Submit'; position: absolute; top: -14px; left: 24px; background: var(--mango); color: white; font-size: 0.75rem; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; padding: 6px 16px; border-radius: 20px; }
+        .acknowledgment-check { display: flex; align-items: flex-start; gap: 16px; cursor: pointer; margin-top: 8px; }
+        .acknowledgment-check input[type="checkbox"] { width: 26px; height: 26px; accent-color: var(--mango); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
+        .acknowledgment-text { font-size: 1rem; line-height: 1.7; color: var(--charcoal); }
+        
+        .submit-section { text-align: center; margin-top: 44px; }
+        .submit-btn { background: linear-gradient(135deg, var(--mango) 0%, var(--mango-dark) 100%); color: white; border: none; padding: 22px 70px; font-family: 'DM Sans', sans-serif; font-size: 1.15rem; font-weight: 700; border-radius: 50px; cursor: pointer; transition: all 0.3s ease; letter-spacing: 1px; text-transform: uppercase; box-shadow: 0 8px 28px rgba(233, 163, 25, 0.35); }
+        .submit-btn:hover { transform: translateY(-4px); box-shadow: 0 14px 40px rgba(233, 163, 25, 0.45); }
+        .submit-btn:disabled { background: #ccc; cursor: not-allowed; box-shadow: none; transform: none; color: #888; }
+        
+        .validation-message { margin-top: 16px; padding: 12px 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 8px; color: #856404; font-size: 0.9rem; display: none; text-align: left; }
+        .validation-message.show { display: block; }
+        
+        .success-message { display: none; text-align: center; padding: 60px 40px; }
+        .success-message.show { display: block; }
+        .success-mia { height: 150px; margin-bottom: 24px; animation: bounce 1s ease-in-out infinite; }
+        @keyframes bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-15px); }
+        }
+        .success-message h3 { font-family: 'Playfair Display', serif; font-size: 2.2rem; color: var(--charcoal); margin-bottom: 16px; }
+        .success-message p { color: var(--dark); max-width: 500px; margin: 0 auto 20px; line-height: 1.8; font-size: 1.05rem; }
+        .success-note { background: var(--light-gray); padding: 16px 24px; border-radius: 10px; display: inline-block; font-size: 0.95rem; color: var(--gray); }
+        
+        footer { background: var(--cream); color: var(--charcoal); padding: 36px; text-align: center; border-top: 3px solid var(--mango); }
+        footer p { opacity: 0.7; font-size: 0.9rem; }
+        
+        @media (max-width: 768px) {
+            header { padding: 32px 20px 50px; }
+            .mia-img { height: 100px; }
+            h1 { font-size: 1.8rem; }
+            .form-container { padding: 24px; }
+            .form-row { grid-template-columns: 1fr; }
+            .submit-btn { padding: 18px 40px; font-size: 1rem; }
+            .acknowledgment-section::before { font-size: 0.65rem; padding: 5px 12px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="mia-container">
+            <img src="../MIA_original_2x.png" alt="Mia Mango" class="mia-img">
+        </div>
+        <h1>Mango Kudos</h1>
+        <p class="header-subtitle">Recognize a teammate who went above and beyond — Mia style! 🥭</p>
+    </header>
+    
+    <div class="reward-banner">
+        <span>🏆 The best nominations are shared company-wide — and winners receive a</span>
+        <span class="amount">$50 Amazon Gift Card</span>
+    </div>
+    
+    <main>
+        <div class="intro-card">
+            <h2>What is Mango Kudos?</h2>
+            <p>This isn't for "good job" stuff. This is for the <strong>truly remarkable</strong> — the moments when someone goes so far above and beyond that you just have to tell everyone about it.</p>
+            <ul>
+                <li><strong>One nomination per year</strong> — Make it count!</li>
+                <li><strong>Tell the full story</strong> — We want the details</li>
+                <li><strong>Remarkable only</strong> — Not "did their job well," but "blew my mind"</li>
+            </ul>
+            <div class="warning-box">
+                <p>⚠️ <strong>This is NOT for everyday performance.</strong> Save your nomination for something that truly made you stop and say "wow." You only get one per year!</p>
+            </div>
+        </div>
+        
+        <div class="form-container">
+            <form id="kudosForm">
+                <div class="form-section">
+                    <div class="form-section-title"><span class="icon">👤</span> Your Information</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nominatorName">Your Name</label>
+                            <input type="text" id="nominatorName" name="nominatorName" required placeholder="First and Last Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="nominatorEmail">Your Email</label>
+                            <input type="email" id="nominatorEmail" name="nominatorEmail" required placeholder="you@mangoautomotive.com">
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nominatorLocation">Your Location</label>
+                            <select id="nominatorLocation" name="nominatorLocation" required>
+                                <option value="">Select your shop...</option>
+                                <option value="Cottonwood (Eagle Ranch)">Cottonwood (Eagle Ranch)</option>
+                                <option value="The Heights (Comanche)">The Heights (Comanche)</option>
+                                <option value="Downtown (Central Ave)">Downtown (Central Ave)</option>
+                                <option value="Las Cruces (Triviz Dr)">Las Cruces (Triviz Dr)</option>
+                                <option value="El Paso (Pellicano Dr)">El Paso (Pellicano Dr)</option>
+                                <option value="El Paso (Montana Ave)">El Paso (Montana Ave)</option>
+                                <option value="Yuma (Florence Ln)">Yuma (Florence Ln)</option>
+                                <option value="Corporate Team">Corporate Team</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="nominatorRole">Your Role</label>
+                            <select id="nominatorRole" name="nominatorRole" required>
+                                <option value="">Select your role...</option>
+                                <option value="Shop Manager">Shop Manager</option>
+                                <option value="Advisor">Advisor</option>
+                                <option value="Foreman">Foreman</option>
+                                <option value="Tech">Tech</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <div class="form-section-title"><span class="icon">⭐</span> Who Are You Nominating?</div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nomineeName">Their Name</label>
+                            <input type="text" id="nomineeName" name="nomineeName" required placeholder="First and Last Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="nomineeLocation">Their Location</label>
+                            <select id="nomineeLocation" name="nomineeLocation" required>
+                                <option value="">Select their shop...</option>
+                                <option value="Cottonwood (Eagle Ranch)">Cottonwood (Eagle Ranch)</option>
+                                <option value="The Heights (Comanche)">The Heights (Comanche)</option>
+                                <option value="Downtown (Central Ave)">Downtown (Central Ave)</option>
+                                <option value="Las Cruces (Triviz Dr)">Las Cruces (Triviz Dr)</option>
+                                <option value="El Paso (Pellicano Dr)">El Paso (Pellicano Dr)</option>
+                                <option value="El Paso (Montana Ave)">El Paso (Montana Ave)</option>
+                                <option value="Yuma (Florence Ln)">Yuma (Florence Ln)</option>
+                                <option value="Corporate Team">Corporate Team</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="nomineeRole">Their Role</label>
+                            <select id="nomineeRole" name="nomineeRole" required>
+                                <option value="">Select their role...</option>
+                                <option value="Shop Manager">Shop Manager</option>
+                                <option value="Advisor">Advisor</option>
+                                <option value="Foreman">Foreman</option>
+                                <option value="Tech">Tech</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="form-section">
+                    <div class="form-section-title"><span class="icon">📝</span> Tell Us What Happened</div>
+                    <div class="form-group">
+                        <label for="story">The Full Story</label>
+                        <textarea id="story" name="story" required placeholder="Describe in detail what this person did that was truly remarkable. What was the situation? What did they do? Why was it above and beyond?"></textarea>
+                        <div class="char-count" id="charCount">0 / 100 minimum characters</div>
+                    </div>
+                    <div class="story-help">
+                        <strong>💡 What makes a great nomination?</strong>
+                        Be specific! Include the situation, what they did, and why it mattered. "They helped a customer" isn't enough — tell us HOW they helped, what made it special, and the impact it had.
+                    </div>
+                </div>
+                
+                <div class="acknowledgment-section">
+                    <label class="acknowledgment-check">
+                        <input type="checkbox" id="acknowledgment" required>
+                        <span class="acknowledgment-text">
+                            I understand this is my <strong>one nomination for the year</strong>, and I'm nominating someone for something <strong>truly remarkable</strong> — not just good everyday work.
+                        </span>
+                    </label>
+                </div>
+                
+                <div class="submit-section">
+                    <button type="submit" class="submit-btn" id="submitBtn" disabled>Send Kudos 🥭</button>
+                    <div class="validation-message" id="validationMessage"></div>
+                </div>
+            </form>
+            
+            <div class="success-message" id="successMessage">
+                <img src="../MIA_original_2x.png" alt="Mia Mango celebrating" class="success-mia">
+                <h3>Kudos Sent! 🎉</h3>
+                <p>Thanks for recognizing a teammate! Your nomination has been submitted for review.</p>
+                <p>The best nominations will be shared company-wide, and the top ones each quarter receive a $50 Amazon gift card!</p>
+                <div class="success-note">Remember: This was your one nomination for the year. Make sure to celebrate your teammate in person too!</div>
+            </div>
+        </div>
+    </main>
+    
+    <footer>
+        <p>© 2025 Mango Automotive — Mango Kudos</p>
+    </footer>
+    
+    <script>
+        const form = document.getElementById('kudosForm');
+        const submitBtn = document.getElementById('submitBtn');
+        const acknowledgment = document.getElementById('acknowledgment');
+        const story = document.getElementById('story');
+        const charCount = document.getElementById('charCount');
+        const validationMessage = document.getElementById('validationMessage');
+        const MIN_CHARS = 100;
+        
+        // Character count
+        story.addEventListener('input', function() {
+            const count = this.value.length;
+            charCount.textContent = `${count} / ${MIN_CHARS} minimum characters`;
+            if (count < MIN_CHARS) {
+                charCount.classList.add('warning');
+            } else {
+                charCount.classList.remove('warning');
+            }
+            validateForm();
+        });
+        
+        acknowledgment.addEventListener('change', validateForm);
+        
+        // Validate all required fields
+        const requiredFields = form.querySelectorAll('[required]');
+        requiredFields.forEach(field => {
+            field.addEventListener('input', validateForm);
+            field.addEventListener('change', validateForm);
+        });
+        
+        function validateForm() {
+            const messages = [];
+            
+            // Check all required fields
+            let allFilled = true;
+            requiredFields.forEach(field => {
+                if (!field.value || (field.type === 'checkbox' && !field.checked)) {
+                    allFilled = false;
+                }
+            });
+            
+            if (!allFilled) {
+                messages.push('Fill out all required fields');
+            }
+            
+            if (story.value.length < MIN_CHARS) {
+                messages.push(`Story must be at least ${MIN_CHARS} characters (currently ${story.value.length})`);
+            }
+            
+            if (!acknowledgment.checked) {
+                messages.push('Check the acknowledgment box');
+            }
+            
+            if (messages.length > 0) {
+                validationMessage.innerHTML = '⚠️ ' + messages.join('<br>⚠️ ');
+                validationMessage.classList.add('show');
+                submitBtn.disabled = true;
+            } else {
+                validationMessage.classList.remove('show');
+                submitBtn.disabled = false;
+            }
+        }
+        
+        form.addEventListener('submit', async function(e) {
+            e.preventDefault();
+            
+            const nominatorName = document.getElementById('nominatorName').value;
+            const nominatorEmail = document.getElementById('nominatorEmail').value;
+            const nominatorLocation = document.getElementById('nominatorLocation').value;
+            const nominatorRole = document.getElementById('nominatorRole').value;
+            const nomineeName = document.getElementById('nomineeName').value;
+            const nomineeLocation = document.getElementById('nomineeLocation').value;
+            const nomineeRole = document.getElementById('nomineeRole').value;
+            const storyText = story.value;
+            
+            submitBtn.innerHTML = 'Sending... ⏳';
+            submitBtn.disabled = true;
+            
+            const emailBody = `🥭 MANGO KUDOS NOMINATION
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
+NOMINATED BY:
+Name: ${nominatorName}
+Email: ${nominatorEmail}
+Location: ${nominatorLocation}
+Role: ${nominatorRole}
+
+NOMINEE:
+Name: ${nomineeName}
+Location: ${nomineeLocation}
+Role: ${nomineeRole}
+
+THE STORY:
+${storyText}
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+Submitted: ${new Date().toLocaleString()}`;
+            
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de',
+                        subject: `🥭 Mango Kudos: ${nomineeName} nominated by ${nominatorName}`,
+                        from_name: 'Mango Kudos',
+                        to: 'mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com',
+                        cc: 'hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com',
+                        message: emailBody,
+                        replyto: nominatorEmail
+                    })
+                });
+                
+                if (response.ok) {
+                    form.style.display = 'none';
+                    document.getElementById('successMessage').classList.add('show');
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com?subject=${encodeURIComponent(`🥭 Mango Kudos: ${nomineeName} nominated by ${nominatorName}`)}&body=${encodeURIComponent(emailBody)}`;
+                window.location.href = mailtoLink;
+                setTimeout(() => {
+                    form.style.display = 'none';
+                    document.getElementById('successMessage').classList.add('show');
+                }, 500);
+            }
+        });
+        
+        // Initial validation
+        validateForm();
+    </script>
+</body>
+</html>
