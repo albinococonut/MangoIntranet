@@ -156,17 +156,6 @@
         </div>
         <div class="form-container">
             <form id="selectionForm">
-                <div class="quarter-selector">
-                    <label for="quarter">🗓️ Select Your Quarter</label>
-                    <select id="quarter" name="quarter" required>
-                        <option value="" data-theme="" data-deadline="" selected>Select a Quarter...</option>
-                        <option value="Q1 2026" data-theme="Mindset & Optimism" data-deadline="March 31, 2026">Q1 2026 — Mindset & Optimism</option>
-                        <option value="Q2 2026" data-theme="Ownership & Accountability" data-deadline="June 30, 2026">Q2 2026 — Ownership & Accountability</option>
-                        <option value="Q3 2026" data-theme="Vision & Impact" data-deadline="September 30, 2026">Q3 2026 — Vision & Impact</option>
-                        <option value="Q4 2026" data-theme="Action & Execution" data-deadline="December 31, 2026">Q4 2026 — Action & Execution</option>
-                    </select>
-                    <div class="quarter-theme" id="quarterTheme">Select a quarter above to see the theme and available books</div>
-                </div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">Your Name</label>
@@ -205,11 +194,22 @@
                         </select>
                     </div>
                 </div>
+                <div class="quarter-selector">
+                    <label for="quarter">🗓️ Select Your Quarter</label>
+                    <select id="quarter" name="quarter" required>
+                        <option value="" data-theme="" data-deadline="" selected>Select a Quarter...</option>
+                        <option value="Q1 2026" data-theme="Mindset & Optimism" data-deadline="March 31, 2026">Q1 2026 — Mindset & Optimism</option>
+                        <option value="Q2 2026" data-theme="Ownership & Accountability" data-deadline="June 30, 2026">Q2 2026 — Ownership & Accountability</option>
+                        <option value="Q3 2026" data-theme="Vision & Impact" data-deadline="September 30, 2026">Q3 2026 — Vision & Impact</option>
+                        <option value="Q4 2026" data-theme="Action & Execution" data-deadline="December 31, 2026">Q4 2026 — Action & Execution</option>
+                    </select>
+                    <div class="quarter-theme" id="quarterTheme">Select a quarter to filter books by theme</div>
+                </div>
                 <div class="resources-section">
                     <h4 class="section-title">Build Your Learning Path</h4>
                     <p class="section-subtitle">Choose <strong>at least one resource</strong> — or stack multiple for maximum growth! 🚀</p>
                     
-                    <div id="selectQuarterPrompt" class="select-quarter-prompt">
+                    <div id="selectQuarterPrompt" class="select-quarter-prompt" style="display:none;">
                         👆 Please select a quarter above to see available books
                     </div>
 
@@ -220,7 +220,7 @@
 
                     <div id="categoriesContainer">
                         <!-- Q1: MINDSET & OPTIMISM -->
-                        <div class="category-section hidden" data-theme="Mindset & Optimism">
+                        <div class="category-section" data-theme="Mindset & Optimism">
                             <div class="category-header active">🧠 Q1: Mindset & Optimism</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
@@ -311,7 +311,7 @@
                         </div>
 
                         <!-- Q2: OWNERSHIP & ACCOUNTABILITY -->
-                        <div class="category-section hidden" data-theme="Ownership & Accountability">
+                        <div class="category-section" data-theme="Ownership & Accountability">
                             <div class="category-header">💪 Q2: Ownership & Accountability</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
@@ -388,7 +388,7 @@
                         </div>
 
                         <!-- Q3: VISION & IMPACT -->
-                        <div class="category-section hidden" data-theme="Vision & Impact">
+                        <div class="category-section" data-theme="Vision & Impact">
                             <div class="category-header">🎯 Q3: Vision & Impact</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
@@ -465,7 +465,7 @@
                         </div>
 
                         <!-- Q4: ACTION & EXECUTION -->
-                        <div class="category-section hidden" data-theme="Action & Execution">
+                        <div class="category-section" data-theme="Action & Execution">
                             <div class="category-header">🚀 Q4: Action & Execution</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
@@ -757,19 +757,15 @@
             headers.forEach(h => h.classList.remove('active'));
             
             if (!selectedTheme) {
-                // No quarter selected - hide all book sections, show prompt
+                // No quarter selected - show ALL books
                 sections.forEach(section => {
-                    if (section.dataset.theme !== 'Courses') {
-                        section.classList.add('hidden');
-                    }
+                    section.classList.remove('hidden');
                 });
-                selectQuarterPrompt.style.display = 'block';
                 showAllSection.classList.add('hidden');
                 return;
             }
             
-            // Quarter selected - hide prompt, show "show all" section
-            selectQuarterPrompt.style.display = 'none';
+            // Quarter selected - show "show all" section
             showAllSection.classList.remove('hidden');
             quarterThemeText.textContent = selectedTheme;
             
@@ -828,7 +824,7 @@
             if (theme) {
                 quarterTheme.innerHTML = `This Quarter's Focus: <strong>${theme}</strong> — ${themeDescriptions[theme]}`;
             } else {
-                quarterTheme.textContent = 'Select a quarter above to see the theme and available books';
+                quarterTheme.textContent = 'Selecting a quarter will filter books to that theme';
             }
             
             filterCategories(theme, false);
@@ -847,7 +843,7 @@
             validateForm();
         }
 
-        // Handle checkbox changes - show/hide format selector
+        // Handle checkbox changes - show/hide format selector, auto-select Audible
         categoriesContainer.addEventListener('change', function(e) {
             if (e.target.name === 'selections') {
                 const checkbox = e.target;
@@ -855,7 +851,15 @@
                 
                 if (checkbox.value.startsWith('Book:')) {
                     if (checkbox.checked) {
-                        if (formatSelector) formatSelector.style.display = 'flex';
+                        if (formatSelector) {
+                            formatSelector.style.display = 'flex';
+                            // Auto-select Audible as default
+                            const audibleBtn = formatSelector.querySelector('[data-format="audible"]');
+                            if (audibleBtn && !bookFormats[checkbox.value]) {
+                                audibleBtn.classList.add('selected');
+                                bookFormats[checkbox.value] = 'audible';
+                            }
+                        }
                     } else {
                         if (formatSelector) {
                             formatSelector.style.display = 'none';
@@ -968,7 +972,7 @@
         // Initialize
         initFormatSelectors();
         updateSelectionCount();
-        filterCategories(''); // Start with no quarter selected
+        // All books visible by default, no filtering needed initially
     </script>
 </body>
 </html>
