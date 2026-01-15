@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Employee Development Program | Mango Automotive</title>
+    <title>Mango University | Mango Automotive</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700&display=swap" rel="stylesheet">
@@ -180,7 +180,7 @@
 <body>
     <header>
         <img src="../logo.png" alt="Mango Automotive" class="logo-img">
-        <h1>Employee Development Program</h1>
+        <h1>Mango University</h1>
         <p class="header-subtitle">Great leaders aren't born — they're built. <strong>We're investing in YOU</strong> with world-class books and courses to unlock your full potential.</p>
     </header>
     <div class="highlight-banner">🎯 100% Company-Funded · <span>You bring the dedication, we cover everything else</span></div>
@@ -703,7 +703,7 @@
             </div>
         </div>
     </main>
-    <footer><p>© 2025 Mango Automotive — Employee Development Program</p></footer>
+    <footer><p>© 2025 Mango Automotive — Mango University</p></footer>
     
     <!-- Confirmation Modal -->
     <div class="confirmation-overlay" id="confirmationOverlay">
@@ -1068,7 +1068,7 @@
             confirmBtn.innerHTML = 'Submitting... ⏳';
             confirmBtn.disabled = true;
             const emailBody = `🎯 ${quarter.toUpperCase()} EMPLOYEE DEVELOPMENT COMMITMENT\nTheme: ${theme}\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\n\nTEAM MEMBER INFORMATION\nName: ${name}\nEmail: ${email}\nLocation: ${location}\nRole: ${role}\n\nSELECTED RESOURCE(S):\n• ${selectionsForEmail.join('\n\n• ')}\n\nCOMMITMENT CONFIRMED ✓\nDeadline: ${deadline}\n\n━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━\nSubmitted: ${new Date().toLocaleString()}`;
-            const userEmailBody = `Hi ${name.split(' ')[0]}! 🎉\n\nYou're officially enrolled in the Mango Automotive Employee Development Program for ${quarter}!\n\nYOUR COMMITMENT:\n• ${selectionsForUser.join('\n• ')}\n\nDEADLINE: ${deadline}\n\nYour resources will be ordered within 48 hours.\n\nLet's grow together,\nMango Automotive Leadership Team`;
+            const userEmailBody = `Hi ${name.split(' ')[0]}! 🎉\n\nYou're officially enrolled in the Mango Automotive Mango University for ${quarter}!\n\nYOUR COMMITMENT:\n• ${selectionsForUser.join('\n• ')}\n\nDEADLINE: ${deadline}\n\nYour resources will be ordered within 48 hours.\n\nLet's grow together,\nMango Automotive Leadership Team`;
             try {
                 const response = await fetch('https://api.web3forms.com/submit', {
                     method: 'POST',
@@ -1076,7 +1076,7 @@
                     body: JSON.stringify({ 
                         access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de', 
                         subject: `${quarter} Development Commitment - ${name} (${location})`, 
-                        from_name: 'Employee Development Program', 
+                        from_name: 'Mango University', 
                         to: 'mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com', 
                         cc: 'bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com', 
                         message: emailBody, 
