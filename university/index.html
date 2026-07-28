@@ -69,15 +69,14 @@
             --font-ui: 'Inter', -apple-system, system-ui, sans-serif;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        header, main, footer, .highlight-banner { position: relative; z-index: 1; }
+        header, main, footer { position: relative; z-index: 1; }
         body { font-family: var(--font-ui); background: var(--cream); color: var(--ink); line-height: 1.6; min-height: 100vh; }
-        header { color: var(--ink); padding: 36px 24px 30px; text-align: center; position: relative; border-bottom: none; backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); background-image: linear-gradient(90deg, transparent, rgba(232,134,62,0.45), transparent), linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82)); background-repeat: no-repeat, no-repeat; background-position: bottom, top; background-size: 100% 1px, 100% 100%; }
-        .logo-img { height: 80px; margin-bottom: 24px; }
+        header { color: var(--ink); padding: 18px 24px; text-align: left; position: relative; border-bottom: none; backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); background-image: linear-gradient(90deg, transparent, rgba(232,134,62,0.45), transparent), linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82)); background-repeat: no-repeat, no-repeat; background-position: bottom, top; background-size: 100% 1px, 100% 100%; }
+        .logo-img { height: 64px; margin: 0; flex-shrink: 0; }
+        .header-row { max-width: 1000px; margin: 0 auto; display: flex; align-items: center; gap: 18px; }
         h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.02em; margin-bottom: 16px; color: var(--ink); }
-        .header-subtitle { font-size: 1.1rem; max-width: 650px; margin: 0 auto; line-height: 1.7; color: var(--ink-soft); }
+        .header-subtitle { font-size: 0.92rem; max-width: none; margin: 4px 0 0; line-height: 1.7; color: var(--ink-soft); }
         .header-subtitle strong { color: var(--accent); font-weight: 600; }
-        .highlight-banner { max-width: 1000px; width: calc(100% - 48px); margin: 8px auto 0; border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); color: var(--ink); padding: 16px 24px; text-align: center; font-weight: 500; font-size: 0.95rem; letter-spacing: 0.01em; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; }
-        .highlight-banner span { color: var(--ink); }
         .kicker { font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
         .dot-pill { display: inline-flex; align-items: center; gap: 8px; border-radius: 9999px; padding: 6px 14px; background: rgba(255,255,255,0.6); font-size: 11px; font-weight: 500; letter-spacing: 0.01em; white-space: nowrap; }
         .dot-pill::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
@@ -117,14 +116,19 @@
         .category-section.hidden { display: none; }
         .category-header { background: rgba(34,32,28,0.05); border: 1px solid rgba(34,32,28,0.08); padding: 10px 20px; border-radius: 9999px; margin-bottom: 16px; font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-soft); }
         .category-header.active { background: #fff; border-color: rgba(34,32,28,0.08); color: var(--ink); box-shadow: 0 1px 4px rgba(40,34,26,0.12); }
+        .category-header::before { content: ''; display: inline-block; width: 7px; height: 7px; border-radius: 50%; background: #9AA7AE; margin-right: 10px; vertical-align: 1px; }
+        .category-section[data-theme="Mindset & Optimism"] .category-header::before { background: #3E9CB0; }
+        .category-section[data-theme="Ownership & Growth"] .category-header::before { background: #3E8E5E; }
+        .category-section[data-theme="Vision & Impact"] .category-header::before { background: #5FA9D6; }
+        .category-section[data-theme="Action & Execution"] .category-header::before { background: #C97A1F; }
         .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
         .resource-grid > .resource-option:nth-child(odd):last-child { grid-column: 1 / -1; }
         .resource-option { position: relative; }
         .resource-option input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
         .resource-card { border-radius: 16px; background: rgba(255,255,255,0.55); border: 0.56px solid rgba(34,32,28,0.08); padding: 16px; cursor: pointer; transition: all 0.3s ease; height: 100%; display: flex; gap: 16px; position: relative; }
         .resource-card:hover { border-color: rgba(232,134,62,0.5); transform: translateY(-4px); box-shadow: 0 1px 0 rgba(255,255,255,0.95) inset, 0 24px 56px -28px rgba(40,34,26,0.28), 0 2px 8px -4px rgba(40,34,26,0.08); }
-        .resource-option input:checked + .resource-card { border-color: var(--accent); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,247,240,0.88)); box-shadow: 0 1px 0 rgba(255,255,255,0.95) inset, 0 18px 48px -28px rgba(232,134,62,0.4), 0 2px 8px -4px rgba(40,34,26,0.08); }
-        .resource-option input:checked + .resource-card::after { content: '✓'; position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; }
+        .resource-option input:checked + .resource-card { border-color: #3E8E5E; background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(244,250,246,0.9)); box-shadow: 0 1px 0 rgba(255,255,255,0.95) inset, 0 18px 48px -28px rgba(62,142,94,0.4), 0 2px 8px -4px rgba(40,34,26,0.08); }
+        .resource-option input:checked + .resource-card::after { content: '✓'; position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; background: #3E8E5E; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; }
         .book-cover-link { flex-shrink: 0; transition: transform 0.2s ease; }
         .book-cover-link:hover { transform: scale(1.05); }
         .book-cover { width: 85px; height: 128px; border-radius: 10px; box-shadow: 0 10px 24px -10px rgba(40,34,26,0.35); object-fit: cover; background: linear-gradient(135deg, #f2a86e 0%, var(--accent) 100%); }
@@ -152,7 +156,7 @@
         .counter-success { color: #3E8E5E; background: rgba(255,255,255,0.6); border: 0.56px solid rgba(62,142,94,0.33); border-radius: 9999px; padding: 6px 14px; font-size: 0.8rem; font-weight: 500; }
         .counter-success::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 8px; vertical-align: 1px; }
         .commitment-section { background: rgba(232,134,62,0.07); border: 1px solid rgba(232,134,62,0.30); border-radius: 20px; padding: 28px; margin-top: 36px; position: relative; }
-        .commitment-section::before { content: 'Your Pledge'; position: absolute; top: -14px; left: 24px; background: #FBF7F0; color: #B5631F; border: 0.56px solid rgba(181,99,31,0.333); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; padding: 6px 16px; border-radius: 9999px; }
+        .commitment-section::before { content: 'Step 4 · Your Pledge'; position: absolute; top: -14px; left: 24px; background: #FBF7F0; color: #B5631F; border: 0.56px solid rgba(181,99,31,0.333); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; padding: 6px 16px; border-radius: 9999px; }
         .commitment-check { display: flex; align-items: flex-start; gap: 16px; cursor: pointer; margin-top: 8px; text-transform: none; letter-spacing: normal; font-size: 1rem; font-weight: 400; color: var(--ink); }
         .commitment-check input[type="checkbox"] { width: 26px; height: 26px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
         .commitment-text { font-size: 1rem; line-height: 1.7; color: var(--ink); }
@@ -241,19 +245,21 @@
 <body class="theme-luxury">
     <div class="bg-orbs" aria-hidden="true"><div class="orb orb-blue"></div><div class="orb orb-gold"></div><div class="orb orb-amber"></div><div class="orb orb-teal"></div></div>
     <header>
-        <img src="../mango-badge-logo.png" alt="Mango Automotive - Stay Tuned Up badge" class="logo-img">
-        <div class="kicker">Employee Development</div>
-        <h1>Mango University</h1>
-        <p class="header-subtitle">Great leaders aren't born — they're built. <strong>We're investing in YOU</strong> with world-class books to unlock your full potential.</p>
+        <div class="header-row">
+            <img src="../mango-badge-logo.png" alt="Mango Automotive - Stay Tuned Up badge" class="logo-img">
+            <div class="header-text">
+                <h1>Mango University</h1>
+                <p class="header-subtitle">Great leaders aren't born — they're built. <strong>We're investing in YOU</strong> with world-class books to unlock your full potential. <span class="dot-pill dot-pill-green">100% Company-Funded</span></p>
+            </div>
+        </div>
     </header>
-    <div class="highlight-banner"><span class="dot-pill dot-pill-green">100% Company-Funded</span> <span>You bring the dedication, we cover everything else</span></div>
     <main>
         <div class="instructions">
             <div class="kicker">How It Works</div>
             <h2>Here's How It Works</h2>
             <ol>
-                <li><strong>Pick your quarter</strong> — Each quarter focuses on a different leadership superpower.</li>
                 <li><strong>Tell us who you are</strong> — Name, email, location, and role.</li>
+                <li><strong>Pick your quarter</strong> — Each quarter focuses on a different leadership superpower.</li>
                 <li><strong>Choose at least one book</strong> — or stack multiple. Go all-in on your growth.</li>
                 <li><strong>Make it official</strong> — Check the commitment box and hit submit.</li>
                 <li><strong>Watch your mailbox</strong> — You'll receive a confirmation email, and your resources will be on the way!</li>
@@ -264,6 +270,7 @@
         </div>
         <div class="form-container">
             <form id="selectionForm">
+                <div class="kicker">Step 1 · Who You Are</div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">Your Name</label>
@@ -301,6 +308,7 @@
                     </div>
                 </div>
                 <div class="quarter-selector watercolor-wash">
+                    <div class="kicker">Step 2 · Pick Your Focus</div>
                     <label for="quarter">What Do You Want to Focus On?</label>
                     <select id="quarter" name="quarter" required>
                         <option value="Q1 2026" data-theme="Mindset & Optimism" data-deadline="March 31, 2026">Mindset & Optimism (Q1 2026)</option>
@@ -311,7 +319,7 @@
                     <div class="quarter-note">You can select books from any quarter, but we recommend focusing on one theme.</div>
                 </div>
                 <div class="resources-section">
-                    <div class="kicker">This Quarter</div>
+                    <div class="kicker">Step 3 · Choose Your Books</div>
                     <h4 class="section-title">Build Your Learning Path</h4>
                     <p class="section-subtitle">Choose <strong>at least one resource</strong> — or stack multiple for maximum growth!</p>
                     

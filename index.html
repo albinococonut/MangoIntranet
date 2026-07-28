@@ -284,7 +284,7 @@
             left: 0;
             right: 0;
             height: 3px;
-            background: #E8863E;
+            background: #3E9CB0;
             transform: scaleX(0);
             transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
@@ -298,8 +298,19 @@
             box-shadow:
                 0 12px 24px rgba(40,34,26,0.10),
                 0 4px 8px rgba(40,34,26,0.06);
-            border-color: rgba(232, 134, 62, 0.45);
+            border-color: rgba(62, 156, 176, 0.5);
         }
+
+        /* Rotate highlight colors through the spec'd palette so no two
+           neighboring tiles share the same accent */
+        .link-card:nth-child(5n+2)::before { background: #3E8E5E; }
+        .link-card:nth-child(5n+2):hover { border-color: rgba(62, 142, 94, 0.5); }
+        .link-card:nth-child(5n+3)::before { background: #C97A1F; }
+        .link-card:nth-child(5n+3):hover { border-color: rgba(201, 122, 31, 0.5); }
+        .link-card:nth-child(5n+4)::before { background: #9AA7AE; }
+        .link-card:nth-child(5n+4):hover { border-color: rgba(154, 167, 174, 0.6); }
+        .link-card:nth-child(5n)::before { background: #C05A2E; }
+        .link-card:nth-child(5n):hover { border-color: rgba(192, 90, 46, 0.5); }
 
         .link-card.featured {
             background: rgba(255,255,255,0.6);
