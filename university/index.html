@@ -1094,7 +1094,7 @@
                         subject: `${quarter} Development Commitment - ${name} (${location})`, 
                         from_name: 'Mango University', 
                         to: 'mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com', 
-                        cc: 'bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com,dream-team-aaaajyheabbgclpgjouich6zgm@mangoautomotive.slack.com',
+                        cc: 'bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com',
                         message: emailBody, 
                         replyto: email 
                     })
@@ -1120,7 +1120,7 @@
                     throw new Error('Form submission failed'); 
                 }
             } catch (error) {
-                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com,dream-team-aaaajyheabbgclpgjouich6zgm@mangoautomotive.slack.com?subject=${encodeURIComponent(`${quarter} Development Commitment - ${name}`)}&body=${encodeURIComponent(emailBody)}`;
+                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com?subject=${encodeURIComponent(`${quarter} Development Commitment - ${name}`)}&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = mailtoLink;
                 setTimeout(() => { 
                     document.getElementById('deadlineReminder').textContent = `📅 Your Deadline: ${deadline}`; 

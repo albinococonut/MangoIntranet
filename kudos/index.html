@@ -430,7 +430,7 @@ Submitted: ${new Date().toLocaleString()}`;
                         subject: `🥭 Mango Kudos: ${nomineeName} nominated by ${nominatorName}`,
                         from_name: 'Mango Kudos',
                         to: 'mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com',
-                        cc: 'hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com,dream-team-aaaajyheabbgclpgjouich6zgm@mangoautomotive.slack.com',
+                        cc: 'hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com',
                         message: emailBody,
                         replyto: nominatorEmail
                     })
@@ -443,7 +443,7 @@ Submitted: ${new Date().toLocaleString()}`;
                     throw new Error('Submission failed');
                 }
             } catch (error) {
-                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com,dream-team-aaaajyheabbgclpgjouich6zgm@mangoautomotive.slack.com?subject=${encodeURIComponent(`🥭 Mango Kudos: ${nomineeName} nominated by ${nominatorName}`)}&body=${encodeURIComponent(emailBody)}`;
+                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com?subject=${encodeURIComponent(`🥭 Mango Kudos: ${nomineeName} nominated by ${nominatorName}`)}&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = mailtoLink;
                 setTimeout(() => {
                     form.style.display = 'none';
