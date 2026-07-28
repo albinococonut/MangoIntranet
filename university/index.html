@@ -237,7 +237,7 @@
         <img src="../mango-badge-logo.png" alt="Mango Automotive - Stay Tuned Up badge" class="logo-img">
         <div class="kicker">Employee Development</div>
         <h1>Mango University</h1>
-        <p class="header-subtitle">Great leaders aren't born — they're built. <strong>We're investing in YOU</strong> with world-class books and courses to unlock your full potential.</p>
+        <p class="header-subtitle">Great leaders aren't born — they're built. <strong>We're investing in YOU</strong> with world-class books to unlock your full potential.</p>
     </header>
     <div class="highlight-banner"><span class="dot-pill dot-pill-green">100% Company-Funded</span> <span>You bring the dedication, we cover everything else</span></div>
     <main>
@@ -247,7 +247,7 @@
             <ol>
                 <li><strong>Pick your quarter</strong> — Each quarter focuses on a different leadership superpower.</li>
                 <li><strong>Tell us who you are</strong> — Name, email, location, and role.</li>
-                <li><strong>Choose at least one resource</strong> — Books, online courses, or both! Go all-in on your growth.</li>
+                <li><strong>Choose at least one book</strong> — or stack multiple. Go all-in on your growth.</li>
                 <li><strong>Make it official</strong> — Check the commitment box and hit submit.</li>
                 <li><strong>Watch your mailbox</strong> — You'll receive a confirmation email, and your resources will be on the way!</li>
             </ol>
@@ -665,71 +665,6 @@
                         </div>
 
                         <!-- ONLINE COURSES - Always visible -->
-                        <div class="category-section" data-theme="Courses">
-                            <div class="category-header">Online Courses — All Quarters</div>
-                            <div class="resource-grid">
-                                <label class="resource-option">
-                                    <input type="checkbox" name="selections" value="Course: Cultivating a Growth Mindset (LinkedIn Learning) - ~$40/mo subscription" data-url="https://www.linkedin.com/learning/cultivating-a-growth-mindset">
-                                    <div class="resource-card">
-                                        <div class="course-cover-wrapper">
-                                            <div class="course-cover linkedin"><div class="icon">💼</div><span>LinkedIn<br>Learning</span></div>
-                                            <a href="https://www.linkedin.com/learning/cultivating-a-growth-mindset" target="_blank" class="view-course-link" onclick="event.stopPropagation();">View Course →</a>
-                                        </div>
-                                        <div class="resource-info">
-                                            <span class="resource-type">Course — ~$40/mo</span>
-                                            <div class="resource-title">Cultivating a Growth Mindset</div>
-                                            <div class="resource-author">Gemma Leigh Roberts • LinkedIn Learning</div>
-                                            <p class="resource-description">Apply Carol Dweck's research to your leadership. ~1 hour.</p>
-                                        </div>
-                                    </div>
-                                </label>
-                                <label class="resource-option">
-                                    <input type="checkbox" name="selections" value="Course: Foundations of Positive Psychology - UPenn (Coursera) - Free to audit or ~$49/course" data-url="https://www.coursera.org/specializations/positivepsychology">
-                                    <div class="resource-card">
-                                        <div class="course-cover-wrapper">
-                                            <div class="course-cover coursera"><div class="icon">🎓</div><span>UPenn<br>Coursera</span></div>
-                                            <a href="https://www.coursera.org/specializations/positivepsychology" target="_blank" class="view-course-link" onclick="event.stopPropagation();">View Course →</a>
-                                        </div>
-                                        <div class="resource-info">
-                                            <span class="resource-type">Course — Free to Audit</span>
-                                            <div class="resource-title">Foundations of Positive Psychology</div>
-                                            <div class="resource-author">Dr. Martin Seligman • UPenn</div>
-                                            <p class="resource-description">From the founder of positive psychology. 5-course specialization.</p>
-                                        </div>
-                                    </div>
-                                </label>
-                                <label class="resource-option">
-                                    <input type="checkbox" name="selections" value="Course: Inspiring and Motivating Individuals - University of Michigan (Coursera) - Free to audit or ~$49/course" data-url="https://www.coursera.org/learn/motivate-people-teams">
-                                    <div class="resource-card">
-                                        <div class="course-cover-wrapper">
-                                            <div class="course-cover coursera"><div class="icon">🎓</div><span>U of Michigan<br>Coursera</span></div>
-                                            <a href="https://www.coursera.org/learn/motivate-people-teams" target="_blank" class="view-course-link" onclick="event.stopPropagation();">View Course →</a>
-                                        </div>
-                                        <div class="resource-info">
-                                            <span class="resource-type">Course — Free to Audit</span>
-                                            <div class="resource-title">Inspiring & Motivating Individuals</div>
-                                            <div class="resource-author">University of Michigan</div>
-                                            <p class="resource-description">Part of Leading People & Teams specialization. ~4 weeks.</p>
-                                        </div>
-                                    </div>
-                                </label>
-                                <label class="resource-option">
-                                    <input type="checkbox" name="selections" value="Course: The Science of Well-Being - Yale University (Coursera, Free)" data-url="https://www.coursera.org/learn/the-science-of-well-being">
-                                    <div class="resource-card">
-                                        <div class="course-cover-wrapper">
-                                            <div class="course-cover yale"><div class="icon">🎓</div><span>Yale<br>Coursera</span></div>
-                                            <a href="https://www.coursera.org/learn/the-science-of-well-being" target="_blank" class="view-course-link" onclick="event.stopPropagation();">View Course →</a>
-                                        </div>
-                                        <div class="resource-info">
-                                            <span class="resource-type">Course — 100% Free</span>
-                                            <div class="resource-title">The Science of Well-Being</div>
-                                            <div class="resource-author">Prof. Laurie Santos • Yale</div>
-                                            <p class="resource-description">Yale's most popular course ever. 4M+ learners. ~19 hours, self-paced.</p>
-                                        </div>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
                     </div>
 
                     <div class="selection-counter watercolor-wash">
@@ -905,7 +840,7 @@
             } else {
                 // Show only the selected quarter's books and courses
                 sections.forEach(section => {
-                    if (section.dataset.theme === selectedTheme || section.dataset.theme === 'Courses') {
+                    if (section.dataset.theme === selectedTheme) {
                         section.classList.remove('hidden');
                         if (section.dataset.theme === selectedTheme) {
                             section.querySelector('.category-header').classList.add('active');
