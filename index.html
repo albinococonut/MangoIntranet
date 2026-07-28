@@ -433,11 +433,13 @@
 
         /* Team Appreciation Callout */
         .appreciation-section {
-            background: #E8863E;
-            color: white;
+            background: radial-gradient(135% 160% at 28% -10%, rgba(232,134,62,0.50), rgba(232,134,62,0.16) 70%, rgba(232,134,62,0.08));
+            color: #22201C;
             padding: 48px 40px;
             border-radius: 26px;
-            box-shadow: 0 18px 48px -28px rgba(40,34,26,0.30);
+            box-shadow:
+                inset 0 0 0 1px rgba(232,134,62,0.28),
+                0 18px 48px -28px rgba(40,34,26,0.22);
             margin-bottom: 48px;
             position: relative;
             overflow: hidden;
@@ -450,7 +452,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="white" opacity="0.1"/></svg>');
+            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="%2322201C" opacity="0.04"/></svg>');
             opacity: 0.3;
         }
 
@@ -468,7 +470,7 @@
             text-transform: uppercase;
             letter-spacing: 0.18em;
             margin-bottom: 20px;
-            opacity: 0.9;
+            color: #C97A1F;
         }
 
         .appreciation-message {
@@ -481,8 +483,8 @@
         .appreciation-cta {
             display: inline-block;
             margin-top: 24px;
-            background: white;
-            color: #E8863E;
+            background: #E8863E;
+            color: #ffffff;
             font-size: 14px;
             font-weight: 700;
             text-decoration: none;
@@ -490,6 +492,10 @@
             border-radius: 9999px;
             box-shadow: 0 8px 20px -8px rgba(40,34,26,0.35);
             transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .appreciation-cta:hover {
+            background: #d97a35;
         }
 
         .appreciation-cta:hover {
@@ -503,12 +509,16 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: #E8863E;
-            color: white;
+            background:
+                radial-gradient(135% 160% at 28% -10%, rgba(232,134,62,0.50), rgba(232,134,62,0.16) 70%, rgba(232,134,62,0.08)),
+                linear-gradient(180deg, rgba(253,248,242,0.90), rgba(251,244,236,0.82));
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            color: #22201C;
             padding: 12px 24px;
-            box-shadow: 0 -4px 16px rgba(40, 34, 26, 0.12);
+            box-shadow: 0 -4px 16px rgba(40, 34, 26, 0.10);
             z-index: 1000;
-            border-top: 1px solid rgba(255, 255, 255, 0.35);
+            border-top: 1px solid rgba(237, 220, 206, 0.75);
         }
 
         .ticker-wrapper {
