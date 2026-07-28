@@ -12,7 +12,8 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Luxury background orbs */
-        .bg-orbs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+        /* Layer 2 (#FBFAF8 inner wrapper) + Layer 3 (orbs) over the #FBF7F0 body */
+        .bg-orbs { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; background: #FBFAF8; }
         .bg-orbs .orb { position: absolute; border-radius: 50%; pointer-events: none; }
         .orb-blue  { width: 720px; height: 720px; top: -12%; right: -8%; background: radial-gradient(circle, rgba(95,169,214,0.18), rgba(95,169,214,0) 70%); filter: blur(140px); }
         .orb-gold  { width: 680px; height: 680px; top: 24%; left: -10%; background: radial-gradient(circle, rgba(242,206,112,0.10), rgba(242,206,112,0) 70%); filter: blur(160px); }
@@ -35,7 +36,7 @@
             --mg-muted: 92 86 78;
             --mg-faint: 147 140 129;
             --mg-line: 224 217 206;
-            --app-bg: #F1ECE3;
+            --app-bg: #FBF7F0;
             --surface-card: rgba(255,255,255,0.66);
             --card-radius: 24px;
             --card-blur: 20px;
@@ -49,7 +50,7 @@
             --heading-tracking: -0.02em;
             --heading-weight: 500;
         }
-        html, body { background: var(--app-bg, #F1ECE3); }
+        html, body { background: var(--app-bg, #FBF7F0); }
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(34,32,28,0.14); border-radius: 4px; }
@@ -62,7 +63,7 @@
 
         body {
             font-family: 'Inter', -apple-system, system-ui, sans-serif;
-            background: #F1ECE3;
+            background: #FBF7F0;
             color: #22201C;
             min-height: 100vh;
             padding: 0;
@@ -254,19 +255,13 @@
 
         /* Sophisticated Cards with Depth */
         .link-card {
-            background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82));
-            backdrop-filter: blur(22px);
-            -webkit-backdrop-filter: blur(22px);
-            border-radius: 26px;
-            padding: 10px 12px;
+            background: rgba(255,255,255,0.55);
+            border-radius: 16px;
+            padding: 12px 16px;
             text-decoration: none;
             color: #22201C;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow:
-                0 1px 0 rgba(255,255,255,0.95) inset,
-                0 18px 48px -28px rgba(40,34,26,0.22),
-                0 2px 8px -4px rgba(40,34,26,0.08);
-            border: 1px solid rgba(255,255,255,0.80);
+            border: 0.56px solid rgba(34,32,26,0.08);
             display: flex;
             flex-direction: row;
             align-items: center;
@@ -314,17 +309,29 @@
         }
 
         .featured-badge {
-            background: rgba(201,122,31,0.10);
-            color: #C97A1F;
+            background: rgba(255,255,255,0.6);
+            border: 0.56px solid rgba(181,99,31,0.333);
+            color: #B5631F;
             font-size: 11px;
             font-weight: 500;
             letter-spacing: 0.04em;
             text-transform: uppercase;
-            padding: 2px 8px;
+            padding: 2px 10px;
             border-radius: 9999px;
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
             width: fit-content;
             margin-top: 3px;
+        }
+
+        .featured-badge::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #B5631F;
+            flex-shrink: 0;
         }
 
         .link-card:active {
@@ -433,27 +440,14 @@
 
         /* Team Appreciation Callout */
         .appreciation-section {
-            background: radial-gradient(135% 160% at 28% -10%, rgba(232,134,62,0.50), rgba(232,134,62,0.16) 70%, rgba(232,134,62,0.08));
+            background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1));
+            border: 0.56px solid rgba(34,32,28,0.08);
             color: #22201C;
-            padding: 48px 40px;
-            border-radius: 26px;
-            box-shadow:
-                inset 0 0 0 1px rgba(232,134,62,0.28),
-                0 18px 48px -28px rgba(40,34,26,0.22);
+            padding: 24px 40px 40px;
+            border-radius: 24px;
             margin-bottom: 48px;
             position: relative;
             overflow: hidden;
-        }
-
-        .appreciation-section::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="2" fill="%2322201C" opacity="0.04"/></svg>');
-            opacity: 0.3;
         }
 
         .appreciation-content {
@@ -470,7 +464,7 @@
             text-transform: uppercase;
             letter-spacing: 0.18em;
             margin-bottom: 20px;
-            color: #C97A1F;
+            color: #938C81;
         }
 
         .appreciation-message {
@@ -509,16 +503,14 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background:
-                radial-gradient(135% 160% at 28% -10%, rgba(232,134,62,0.50), rgba(232,134,62,0.16) 70%, rgba(232,134,62,0.08)),
-                linear-gradient(180deg, rgba(253,248,242,0.90), rgba(251,244,236,0.82));
+            background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(251,247,240,0.84));
             backdrop-filter: blur(22px);
             -webkit-backdrop-filter: blur(22px);
             color: #22201C;
             padding: 12px 24px;
-            box-shadow: 0 -4px 16px rgba(40, 34, 26, 0.10);
+            box-shadow: 0 -4px 16px rgba(40, 34, 26, 0.08);
             z-index: 1000;
-            border-top: 1px solid rgba(237, 220, 206, 0.75);
+            border-top: 1px solid rgba(34, 32, 28, 0.08);
         }
 
         .ticker-wrapper {
@@ -628,7 +620,7 @@
             <div class="appreciation-content">
                 <div class="appreciation-title">You Make the Difference</div>
                 <div class="appreciation-message" id="thankYouMessage"></div>
-                <a href="kudos/" class="appreciation-cta">🏆 Seen someone go above &amp; beyond? Nominate them for Mango Kudos</a>
+                <a href="kudos/" class="appreciation-cta">Seen someone go above &amp; beyond? Nominate them for Mango Kudos</a>
             </div>
         </div>
 
@@ -745,7 +737,7 @@
                     </div>
                     <div class="link-content">
                         <div class="link-title">${link.title}</div>
-                        ${isFeatured ? '<span class="featured-badge">★ New</span>' : ''}
+                        ${isFeatured ? '<span class="featured-badge">New</span>' : ''}
                         <div class="link-stat">Clicked <span class="click-count">${clicks}</span> times</div>
                     </div>
                 </a>
@@ -838,20 +830,46 @@
             } catch (error) {}
         }
 
-        async function loadNews() {
+        const MATRIX_TICKER_URL = 'https://matrix.mangoautomotive.com/api/ticker';
+
+        function renderTicker(text) {
             const tickerDiv = document.getElementById('ticker');
-            
+            const looped = text + ' • ';
+            tickerDiv.textContent = looped + looped;
+
+            // Calculate duration for constant speed (60px per second)
+            setTimeout(() => {
+                const textWidth = tickerDiv.scrollWidth / 2;
+                const duration = textWidth / 60;
+                tickerDiv.style.animationDuration = `${duration}s`;
+            }, 50);
+        }
+
+        async function loadNews() {
             const defaultNews = [
                 "Welcome to the Mango Intranet! 🥭",
                 "Check out our latest training videos in the SOPs section 📚",
                 "Don't forget to use Guava Coach for better customer conversations 💬",
                 "Great job on last month's numbers! Keep it up! 📈"
             ];
-            
+
+            // 1) Preferred source: the Mango Matrix daily ticker
             try {
-                // 🔧 FIX: Add cache-busting timestamp + no-cache headers
-                const cacheBuster = Date.now();
-                const response = await fetch(`${NEWS_API_URL}?t=${cacheBuster}`, {
+                const response = await fetch(`${MATRIX_TICKER_URL}?t=${Date.now()}`, { cache: 'no-store' });
+                if (response.ok) {
+                    const data = await response.json();
+                    if (data && typeof data.text === 'string' && data.text.trim()) {
+                        renderTicker(data.text.trim());
+                        return;
+                    }
+                }
+            } catch (error) {
+                console.error('Matrix ticker unavailable:', error);
+            }
+
+            // 2) Fallback: legacy news feed
+            try {
+                const response = await fetch(`${NEWS_API_URL}?t=${Date.now()}`, {
                     method: 'GET',
                     headers: {
                         'Cache-Control': 'no-cache, no-store, must-revalidate',
@@ -859,36 +877,19 @@
                         'Expires': '0'
                     }
                 });
-                
                 if (response.ok) {
                     const newsItems = await response.json();
-                    
                     if (newsItems && newsItems.length > 0) {
-                        const newsText = newsItems.join(' • ') + ' • ';
-                        tickerDiv.textContent = newsText + newsText;
-                        
-                        // Calculate duration for constant speed (60px per second - slower)
-                        setTimeout(() => {
-                            const textWidth = tickerDiv.scrollWidth / 2;
-                            const duration = textWidth / 60;
-                            tickerDiv.style.animationDuration = `${duration}s`;
-                        }, 50);
+                        renderTicker(newsItems.join(' • '));
                         return;
                     }
                 }
             } catch (error) {
                 console.error('Failed to load news:', error);
             }
-            
-            const defaultText = defaultNews.join(' • ') + ' • ';
-            tickerDiv.textContent = defaultText + defaultText;
-            
-            // Calculate duration for constant speed
-            setTimeout(() => {
-                const textWidth = tickerDiv.scrollWidth / 2;
-                const duration = textWidth / 60;
-                tickerDiv.style.animationDuration = `${duration}s`;
-            }, 50);
+
+            // 3) Last resort: built-in messages
+            renderTicker(defaultNews.join(' • '));
         }
 
         // Keyboard shortcuts

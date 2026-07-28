@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
         /* Luxury background orbs */
-        .bg-orbs { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; }
+        .bg-orbs { position: fixed; inset: 0; overflow: hidden; pointer-events: none; z-index: 0; background: #FBFAF8; }
         .bg-orbs .orb { position: absolute; border-radius: 50%; pointer-events: none; }
         .orb-blue  { width: 720px; height: 720px; top: -12%; right: -8%; background: radial-gradient(circle, rgba(95,169,214,0.18), rgba(95,169,214,0) 70%); filter: blur(140px); }
         .orb-gold  { width: 680px; height: 680px; top: 24%; left: -10%; background: radial-gradient(circle, rgba(242,206,112,0.10), rgba(242,206,112,0) 70%); filter: blur(160px); }
@@ -32,7 +32,7 @@
             --mg-muted: 92 86 78;
             --mg-faint: 147 140 129;
             --mg-line: 224 217 206;
-            --app-bg: #F1ECE3;
+            --app-bg: #FBF7F0;
             --surface-card: rgba(255,255,255,0.66);
             --card-radius: 24px;
             --card-blur: 20px;
@@ -46,7 +46,7 @@
             --heading-tracking: -0.02em;
             --heading-weight: 500;
         }
-        html, body { background: var(--app-bg, #F1ECE3); }
+        html, body { background: var(--app-bg, #FBF7F0); }
         ::-webkit-scrollbar { width: 5px; height: 5px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: rgba(34,32,28,0.14); border-radius: 4px; }
@@ -54,7 +54,7 @@
         :root {
             --accent: #E8863E;
             --accent-hover: #d97a35;
-            --cream: #F1ECE3;
+            --cream: #FBF7F0;
             --ink: #22201C;
             --ink-soft: #5C564E;
             --muted: #938C81;
@@ -73,24 +73,30 @@
         h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.02em; margin-bottom: 16px; color: var(--ink); }
         .header-subtitle { font-size: 1.1rem; max-width: 650px; margin: 0 auto; line-height: 1.7; color: var(--ink-soft); }
         .header-subtitle strong { color: var(--accent); font-weight: 600; }
-        .highlight-banner { background: var(--accent); color: #fff; padding: 14px 24px; text-align: center; font-weight: 600; font-size: 0.95rem; letter-spacing: 0.01em; }
-        .highlight-banner span { color: #fff; }
+        .highlight-banner { max-width: 1000px; width: calc(100% - 48px); margin: 8px auto 0; border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); color: var(--ink); padding: 16px 24px; text-align: center; font-weight: 500; font-size: 0.95rem; letter-spacing: 0.01em; display: flex; align-items: center; justify-content: center; flex-wrap: wrap; gap: 10px; }
+        .highlight-banner span { color: var(--ink); }
+        .kicker { font-family: var(--font-ui); font-size: 11.5px; font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+        .dot-pill { display: inline-flex; align-items: center; gap: 8px; border-radius: 9999px; padding: 6px 14px; background: rgba(255,255,255,0.6); font-size: 11px; font-weight: 500; letter-spacing: 0.01em; white-space: nowrap; }
+        .dot-pill::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+        .dot-pill-green { color: #3E8E5E; border: 0.56px solid rgba(62,142,94,0.33); }
+        .dot-pill-amber { color: #B5631F; border: 0.56px solid rgba(181,99,31,0.333); }
+        .watercolor-wash { background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)); border: 0.56px solid rgba(34,32,28,0.08); border-radius: 24px; padding: 24px; }
         main { max-width: 1000px; margin: 0 auto; padding: 50px 24px; }
         .instructions { border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); padding: 36px; margin-bottom: 32px; }
         .instructions h2 { font-family: var(--font-display); font-weight: 500; font-size: 25px; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
-        .instructions h2::before { content: '🚀 '; }
         .instructions ol { margin-left: 24px; color: var(--ink-soft); }
         .instructions li { margin-bottom: 14px; line-height: 1.7; }
         .instructions li strong { color: var(--ink); font-weight: 600; }
         .promise-box { background: rgba(232,134,62,0.07); padding: 20px 24px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(232,134,62,0.20); color: var(--ink-soft); }
         .promise-box strong { color: var(--accent); }
         .form-container { border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); padding: 44px; }
-        .quarter-selector { background: var(--accent); color: #fff; padding: 28px; border-radius: 20px; margin-bottom: 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; box-shadow: 0 14px 32px -20px rgba(232,134,62,0.65); }
-        .quarter-selector label { font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: #fff; margin-bottom: 0; }
+        .quarter-selector { color: var(--ink); margin-bottom: 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
+        .quarter-selector label { font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink); margin-bottom: 0; }
         .quarter-selector select { padding: 12px 24px; border: 1px solid rgba(34,32,28,0.12); border-radius: 9999px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; background: rgba(255,255,255,0.9); color: var(--ink); cursor: pointer; min-width: 280px; }
         .quarter-selector select option { background: #fff; color: var(--ink); }
-        .quarter-theme { width: 100%; margin-top: 8px; font-size: 0.95rem; font-weight: 500; color: #fff; }
-        .quarter-note { width: 100%; font-size: 0.85rem; opacity: 0.9; margin-top: 4px; color: #fff; }
+        .quarter-theme { width: 100%; margin-top: 8px; font-size: 0.95rem; font-weight: 500; color: var(--ink); }
+        .quarter-theme strong { color: var(--accent); }
+        .quarter-note { width: 100%; font-size: 0.85rem; margin-top: 4px; color: var(--ink-soft); }
         .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 36px; }
         .form-group { display: flex; flex-direction: column; }
         label { font-size: 12.5px; font-weight: 600; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.18em; }
@@ -107,7 +113,7 @@
         .category-section { margin-bottom: 32px; transition: all 0.3s ease; }
         .category-section.hidden { display: none; }
         .category-header { background: rgba(34,32,28,0.05); border: 1px solid rgba(34,32,28,0.08); padding: 10px 20px; border-radius: 9999px; margin-bottom: 16px; font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-soft); }
-        .category-header.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .category-header.active { background: #fff; border-color: rgba(34,32,28,0.08); color: var(--ink); box-shadow: 0 1px 4px rgba(40,34,26,0.12); }
         .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
         .resource-option { position: relative; }
         .resource-option input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
@@ -130,16 +136,19 @@
         .resource-author { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
         .resource-description { font-size: 0.85rem; color: var(--ink-soft); flex-grow: 1; line-height: 1.55; }
         .format-note { font-size: 0.7rem; color: var(--muted); margin-top: 8px; font-style: italic; }
-        .recommender-tag { display: inline-block; background: var(--accent); color: #fff; font-size: 0.6rem; font-weight: 700; padding: 3px 9px; border-radius: 9999px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.08em; }
+        .recommender-tag { display: inline-block; background: rgba(201,122,31,0.10); color: #C97A1F; font-size: 0.6rem; font-weight: 600; padding: 3px 9px; border-radius: 9999px; margin-left: 8px; text-transform: uppercase; letter-spacing: 0.08em; }
         .resource-card::before { content: ''; position: absolute; top: 0; right: 0; width: 0; height: 0; border-style: solid; border-width: 0 40px 40px 0; border-color: transparent rgba(232,134,62,0.35) transparent transparent; opacity: 0; transition: opacity 0.3s ease; border-radius: 0 24px 0 0; }
         .resource-option input:checked + .resource-card::before { opacity: 1; }
-        .selection-counter { background: rgba(255,255,255,0.7); border: 1px solid rgba(34,32,28,0.12); border-radius: 18px; padding: 18px 24px; margin-top: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
-        .counter-text { font-weight: 600; color: var(--ink); font-size: 1rem; }
-        .counter-number { color: var(--accent); font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
-        .counter-warning { color: var(--accent); font-size: 0.9rem; font-weight: 500; }
-        .counter-success { color: var(--ink-soft); font-size: 0.9rem; font-weight: 500; }
+        .selection-counter { margin-top: 28px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .counter-stat { display: flex; flex-direction: column; }
+        .counter-number { color: var(--ink); font-family: var(--font-display); font-weight: 500; font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
+        .counter-caption { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); margin-top: 2px; }
+        .counter-warning { color: #B5631F; background: rgba(255,255,255,0.6); border: 0.56px solid rgba(181,99,31,0.333); border-radius: 9999px; padding: 6px 14px; font-size: 0.8rem; font-weight: 500; }
+        .counter-warning::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 8px; vertical-align: 1px; }
+        .counter-success { color: #3E8E5E; background: rgba(255,255,255,0.6); border: 0.56px solid rgba(62,142,94,0.33); border-radius: 9999px; padding: 6px 14px; font-size: 0.8rem; font-weight: 500; }
+        .counter-success::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 8px; vertical-align: 1px; }
         .commitment-section { background: rgba(232,134,62,0.07); border: 1px solid rgba(232,134,62,0.30); border-radius: 20px; padding: 28px; margin-top: 36px; position: relative; }
-        .commitment-section::before { content: '✍️ Your Pledge'; position: absolute; top: -14px; left: 24px; background: var(--accent); color: #fff; font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; padding: 6px 16px; border-radius: 9999px; }
+        .commitment-section::before { content: 'Your Pledge'; position: absolute; top: -14px; left: 24px; background: #FBF7F0; color: #B5631F; border: 0.56px solid rgba(181,99,31,0.333); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; padding: 6px 16px; border-radius: 9999px; }
         .commitment-check { display: flex; align-items: flex-start; gap: 16px; cursor: pointer; margin-top: 8px; }
         .commitment-check input[type="checkbox"] { width: 26px; height: 26px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
         .commitment-text { font-size: 1rem; line-height: 1.7; color: var(--ink); }
@@ -155,9 +164,9 @@
         .confirmation-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(40,34,26,0.40); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .confirmation-overlay.show { display: flex; }
         .confirmation-modal { border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); max-width: 600px; width: 100%; max-height: 90vh; overflow-y: auto; }
-        .confirmation-header { background: var(--accent); color: #fff; padding: 24px 28px; border-radius: 26px 26px 0 0; }
+        .confirmation-header { background: linear-gradient(180deg, rgba(255,255,255,0.92), rgba(251,247,240,0.75)); color: var(--ink); padding: 24px 28px; border-radius: 26px 26px 0 0; border-bottom: 1px solid var(--line); }
         .confirmation-header h3 { font-family: var(--font-display); font-weight: 500; font-size: 1.5rem; letter-spacing: -0.02em; margin-bottom: 4px; }
-        .confirmation-header p { opacity: 0.92; font-size: 0.95rem; }
+        .confirmation-header p { color: var(--ink-soft); font-size: 0.95rem; }
         .confirmation-body { padding: 28px; }
         .confirmation-section { margin-bottom: 24px; }
         .confirmation-section h4 { font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.18em; font-weight: 600; color: var(--muted); margin-bottom: 12px; }
@@ -181,7 +190,7 @@
         .success-message h3 { font-family: var(--font-display); font-weight: 500; font-size: 2.2rem; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 16px; }
         .success-message p { color: var(--ink-soft); max-width: 550px; margin: 0 auto; line-height: 1.8; font-size: 1.05rem; }
         .success-message .confirmation-note { background: rgba(34,32,28,0.04); padding: 16px 24px; border-radius: 14px; margin-top: 24px; display: inline-block; font-size: 0.95rem; color: var(--ink-soft); }
-        .success-message .commitment-reminder { background: var(--accent); color: #fff; padding: 22px 36px; border-radius: 18px; margin-top: 28px; display: inline-block; font-weight: 600; font-size: 1.1rem; box-shadow: 0 16px 32px -20px rgba(232,134,62,0.7); }
+        .success-message .commitment-reminder { background: rgba(232,134,62,0.08); border: 1px solid rgba(232,134,62,0.30); color: var(--ink); padding: 22px 36px; border-radius: 18px; margin-top: 28px; display: inline-block; font-weight: 600; font-size: 1.1rem; }
         footer { background: var(--cream); color: var(--ink-soft); padding: 36px; text-align: center; border-top: 1px solid var(--line); }
         footer p { color: var(--muted); font-size: 0.9rem; }
         .format-selector { display: flex; gap: 4px; margin-top: 10px; background: rgba(34,32,28,0.05); border: 1px solid rgba(34,32,28,0.08); border-radius: 9999px; padding: 3px; align-self: flex-start; }
@@ -193,8 +202,8 @@
         .show-all-section.hidden { display: none; }
         .show-all-text { color: var(--ink-soft); font-size: 0.95rem; }
         .show-all-btn { background: rgba(255,255,255,0.8); border: 1px solid rgba(34,32,28,0.12); color: var(--ink); padding: 10px 20px; border-radius: 9999px; font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
-        .show-all-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
-        .show-all-btn.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+        .show-all-btn:hover { background: #fff; border-color: rgba(232,134,62,0.45); color: var(--ink); }
+        .show-all-btn.active { background: #fff; border-color: rgba(232,134,62,0.45); color: var(--ink); box-shadow: 0 1px 4px rgba(40,34,26,0.12); }
         @media (max-width: 768px) {
             header { padding: 36px 20px 28px; }
             .form-container { padding: 20px; }
@@ -225,12 +234,14 @@
     <div class="bg-orbs" aria-hidden="true"><div class="orb orb-blue"></div><div class="orb orb-gold"></div><div class="orb orb-amber"></div><div class="orb orb-teal"></div></div>
     <header>
         <img src="../logo.png" alt="Mango Automotive" class="logo-img">
+        <div class="kicker">Employee Development</div>
         <h1>Mango University</h1>
         <p class="header-subtitle">Great leaders aren't born — they're built. <strong>We're investing in YOU</strong> with world-class books and courses to unlock your full potential.</p>
     </header>
-    <div class="highlight-banner">🎯 100% Company-Funded · <span>You bring the dedication, we cover everything else</span></div>
+    <div class="highlight-banner"><span class="dot-pill dot-pill-green">100% Company-Funded</span> <span>You bring the dedication, we cover everything else</span></div>
     <main>
         <div class="instructions">
+            <div class="kicker">How It Works</div>
             <h2>Here's How It Works</h2>
             <ol>
                 <li><strong>Pick your quarter</strong> — Each quarter focuses on a different leadership superpower.</li>
@@ -240,7 +251,7 @@
                 <li><strong>Watch your mailbox</strong> — You'll receive a confirmation email, and your resources will be on the way!</li>
             </ol>
             <div class="promise-box">
-                <p>💡 <strong>Our Promise:</strong> Every resource on this page was hand-picked by leadership to deliver real, actionable insights you can use immediately. No fluff, no theory-only books — just proven strategies from the world's best minds.</p>
+                <p><strong>Our Promise:</strong> Every resource on this page was hand-picked by leadership to deliver real, actionable insights you can use immediately. No fluff, no theory-only books — just proven strategies from the world's best minds.</p>
             </div>
         </div>
         <div class="form-container">
@@ -281,29 +292,30 @@
                         </select>
                     </div>
                 </div>
-                <div class="quarter-selector">
-                    <label for="quarter">🎯 What Do You Want to Focus On?</label>
+                <div class="quarter-selector watercolor-wash">
+                    <label for="quarter">What Do You Want to Focus On?</label>
                     <select id="quarter" name="quarter" required>
                         <option value="Q1 2026" data-theme="Mindset & Optimism" data-deadline="March 31, 2026">Mindset & Optimism (Q1 2026)</option>
                         <option value="Q3 2026" data-theme="Ownership & Growth" data-deadline="September 30, 2026" selected>Ownership & Growth (Q3 2026)</option>
                         <option value="Q4 2026" data-theme="Action & Execution" data-deadline="December 31, 2026">Action & Execution (Q4 2026)</option>
                     </select>
                     <div class="quarter-theme" id="quarterTheme">This Quarter's Focus: <strong>Mindset & Optimism</strong> — Build the mental foundation that drives everything else</div>
-                    <div class="quarter-note">💡 You can select books from any quarter, but we recommend focusing on one theme.</div>
+                    <div class="quarter-note">You can select books from any quarter, but we recommend focusing on one theme.</div>
                 </div>
                 <div class="resources-section">
+                    <div class="kicker">This Quarter</div>
                     <h4 class="section-title">Build Your Learning Path</h4>
-                    <p class="section-subtitle">Choose <strong>at least one resource</strong> — or stack multiple for maximum growth! 🚀</p>
+                    <p class="section-subtitle">Choose <strong>at least one resource</strong> — or stack multiple for maximum growth!</p>
                     
                     <div id="showAllSection" class="show-all-section hidden">
-                        <span class="show-all-text">📚 These books specifically focus on the <strong id="quarterThemeText">Q1</strong> themes.</span>
+                        <span class="show-all-text">These books specifically focus on the <strong id="quarterThemeText">Q1</strong> themes.</span>
                         <button type="button" class="show-all-btn" id="showAllBtn">Show all available books instead</button>
                     </div>
 
                     <div id="categoriesContainer">
                         <!-- Q1: MINDSET & OPTIMISM -->
                         <div class="category-section" data-theme="Mindset & Optimism">
-                            <div class="category-header active">🧠 Q1: Mindset & Optimism</div>
+                            <div class="category-header active">Q1: Mindset & Optimism</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
                                     <input type="checkbox" name="selections" value="Book: Be Obsessed or Be Average by Grant Cardone">
@@ -312,7 +324,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781101981054-L.jpg" alt="Be Obsessed or Be Average" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
                                             <div class="resource-title">Be Obsessed or Be Average</div>
                                             <div class="resource-author">Grant Cardone</div>
                                             <p class="resource-description">Why obsession is the key to success. High-energy motivation to dominate your goals.</p>
@@ -326,7 +338,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780345472328-L.jpg" alt="Mindset" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Jesse</span></span>
                                             <div class="resource-title">Mindset</div>
                                             <div class="resource-author">Carol S. Dweck</div>
                                             <p class="resource-description">Fixed vs. growth mindset will transform how you coach your team and handle setbacks.</p>
@@ -340,7 +352,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780470100288-L.jpg" alt="The Energy Bus" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Jesse</span></span>
                                             <div class="resource-title">The Energy Bus</div>
                                             <div class="resource-author">Jon Gordon</div>
                                             <p class="resource-description">A fun, fast fable with 10 rules for fueling your life with positive energy.</p>
@@ -354,7 +366,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780307591548-L.jpg" alt="The Happiness Advantage" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Jesse</span></span>
                                             <div class="resource-title">The Happiness Advantage</div>
                                             <div class="resource-author">Shawn Achor</div>
                                             <p class="resource-description">Harvard researcher reveals 7 principles proving happiness drives success.</p>
@@ -368,7 +380,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781591846352-L.jpg" alt="The Obstacle Is the Way" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Jesse</span></span>
                                             <div class="resource-title">The Obstacle Is the Way</div>
                                             <div class="resource-author">Ryan Holiday</div>
                                             <p class="resource-description">Ancient Stoic wisdom meets modern challenges. Turn every obstacle into an opportunity.</p>
@@ -382,7 +394,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg" alt="The Psychology of Money" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
                                             <div class="resource-title">The Psychology of Money</div>
                                             <div class="resource-author">Morgan Housel</div>
                                             <p class="resource-description">Timeless lessons on wealth, greed, and happiness. Understanding how people think about money.</p>
@@ -394,7 +406,7 @@
 
                         <!-- Q3: OWNERSHIP & GROWTH -->
                         <div class="category-section" data-theme="Ownership & Growth">
-                            <div class="category-header">💪 Q3: Ownership & Growth</div>
+                            <div class="category-header">Q3: Ownership & Growth</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
                                     <input type="checkbox" name="selections" value="Book: Atomic Habits by James Clear">
@@ -403,7 +415,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg" alt="Atomic Habits" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Michelle</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Michelle</span></span>
                                             <div class="resource-title">Atomic Habits</div>
                                             <div class="resource-author">James Clear</div>
                                             <p class="resource-description">Tiny changes, remarkable results. The proven framework for building good habits.</p>
@@ -417,7 +429,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781501111105-L.jpg" alt="Grit" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Jesse</span></span>
                                             <div class="resource-title">Grit</div>
                                             <div class="resource-author">Angela Duckworth</div>
                                             <p class="resource-description">Why passion + perseverance beats raw talent every time.</p>
@@ -431,7 +443,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781401952853-L.jpg" alt="High Performance Habits" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Soren</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Soren</span></span>
                                             <div class="resource-title">High Performance Habits</div>
                                             <div class="resource-author">Brendon Burchard</div>
                                             <p class="resource-description">How extraordinary people become that way. Six habits backed by research.</p>
@@ -445,7 +457,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781593156329-L.jpg" alt="No Excuses!" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
                                             <div class="resource-title">No Excuses!</div>
                                             <div class="resource-author">Brian Tracy</div>
                                             <p class="resource-description">The power of self-discipline. 21 ways to achieve lasting success through accountability.</p>
@@ -459,7 +471,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780743269513-L.jpg" alt="The 7 Habits of Highly Effective People" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
                                             <div class="resource-title">The 7 Habits of Highly Effective People</div>
                                             <div class="resource-author">Stephen R. Covey</div>
                                             <p class="resource-description">The timeless classic. Foundational principles for personal and professional effectiveness.</p>
@@ -471,7 +483,7 @@
 
                         <!-- Q3: VISION & IMPACT -->
                         <div class="category-section" data-theme="Vision & Impact">
-                            <div class="category-header">🎯 Q3: Vision & Impact</div>
+                            <div class="category-header">Q3: Vision & Impact</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
                                     <input type="checkbox" name="selections" value="Book: Aspire by Kevin Hall">
@@ -480,7 +492,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780061964541-L.jpg" alt="Aspire" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
                                             <div class="resource-title">Aspire</div>
                                             <div class="resource-author">Kevin Hall</div>
                                             <p class="resource-description">Discovering your purpose through the power of words. 11 words that transform success.</p>
@@ -494,7 +506,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780385504454-L.jpg" alt="Customers for Life" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
                                             <div class="resource-title">Customers for Life</div>
                                             <div class="resource-author">Carl Sewell</div>
                                             <p class="resource-description">From the legendary car dealer. Directly applicable to automotive service.</p>
@@ -508,7 +520,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781591846444-L.jpg" alt="Start with Why" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
                                             <div class="resource-title">Start with Why</div>
                                             <div class="resource-author">Simon Sinek</div>
                                             <p class="resource-description">Discover why some leaders inspire action. Learn the golden circle framework.</p>
@@ -522,7 +534,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781591847168-L.jpg" alt="The Infinite Game" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
                                             <div class="resource-title">The Infinite Game</div>
                                             <div class="resource-author">Simon Sinek</div>
                                             <p class="resource-description">Stop playing to win. Start playing to keep playing. Long-term success paradigm.</p>
@@ -536,7 +548,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780593418574-L.jpg" alt="Unreasonable Hospitality" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
                                             <div class="resource-title">Unreasonable Hospitality</div>
                                             <div class="resource-author">Will Guidara</div>
                                             <p class="resource-description">The remarkable power of giving people more than they expect.</p>
@@ -548,7 +560,7 @@
 
                         <!-- Q4: ACTION & EXECUTION -->
                         <div class="category-section" data-theme="Action & Execution">
-                            <div class="category-header">🚀 Q4: Action & Execution</div>
+                            <div class="category-header">Q4: Action & Execution</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
                                     <input type="checkbox" name="selections" value="Book: Dare to Lead by Brené Brown">
@@ -557,7 +569,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780399592522-L.jpg" alt="Dare to Lead" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Michelle</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Michelle</span></span>
                                             <div class="resource-title">Dare to Lead</div>
                                             <div class="resource-author">Brené Brown</div>
                                             <p class="resource-description">Brave work. Tough conversations. Whole hearts. Leadership takes courage.</p>
@@ -571,7 +583,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781591845324-L.jpg" alt="Leaders Eat Last" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
                                             <div class="resource-title">Leaders Eat Last</div>
                                             <div class="resource-author">Simon Sinek</div>
                                             <p class="resource-description">Why some teams pull together. Create environments where people thrive.</p>
@@ -585,7 +597,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780971584914-L.jpg" alt="Multi-Unit Leadership" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
                                             <div class="resource-title">Multi-Unit Leadership</div>
                                             <div class="resource-author">Jim Sullivan</div>
                                             <p class="resource-description">The 7 stages of building high-performing partnerships across locations.</p>
@@ -599,7 +611,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780785274346-L.jpg" alt="The 17 Indisputable Laws of Teamwork" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
                                             <div class="resource-title">The 17 Indisputable Laws of Teamwork</div>
                                             <div class="resource-author">John C. Maxwell</div>
                                             <p class="resource-description">Embrace them and empower your team. Build a winning culture.</p>
@@ -613,7 +625,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780785288374-L.jpg" alt="The 21 Irrefutable Laws of Leadership" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
                                             <div class="resource-title">The 21 Irrefutable Laws of Leadership</div>
                                             <div class="resource-author">John C. Maxwell</div>
                                             <p class="resource-description">Follow them and people will follow you. Timeless leadership principles.</p>
@@ -627,7 +639,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780804176989-L.jpg" alt="The Culture Code" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
                                             <div class="resource-title">The Culture Code</div>
                                             <div class="resource-author">Daniel Coyle</div>
                                             <p class="resource-description">The secrets of highly successful groups. Build cohesion and cooperation.</p>
@@ -641,7 +653,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781250195777-L.jpg" alt="The Dichotomy of Leadership" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">📚 Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
                                             <div class="resource-title">The Dichotomy of Leadership</div>
                                             <div class="resource-author">Jocko Willink & Leif Babin</div>
                                             <p class="resource-description">Balancing extreme ownership. Navy SEAL wisdom on leadership balance.</p>
@@ -653,7 +665,7 @@
 
                         <!-- ONLINE COURSES - Always visible -->
                         <div class="category-section" data-theme="Courses">
-                            <div class="category-header">🎓 Online Courses — All Quarters</div>
+                            <div class="category-header">Online Courses — All Quarters</div>
                             <div class="resource-grid">
                                 <label class="resource-option">
                                     <input type="checkbox" name="selections" value="Course: Cultivating a Growth Mindset (LinkedIn Learning) - ~$40/mo subscription" data-url="https://www.linkedin.com/learning/cultivating-a-growth-mindset">
@@ -663,7 +675,7 @@
                                             <a href="https://www.linkedin.com/learning/cultivating-a-growth-mindset" target="_blank" class="view-course-link" onclick="event.stopPropagation();">View Course →</a>
                                         </div>
                                         <div class="resource-info">
-                                            <span class="resource-type">🎓 Course — ~$40/mo</span>
+                                            <span class="resource-type">Course — ~$40/mo</span>
                                             <div class="resource-title">Cultivating a Growth Mindset</div>
                                             <div class="resource-author">Gemma Leigh Roberts • LinkedIn Learning</div>
                                             <p class="resource-description">Apply Carol Dweck's research to your leadership. ~1 hour.</p>
@@ -678,7 +690,7 @@
                                             <a href="https://www.coursera.org/specializations/positivepsychology" target="_blank" class="view-course-link" onclick="event.stopPropagation();">View Course →</a>
                                         </div>
                                         <div class="resource-info">
-                                            <span class="resource-type">🎓 Course — Free to Audit</span>
+                                            <span class="resource-type">Course — Free to Audit</span>
                                             <div class="resource-title">Foundations of Positive Psychology</div>
                                             <div class="resource-author">Dr. Martin Seligman • UPenn</div>
                                             <p class="resource-description">From the founder of positive psychology. 5-course specialization.</p>
@@ -693,7 +705,7 @@
                                             <a href="https://www.coursera.org/learn/motivate-people-teams" target="_blank" class="view-course-link" onclick="event.stopPropagation();">View Course →</a>
                                         </div>
                                         <div class="resource-info">
-                                            <span class="resource-type">🎓 Course — Free to Audit</span>
+                                            <span class="resource-type">Course — Free to Audit</span>
                                             <div class="resource-title">Inspiring & Motivating Individuals</div>
                                             <div class="resource-author">University of Michigan</div>
                                             <p class="resource-description">Part of Leading People & Teams specialization. ~4 weeks.</p>
@@ -708,7 +720,7 @@
                                             <a href="https://www.coursera.org/learn/the-science-of-well-being" target="_blank" class="view-course-link" onclick="event.stopPropagation();">View Course →</a>
                                         </div>
                                         <div class="resource-info">
-                                            <span class="resource-type">🎓 Course — 100% Free</span>
+                                            <span class="resource-type">Course — 100% Free</span>
                                             <div class="resource-title">The Science of Well-Being</div>
                                             <div class="resource-author">Prof. Laurie Santos • Yale</div>
                                             <p class="resource-description">Yale's most popular course ever. 4M+ learners. ~19 hours, self-paced.</p>
@@ -719,10 +731,13 @@
                         </div>
                     </div>
 
-                    <div class="selection-counter">
-                        <span class="counter-text">Resources selected: <span class="counter-number" id="selectionCount">0</span></span>
-                        <span class="counter-warning" id="selectionWarning">⚠️ Please select at least one resource</span>
-                        <span class="counter-success" id="selectionSuccess" style="display:none;">✅ Great choice! Ready to commit?</span>
+                    <div class="selection-counter watercolor-wash">
+                        <div class="counter-stat">
+                            <span class="counter-number" id="selectionCount">0</span>
+                            <span class="counter-caption">resources selected</span>
+                        </div>
+                        <span class="counter-warning" id="selectionWarning">Please select at least one resource</span>
+                        <span class="counter-success" id="selectionSuccess" style="display:none;">Great choice! Ready to commit?</span>
                     </div>
                 </div>
                 <div class="commitment-section">
@@ -734,7 +749,7 @@
                     </label>
                 </div>
                 <div class="submit-section">
-                    <button type="submit" class="submit-btn" id="submitBtn" disabled>Lock In My Commitment 🔒</button>
+                    <button type="submit" class="submit-btn" id="submitBtn" disabled>Lock In My Commitment</button>
                     <div class="validation-message" id="validationMessage"></div>
                     <p class="submit-note"><strong>You'll receive a confirmation email</strong> once submitted. Your resources will be ordered within 48 hours!</p>
                 </div>
@@ -743,7 +758,7 @@
                 <div class="success-icon">🎉</div>
                 <h3>You're Officially In!</h3>
                 <p>This is the first step toward becoming the leader you're meant to be. Your selection(s) have been sent to accounting and will be ordered within 48 hours.</p>
-                <div class="confirmation-note">📧 A confirmation email has been sent to your inbox</div>
+                <div class="confirmation-note">A confirmation email has been sent to your inbox</div>
                 <div class="commitment-reminder" id="deadlineReminder">📅 Your Deadline: March 31, 2026</div>
             </div>
         </div>
@@ -754,16 +769,16 @@
     <div class="confirmation-overlay" id="confirmationOverlay">
         <div class="confirmation-modal">
             <div class="confirmation-header">
-                <h3>📋 Confirm Your Selections</h3>
+                <h3>Confirm Your Selections</h3>
                 <p>Please review before submitting</p>
             </div>
             <div class="confirmation-body">
                 <div class="confirmation-section" id="confirmBooks" style="display:none;">
-                    <h4>📚 Books</h4>
+                    <h4>Books</h4>
                     <div id="confirmBooksList"></div>
                 </div>
                 <div class="confirmation-section" id="confirmCourses" style="display:none;">
-                    <h4>🎓 Courses</h4>
+                    <h4>Courses</h4>
                     <div id="confirmCoursesList"></div>
                 </div>
                 <div class="confirmation-buttons">
