@@ -132,7 +132,7 @@
     
     <div class="reward-banner">
         <span>🏆 The best nominations are shared company-wide — and winners receive a</span>
-        <span class="amount">$50 Amazon Gift Card</span>
+        <span class="amount">$100 Amazon Gift Card</span>
     </div>
     
     <main>
@@ -171,23 +171,12 @@
                                 <option value="Cottonwood (Eagle Ranch)">Cottonwood (Eagle Ranch)</option>
                                 <option value="The Heights (Comanche)">The Heights (Comanche)</option>
                                 <option value="Downtown (Central Ave)">Downtown (Central Ave)</option>
-                                <option value="The Valley">The Valley</option>
                                 <option value="Las Cruces (Triviz Dr)">Las Cruces (Triviz Dr)</option>
                                 <option value="El Paso (Pellicano Dr)">El Paso (Pellicano Dr)</option>
                                 <option value="El Paso (Montana Ave)">El Paso (Montana Ave)</option>
                                 <option value="Yuma (Florence Ln)">Yuma (Florence Ln)</option>
                                 <option value="Corporate Team">Corporate Team</option>
-                            </select>
-                        </div>
-                        <div class="form-group">
-                            <label for="nominatorRole">Your Role</label>
-                            <select id="nominatorRole" name="nominatorRole" required>
-                                <option value="">Select your role...</option>
-                                <option value="Shop Manager">Shop Manager</option>
-                                <option value="Advisor">Advisor</option>
-                                <option value="Foreman">Foreman</option>
-                                <option value="Tech">Tech</option>
-                                <option value="Other">Other</option>
+                                <option value="The Valley (Griegos Rd)">The Valley (Griegos Rd)</option>
                             </select>
                         </div>
                     </div>
@@ -207,25 +196,12 @@
                                 <option value="Cottonwood (Eagle Ranch)">Cottonwood (Eagle Ranch)</option>
                                 <option value="The Heights (Comanche)">The Heights (Comanche)</option>
                                 <option value="Downtown (Central Ave)">Downtown (Central Ave)</option>
-                                <option value="The Valley">The Valley</option>
                                 <option value="Las Cruces (Triviz Dr)">Las Cruces (Triviz Dr)</option>
                                 <option value="El Paso (Pellicano Dr)">El Paso (Pellicano Dr)</option>
                                 <option value="El Paso (Montana Ave)">El Paso (Montana Ave)</option>
                                 <option value="Yuma (Florence Ln)">Yuma (Florence Ln)</option>
                                 <option value="Corporate Team">Corporate Team</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="nomineeRole">Their Role</label>
-                            <select id="nomineeRole" name="nomineeRole" required>
-                                <option value="">Select their role...</option>
-                                <option value="Shop Manager">Shop Manager</option>
-                                <option value="Advisor">Advisor</option>
-                                <option value="Foreman">Foreman</option>
-                                <option value="Tech">Tech</option>
-                                <option value="Other">Other</option>
+                                <option value="The Valley (Griegos Rd)">The Valley (Griegos Rd)</option>
                             </select>
                         </div>
                     </div>
@@ -263,7 +239,7 @@
                 <img src="MIA%20original@2x.png" alt="Mia Mango celebrating" class="success-mia">
                 <h3>Kudos Sent! 🎉</h3>
                 <p>Thanks for recognizing a teammate! Your nomination has been submitted for review.</p>
-                <p>The best nominations will be shared company-wide, and the top ones each quarter receive a $50 Amazon gift card!</p>
+                <p>The best nominations will be shared company-wide, and the top ones each quarter receive a $100 Amazon gift card!</p>
                 <div class="success-note">Remember: This was your one nomination for the year. Make sure to celebrate your teammate in person too!</div>
             </div>
         </div>
@@ -342,10 +318,8 @@
             const nominatorName = document.getElementById('nominatorName').value;
             const nominatorEmail = document.getElementById('nominatorEmail').value;
             const nominatorLocation = document.getElementById('nominatorLocation').value;
-            const nominatorRole = document.getElementById('nominatorRole').value;
             const nomineeName = document.getElementById('nomineeName').value;
             const nomineeLocation = document.getElementById('nomineeLocation').value;
-            const nomineeRole = document.getElementById('nomineeRole').value;
             const storyText = story.value;
             
             submitBtn.innerHTML = 'Sending... ⏳';
@@ -358,12 +332,10 @@ NOMINATED BY:
 Name: ${nominatorName}
 Email: ${nominatorEmail}
 Location: ${nominatorLocation}
-Role: ${nominatorRole}
 
 NOMINEE:
 Name: ${nomineeName}
 Location: ${nomineeLocation}
-Role: ${nomineeRole}
 
 THE STORY:
 ${storyText}

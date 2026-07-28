@@ -108,10 +108,20 @@
         }
 
         .greeting-text {
-            font-size: 18px;
-            font-weight: 600;
-            color: #5C564E;
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 22px;
+            font-weight: 500;
+            color: #22201C;
             letter-spacing: -0.01em;
+        }
+
+        .eyebrow {
+            font-size: 12.5px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.18em;
+            color: #938C81;
+            margin-bottom: 4px;
         }
 
         .weather-strip {
@@ -309,9 +319,9 @@
         }
 
         .link-icon {
-            width: 34px;
-            height: 34px;
-            border-radius: 10px;
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -329,8 +339,8 @@
         }
 
         .link-icon img {
-            width: 22px;
-            height: 22px;
+            width: 30px;
+            height: 30px;
             object-fit: contain;
         }
 
@@ -414,19 +424,38 @@
         }
 
         .appreciation-title {
-            font-size: 18px;
-            font-weight: 800;
+            font-size: 12.5px;
+            font-weight: 600;
             text-transform: uppercase;
-            letter-spacing: 2px;
+            letter-spacing: 0.18em;
             margin-bottom: 20px;
-            opacity: 0.95;
+            opacity: 0.9;
         }
 
         .appreciation-message {
-            font-size: 18px;
-            line-height: 1.7;
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 21px;
+            line-height: 1.6;
             font-weight: 500;
-            text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+        }
+
+        .appreciation-cta {
+            display: inline-block;
+            margin-top: 24px;
+            background: white;
+            color: #E8863E;
+            font-size: 14px;
+            font-weight: 700;
+            text-decoration: none;
+            padding: 13px 30px;
+            border-radius: 9999px;
+            box-shadow: 0 8px 20px -8px rgba(40,34,26,0.35);
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .appreciation-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 26px -8px rgba(40,34,26,0.4);
         }
 
         /* Sophisticated Ticker */
@@ -529,7 +558,8 @@
 
         <!-- Quick Actions -->
         <div class="section">
-            <h2 class="section-title"><span>⚡</span> Quick Actions</h2>
+            <div class="eyebrow">Pinned Shortcuts</div>
+            <h2 class="section-title">Quick Actions</h2>
             <div class="link-grid" id="quickActionsGrid">
                 <!-- Dynamically populated -->
             </div>
@@ -537,7 +567,8 @@
 
         <!-- All Links -->
         <div class="section" id="allLinksSection">
-            <h2 class="section-title"><span>🔗</span> All Links</h2>
+            <div class="eyebrow">The Toolbox</div>
+            <h2 class="section-title">All Links</h2>
             <div class="link-grid" id="allLinksGrid">
                 <!-- Dynamically populated -->
             </div>
@@ -548,6 +579,7 @@
             <div class="appreciation-content">
                 <div class="appreciation-title">You Make the Difference</div>
                 <div class="appreciation-message" id="thankYouMessage"></div>
+                <a href="kudos/" class="appreciation-cta">🏆 Seen someone go above &amp; beyond? Nominate them for Mango Kudos</a>
             </div>
         </div>
 
@@ -630,22 +662,28 @@
                 domain = 'slack.com';
             }
             
-            // Emoji icons for links without good favicons
+            // Real icons downloaded from each site, stored locally in /icons
+            const localIcons = {
+                'tekmetric': 'icons/tekmetric.png',
+                'guava': 'icons/guava.png',
+                'aaa': 'icons/aaa.png',
+                'motovisuals': 'icons/motovisuals.png',
+                'matrix': 'icons/matrix.png',
+                'kudos': 'MIA%20original@2x.png'
+            };
+
+            // Emoji icons for internal pages without a logo
             const emojiIcons = {
                 'edp': '🌱',
-                'sops': '📝',
-                'kudos': '🏆',
-                'matrix': '📊',
-                'guava': '🍈',
-                'tekmetric': '🔧',
-                'aaa': '🚗',
-                'motovisuals': '🎬'
+                'sops': '📝'
             };
-            
+
             const faviconUrl = `https://www.google.com/s2/favicons?domain=${domain}&sz=128`;
-            const iconContent = emojiIcons[link.id] 
-                ? `<span style="font-size: 20px;">${emojiIcons[link.id]}</span>`
-                : `<img src="${faviconUrl}" alt="${link.title}">`;
+            const iconContent = localIcons[link.id]
+                ? `<img src="${localIcons[link.id]}" alt="${link.title}">`
+                : emojiIcons[link.id]
+                    ? `<span style="font-size: 26px;">${emojiIcons[link.id]}</span>`
+                    : `<img src="${faviconUrl}" alt="${link.title}">`;
             
             const isFeatured = link.id === 'matrix';
             return `
