@@ -4,6 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mango University | Mango Automotive</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="../favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="../favicon.png">
+    <link rel="shortcut icon" href="../favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -85,17 +88,17 @@
         .instructions { border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); padding: 36px; margin-bottom: 32px; }
         .instructions h2 { font-family: var(--font-display); font-weight: 500; font-size: 25px; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 20px; }
         .instructions ol { margin-left: 24px; color: var(--ink-soft); }
-        .instructions li { margin-bottom: 14px; line-height: 1.7; }
+        .instructions li { margin-bottom: 20px; line-height: 1.7; }
         .instructions li strong { color: var(--ink); font-weight: 600; }
         .promise-box { background: rgba(232,134,62,0.07); padding: 20px 24px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(232,134,62,0.20); color: var(--ink-soft); }
         .promise-box strong { color: var(--accent); }
         .form-container { border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); padding: 44px; }
         .quarter-selector { color: var(--ink); margin-bottom: 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
         .quarter-selector label { font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink); margin-bottom: 0; }
-        .quarter-selector select { padding: 12px 24px; border: 1px solid rgba(34,32,28,0.12); border-radius: 9999px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; background: rgba(255,255,255,0.9); color: var(--ink); cursor: pointer; min-width: 280px; }
+        .quarter-selector select { padding: 12px 24px; border: 1px solid rgba(34,32,28,0.22); border-radius: 9999px; font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; background: rgba(255,255,255,0.9); color: var(--ink); cursor: pointer; min-width: 280px; }
         .quarter-selector select option { background: #fff; color: var(--ink); }
         .quarter-theme { width: 100%; margin-top: 8px; font-size: 0.95rem; font-weight: 500; color: var(--ink); }
-        .quarter-theme strong { color: var(--accent); }
+        .quarter-theme strong { color: #B5631F; }
         .quarter-note { width: 100%; font-size: 0.85rem; margin-top: 4px; color: var(--ink-soft); }
         .form-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-bottom: 36px; }
         .form-group { display: flex; flex-direction: column; }
@@ -132,7 +135,7 @@
         .course-cover .icon { font-size: 1.8rem; margin-bottom: 6px; }
         .course-cover span { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.3; }
         .resource-info { flex: 1; display: flex; flex-direction: column; }
-        .resource-type { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: var(--accent); margin-bottom: 6px; }
+        .resource-type { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: #B5631F; margin-bottom: 6px; }
         .resource-title { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 2px; line-height: 1.3; }
         .resource-author { font-size: 0.85rem; color: var(--muted); margin-bottom: 8px; }
         .resource-description { font-size: 0.85rem; color: var(--ink-soft); flex-grow: 1; line-height: 1.55; }
@@ -144,7 +147,7 @@
         .counter-stat { display: flex; flex-direction: column; }
         .counter-number { color: var(--ink); font-family: var(--font-display); font-weight: 500; font-size: 44px; line-height: 1.1; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; }
         .counter-caption { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: var(--muted); margin-top: 2px; }
-        .counter-warning { color: #B5631F; background: rgba(255,255,255,0.6); border: 0.56px solid rgba(181,99,31,0.333); border-radius: 9999px; padding: 6px 14px; font-size: 0.8rem; font-weight: 500; }
+        .counter-warning { color: #8F4E18; background: rgba(255,255,255,0.85); border: 1px solid rgba(181,99,31,0.55); border-radius: 9999px; padding: 6px 14px; font-size: 0.8rem; font-weight: 600; }
         .counter-warning::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 8px; vertical-align: 1px; }
         .counter-success { color: #3E8E5E; background: rgba(255,255,255,0.6); border: 0.56px solid rgba(62,142,94,0.33); border-radius: 9999px; padding: 6px 14px; font-size: 0.8rem; font-weight: 500; }
         .counter-success::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 8px; vertical-align: 1px; }
@@ -160,7 +163,7 @@
         .submit-btn:disabled { background: rgba(34,32,28,0.10); cursor: not-allowed; box-shadow: none; transform: none; color: var(--muted); }
         .submit-note { margin-top: 18px; color: var(--ink-soft); font-size: 0.95rem; }
         .submit-note strong { color: var(--ink); }
-        .validation-message { margin-top: 12px; padding: 12px 20px; background: rgba(232,134,62,0.08); border: 1px solid rgba(232,134,62,0.35); border-radius: 14px; color: var(--ink-soft); font-size: 0.9rem; display: none; }
+        .validation-message { margin-top: 12px; padding: 12px 20px; background: rgba(232,134,62,0.10); border: 1px solid rgba(181,99,31,0.55); border-radius: 14px; color: #22201C; font-size: 0.9rem; font-weight: 500; display: none; }
         .validation-message.show { display: block; }
         .confirmation-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(40,34,26,0.40); backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px); z-index: 1000; display: none; align-items: center; justify-content: center; padding: 20px; }
         .confirmation-overlay.show { display: flex; }
@@ -205,6 +208,10 @@
         .show-all-btn { background: rgba(255,255,255,0.8); border: 1px solid rgba(34,32,28,0.12); color: var(--ink); padding: 10px 20px; border-radius: 9999px; font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
         .show-all-btn:hover { background: #fff; border-color: rgba(232,134,62,0.45); color: var(--ink); }
         .show-all-btn.active { background: #fff; border-color: rgba(232,134,62,0.45); color: var(--ink); box-shadow: 0 1px 4px rgba(40,34,26,0.12); }
+        .counter-number { display: inline-block; }
+        @keyframes counterPop { 0% { transform: scale(1); } 40% { transform: scale(1.18); } 100% { transform: scale(1); } }
+        .counter-number.pop { animation: counterPop 0.35s ease; }
+        .resource-option:focus-within .resource-card { border-color: rgba(232,134,62,0.5); box-shadow: 0 0 0 2px rgba(232,134,62,0.12); }
         @media (max-width: 768px) {
             header { padding: 36px 20px 28px; }
             .form-container { padding: 20px; }
@@ -325,7 +332,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781101981054-L.jpg" alt="Be Obsessed or Be Average" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Brian">Brian’s pick</span></span>
                                             <div class="resource-title">Be Obsessed or Be Average</div>
                                             <div class="resource-author">Grant Cardone</div>
                                             <p class="resource-description">Why obsession is the key to success. High-energy motivation to dominate your goals.</p>
@@ -339,7 +346,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780345472328-L.jpg" alt="Mindset" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Jesse">Jesse’s pick</span></span>
                                             <div class="resource-title">Mindset</div>
                                             <div class="resource-author">Carol S. Dweck</div>
                                             <p class="resource-description">Fixed vs. growth mindset will transform how you coach your team and handle setbacks.</p>
@@ -353,7 +360,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780470100288-L.jpg" alt="The Energy Bus" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Jesse">Jesse’s pick</span></span>
                                             <div class="resource-title">The Energy Bus</div>
                                             <div class="resource-author">Jon Gordon</div>
                                             <p class="resource-description">A fun, fast fable with 10 rules for fueling your life with positive energy.</p>
@@ -367,7 +374,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780307591548-L.jpg" alt="The Happiness Advantage" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Jesse">Jesse’s pick</span></span>
                                             <div class="resource-title">The Happiness Advantage</div>
                                             <div class="resource-author">Shawn Achor</div>
                                             <p class="resource-description">Harvard researcher reveals 7 principles proving happiness drives success.</p>
@@ -381,7 +388,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781591846352-L.jpg" alt="The Obstacle Is the Way" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Jesse">Jesse’s pick</span></span>
                                             <div class="resource-title">The Obstacle Is the Way</div>
                                             <div class="resource-author">Ryan Holiday</div>
                                             <p class="resource-description">Ancient Stoic wisdom meets modern challenges. Turn every obstacle into an opportunity.</p>
@@ -395,7 +402,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780857197689-L.jpg" alt="The Psychology of Money" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Brian">Brian’s pick</span></span>
                                             <div class="resource-title">The Psychology of Money</div>
                                             <div class="resource-author">Morgan Housel</div>
                                             <p class="resource-description">Timeless lessons on wealth, greed, and happiness. Understanding how people think about money.</p>
@@ -416,7 +423,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780735211292-L.jpg" alt="Atomic Habits" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Michelle</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Michelle">Michelle’s pick</span></span>
                                             <div class="resource-title">Atomic Habits</div>
                                             <div class="resource-author">James Clear</div>
                                             <p class="resource-description">Tiny changes, remarkable results. The proven framework for building good habits.</p>
@@ -430,7 +437,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781501111105-L.jpg" alt="Grit" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Jesse</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Jesse">Jesse’s pick</span></span>
                                             <div class="resource-title">Grit</div>
                                             <div class="resource-author">Angela Duckworth</div>
                                             <p class="resource-description">Why passion + perseverance beats raw talent every time.</p>
@@ -444,7 +451,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781401952853-L.jpg" alt="High Performance Habits" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Soren</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Soren">Soren’s pick</span></span>
                                             <div class="resource-title">High Performance Habits</div>
                                             <div class="resource-author">Brendon Burchard</div>
                                             <p class="resource-description">How extraordinary people become that way. Six habits backed by research.</p>
@@ -458,7 +465,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781593156329-L.jpg" alt="No Excuses!" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Brian">Brian’s pick</span></span>
                                             <div class="resource-title">No Excuses!</div>
                                             <div class="resource-author">Brian Tracy</div>
                                             <p class="resource-description">The power of self-discipline. 21 ways to achieve lasting success through accountability.</p>
@@ -472,7 +479,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780743269513-L.jpg" alt="The 7 Habits of Highly Effective People" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Brian">Brian’s pick</span></span>
                                             <div class="resource-title">The 7 Habits of Highly Effective People</div>
                                             <div class="resource-author">Stephen R. Covey</div>
                                             <p class="resource-description">The timeless classic. Foundational principles for personal and professional effectiveness.</p>
@@ -493,7 +500,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780061964541-L.jpg" alt="Aspire" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Bobby">Bobby’s pick</span></span>
                                             <div class="resource-title">Aspire</div>
                                             <div class="resource-author">Kevin Hall</div>
                                             <p class="resource-description">Discovering your purpose through the power of words. 11 words that transform success.</p>
@@ -507,7 +514,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780385504454-L.jpg" alt="Customers for Life" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Bobby">Bobby’s pick</span></span>
                                             <div class="resource-title">Customers for Life</div>
                                             <div class="resource-author">Carl Sewell</div>
                                             <p class="resource-description">From the legendary car dealer. Directly applicable to automotive service.</p>
@@ -521,7 +528,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781591846444-L.jpg" alt="Start with Why" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Bobby">Bobby’s pick</span></span>
                                             <div class="resource-title">Start with Why</div>
                                             <div class="resource-author">Simon Sinek</div>
                                             <p class="resource-description">Discover why some leaders inspire action. Learn the golden circle framework.</p>
@@ -535,7 +542,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781591847168-L.jpg" alt="The Infinite Game" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Brian">Brian’s pick</span></span>
                                             <div class="resource-title">The Infinite Game</div>
                                             <div class="resource-author">Simon Sinek</div>
                                             <p class="resource-description">Stop playing to win. Start playing to keep playing. Long-term success paradigm.</p>
@@ -549,7 +556,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780593418574-L.jpg" alt="Unreasonable Hospitality" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Brian">Brian’s pick</span></span>
                                             <div class="resource-title">Unreasonable Hospitality</div>
                                             <div class="resource-author">Will Guidara</div>
                                             <p class="resource-description">The remarkable power of giving people more than they expect.</p>
@@ -570,7 +577,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780399592522-L.jpg" alt="Dare to Lead" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Michelle</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Michelle">Michelle’s pick</span></span>
                                             <div class="resource-title">Dare to Lead</div>
                                             <div class="resource-author">Brené Brown</div>
                                             <p class="resource-description">Brave work. Tough conversations. Whole hearts. Leadership takes courage.</p>
@@ -584,7 +591,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781591845324-L.jpg" alt="Leaders Eat Last" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Brian">Brian’s pick</span></span>
                                             <div class="resource-title">Leaders Eat Last</div>
                                             <div class="resource-author">Simon Sinek</div>
                                             <p class="resource-description">Why some teams pull together. Create environments where people thrive.</p>
@@ -598,7 +605,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780971584914-L.jpg" alt="Multi-Unit Leadership" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Brian">Brian’s pick</span></span>
                                             <div class="resource-title">Multi-Unit Leadership</div>
                                             <div class="resource-author">Jim Sullivan</div>
                                             <p class="resource-description">The 7 stages of building high-performing partnerships across locations.</p>
@@ -612,7 +619,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780785274346-L.jpg" alt="The 17 Indisputable Laws of Teamwork" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Bobby">Bobby’s pick</span></span>
                                             <div class="resource-title">The 17 Indisputable Laws of Teamwork</div>
                                             <div class="resource-author">John C. Maxwell</div>
                                             <p class="resource-description">Embrace them and empower your team. Build a winning culture.</p>
@@ -626,7 +633,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780785288374-L.jpg" alt="The 21 Irrefutable Laws of Leadership" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Bobby">Bobby’s pick</span></span>
                                             <div class="resource-title">The 21 Irrefutable Laws of Leadership</div>
                                             <div class="resource-author">John C. Maxwell</div>
                                             <p class="resource-description">Follow them and people will follow you. Timeless leadership principles.</p>
@@ -640,7 +647,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9780804176989-L.jpg" alt="The Culture Code" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Bobby</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Bobby">Bobby’s pick</span></span>
                                             <div class="resource-title">The Culture Code</div>
                                             <div class="resource-author">Daniel Coyle</div>
                                             <p class="resource-description">The secrets of highly successful groups. Build cohesion and cooperation.</p>
@@ -654,7 +661,7 @@
                                             <img src="https://covers.openlibrary.org/b/isbn/9781250195777-L.jpg" alt="The Dichotomy of Leadership" class="book-cover">
                                         </a>
                                         <div class="resource-info">
-                                            <span class="resource-type">Book<span class="recommender-tag">Brian</span></span>
+                                            <span class="resource-type">Book<span class="recommender-tag" title="Recommended by Brian">Brian’s pick</span></span>
                                             <div class="resource-title">The Dichotomy of Leadership</div>
                                             <div class="resource-author">Jocko Willink & Leif Babin</div>
                                             <p class="resource-description">Balancing extreme ownership. Navy SEAL wisdom on leadership balance.</p>
@@ -885,6 +892,11 @@
 
         function updateSelectionCount() {
             const checkedCount = document.querySelectorAll('input[name="selections"]:checked').length;
+            if (selectionCount.textContent !== String(checkedCount)) {
+                selectionCount.classList.remove('pop');
+                void selectionCount.offsetWidth;
+                selectionCount.classList.add('pop');
+            }
             selectionCount.textContent = checkedCount;
             if (checkedCount > 0) { 
                 selectionWarning.style.display = 'none'; 
