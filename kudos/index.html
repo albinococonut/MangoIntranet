@@ -91,11 +91,24 @@
         .header-subtitle { font-size: 1.1rem; color: var(--ink-secondary); max-width: 600px; margin: 0 auto; line-height: 1.7; }
 
         .reward-banner {
+            background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82));
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 0.56px solid rgba(255,255,255,0.8);
+            border-radius: 26px;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.95),
+                0 18px 48px -28px rgba(40,34,26,0.22),
+                0 2px 8px -4px rgba(40,34,26,0.08);
+            padding: 14px;
+            max-width: 800px; margin: 28px auto 0; color: var(--ink); text-align: center;
+        }
+
+        .reward-inner {
             background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1));
             border: 0.56px solid rgba(34,32,28,0.08);
             border-radius: 24px;
             padding: 24px;
-            max-width: 800px; margin: 28px auto 0; color: var(--ink); text-align: center;
         }
         .reward-stat-number { font-family: var(--font-display); font-size: 44px; font-weight: 500; letter-spacing: -0.02em; font-variant-numeric: tabular-nums; color: #22201C; line-height: 1.1; }
         .reward-stat-caption { font-family: var(--font-ui); font-size: 12px; color: #938C81; margin-top: 4px; }
@@ -190,9 +203,11 @@
     </header>
     
     <div class="reward-banner">
-        <div class="reward-stat-number">$100</div>
-        <div class="reward-stat-caption">Amazon gift card &middot; quarterly winner</div>
-        <p class="reward-text">The best nominations are shared company-wide — and winners receive a $100 Amazon gift card.</p>
+        <div class="reward-inner">
+            <div class="reward-stat-number">$100</div>
+            <div class="reward-stat-caption">Amazon gift card &middot; quarterly winner</div>
+            <p class="reward-text">The best nominations are shared company-wide — and winners receive a $100 Amazon gift card.</p>
+        </div>
     </div>
     
     <main>
@@ -415,7 +430,7 @@ Submitted: ${new Date().toLocaleString()}`;
                         subject: `🥭 Mango Kudos: ${nomineeName} nominated by ${nominatorName}`,
                         from_name: 'Mango Kudos',
                         to: 'mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com',
-                        cc: 'hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com',
+                        cc: 'hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com,dream-team-aaaajyheabbgclpgjouich6zgm@mangoautomotive.slack.com',
                         message: emailBody,
                         replyto: nominatorEmail
                     })
@@ -428,7 +443,7 @@ Submitted: ${new Date().toLocaleString()}`;
                     throw new Error('Submission failed');
                 }
             } catch (error) {
-                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com?subject=${encodeURIComponent(`🥭 Mango Kudos: ${nomineeName} nominated by ${nominatorName}`)}&body=${encodeURIComponent(emailBody)}`;
+                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com,dream-team-aaaajyheabbgclpgjouich6zgm@mangoautomotive.slack.com?subject=${encodeURIComponent(`🥭 Mango Kudos: ${nomineeName} nominated by ${nominatorName}`)}&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = mailtoLink;
                 setTimeout(() => {
                     form.style.display = 'none';

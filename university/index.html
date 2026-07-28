@@ -118,7 +118,7 @@
         .resource-grid > .resource-option:nth-child(odd):last-child { grid-column: 1 / -1; }
         .resource-option { position: relative; }
         .resource-option input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
-        .resource-card { border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); padding: 20px; cursor: pointer; transition: all 0.3s ease; height: 100%; display: flex; gap: 16px; position: relative; }
+        .resource-card { border-radius: 16px; background: rgba(255,255,255,0.55); border: 0.56px solid rgba(34,32,28,0.08); padding: 16px; cursor: pointer; transition: all 0.3s ease; height: 100%; display: flex; gap: 16px; position: relative; }
         .resource-card:hover { border-color: rgba(232,134,62,0.5); transform: translateY(-4px); box-shadow: 0 1px 0 rgba(255,255,255,0.95) inset, 0 24px 56px -28px rgba(40,34,26,0.28), 0 2px 8px -4px rgba(40,34,26,0.08); }
         .resource-option input:checked + .resource-card { border-color: var(--accent); background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(255,247,240,0.88)); box-shadow: 0 1px 0 rgba(255,255,255,0.95) inset, 0 18px 48px -28px rgba(232,134,62,0.4), 0 2px 8px -4px rgba(40,34,26,0.08); }
         .resource-option input:checked + .resource-card::after { content: '✓'; position: absolute; top: 12px; right: 12px; width: 30px; height: 30px; background: var(--accent); color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 15px; }
@@ -1139,7 +1139,7 @@
                         subject: `${quarter} Development Commitment - ${name} (${location})`, 
                         from_name: 'Mango University', 
                         to: 'mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com', 
-                        cc: 'bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com', 
+                        cc: 'bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com,dream-team-aaaajyheabbgclpgjouich6zgm@mangoautomotive.slack.com',
                         message: emailBody, 
                         replyto: email 
                     })
@@ -1165,7 +1165,7 @@
                     throw new Error('Form submission failed'); 
                 }
             } catch (error) {
-                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com?subject=${encodeURIComponent(`${quarter} Development Commitment - ${name}`)}&body=${encodeURIComponent(emailBody)}`;
+                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com,dream-team-aaaajyheabbgclpgjouich6zgm@mangoautomotive.slack.com?subject=${encodeURIComponent(`${quarter} Development Commitment - ${name}`)}&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = mailtoLink;
                 setTimeout(() => { 
                     document.getElementById('deadlineReminder').textContent = `📅 Your Deadline: ${deadline}`; 
