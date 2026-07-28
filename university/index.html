@@ -68,7 +68,7 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         header, main, footer, .highlight-banner { position: relative; z-index: 1; }
         body { font-family: var(--font-ui); background: var(--cream); color: var(--ink); line-height: 1.6; min-height: 100vh; }
-        header { background: var(--cream); color: var(--ink); padding: 48px 24px 36px; text-align: center; position: relative; border-bottom: none; background-image: linear-gradient(90deg, transparent, rgba(232,134,62,0.45), transparent); background-repeat: no-repeat; background-position: bottom; background-size: 100% 1px; }
+        header { color: var(--ink); padding: 36px 24px 30px; text-align: center; position: relative; border-bottom: none; backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); background-image: linear-gradient(90deg, transparent, rgba(232,134,62,0.45), transparent), linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82)); background-repeat: no-repeat, no-repeat; background-position: bottom, top; background-size: 100% 1px, 100% 100%; }
         .logo-img { height: 80px; margin-bottom: 24px; }
         h1 { font-family: var(--font-display); font-weight: 500; font-size: clamp(2rem, 5vw, 3rem); letter-spacing: -0.02em; margin-bottom: 16px; color: var(--ink); }
         .header-subtitle { font-size: 1.1rem; max-width: 650px; margin: 0 auto; line-height: 1.7; color: var(--ink-soft); }
@@ -115,6 +115,7 @@
         .category-header { background: rgba(34,32,28,0.05); border: 1px solid rgba(34,32,28,0.08); padding: 10px 20px; border-radius: 9999px; margin-bottom: 16px; font-weight: 600; font-size: 12.5px; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink-soft); }
         .category-header.active { background: #fff; border-color: rgba(34,32,28,0.08); color: var(--ink); box-shadow: 0 1px 4px rgba(40,34,26,0.12); }
         .resource-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 20px; }
+        .resource-grid > .resource-option:nth-child(odd):last-child { grid-column: 1 / -1; }
         .resource-option { position: relative; }
         .resource-option input[type="checkbox"] { position: absolute; opacity: 0; pointer-events: none; }
         .resource-card { border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); padding: 20px; cursor: pointer; transition: all 0.3s ease; height: 100%; display: flex; gap: 16px; position: relative; }
@@ -149,7 +150,7 @@
         .counter-success::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 8px; vertical-align: 1px; }
         .commitment-section { background: rgba(232,134,62,0.07); border: 1px solid rgba(232,134,62,0.30); border-radius: 20px; padding: 28px; margin-top: 36px; position: relative; }
         .commitment-section::before { content: 'Your Pledge'; position: absolute; top: -14px; left: 24px; background: #FBF7F0; color: #B5631F; border: 0.56px solid rgba(181,99,31,0.333); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; padding: 6px 16px; border-radius: 9999px; }
-        .commitment-check { display: flex; align-items: flex-start; gap: 16px; cursor: pointer; margin-top: 8px; }
+        .commitment-check { display: flex; align-items: flex-start; gap: 16px; cursor: pointer; margin-top: 8px; text-transform: none; letter-spacing: normal; font-size: 1rem; font-weight: 400; color: var(--ink); }
         .commitment-check input[type="checkbox"] { width: 26px; height: 26px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
         .commitment-text { font-size: 1rem; line-height: 1.7; color: var(--ink); }
         .commitment-text strong { color: var(--accent); }
@@ -1182,6 +1183,7 @@
         initFormatSelectors();
         currentTheme = quarterSelect.options[quarterSelect.selectedIndex].dataset.theme;
         quarterThemeText.textContent = currentTheme;
+        quarterTheme.innerHTML = `This Quarter's Focus: <strong>${currentTheme}</strong> — ${themeDescriptions[currentTheme]}`;
         filterCategories(currentTheme, false);
         updateSelectionCount();
     </script>
