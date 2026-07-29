@@ -106,8 +106,8 @@
         .instructions ol { margin-left: 24px; color: var(--ink-soft); }
         .instructions li { margin-bottom: 20px; line-height: 1.7; }
         .instructions li strong { color: var(--ink); font-weight: 600; }
-        .promise-box { background: rgba(232,134,62,0.07); padding: 20px 24px; border-radius: 16px; margin-top: 20px; border: 1px solid rgba(232,134,62,0.20); color: var(--ink-soft); }
-        .promise-box strong { color: var(--accent); }
+        .promise-box { background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)); padding: 20px 24px; border-radius: 24px; margin-top: 20px; border: 0.56px solid rgba(34,32,28,0.08); color: var(--ink-soft); }
+        .promise-box strong { color: #B5631F; }
         .form-container { border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); padding: 44px; }
         .quarter-selector { color: var(--ink); margin-bottom: 32px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 16px; }
         .quarter-selector label { font-family: var(--font-ui); font-size: 12.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.18em; color: var(--ink); margin-bottom: 0; }
@@ -768,6 +768,7 @@
         const quarterThemeText = document.getElementById('quarterThemeText');
         
         let showingAllBooks = false;
+        let quarterTouched = false;
         let currentTheme = '';
         
         // Store book formats: { checkboxValue: 'hardcopy' | 'audible' }
@@ -904,6 +905,8 @@
         });
 
         quarterSelect.addEventListener('change', function() {
+            quarterTouched = true;
+            updateStepStates();
             const selected = this.options[this.selectedIndex];
             const theme = selected.dataset.theme;
             currentTheme = theme;
@@ -1157,7 +1160,7 @@
         }
         function updateStepStates() {
             setStepDone(1, ['name', 'email', 'location', 'role'].every(id => document.getElementById(id).value.trim() !== ''));
-            setStepDone(2, true);
+            setStepDone(2, quarterTouched);
             setStepDone(3, document.querySelectorAll('input[name="selections"]:checked').length > 0);
             setStepDone(4, document.getElementById('commitment').checked);
         }
