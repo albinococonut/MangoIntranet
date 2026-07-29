@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mango Automotive - Employee Portal</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="./favicon.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="./favicon.png">
-    <link rel="shortcut icon" href="./favicon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="./mia-favicon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="./mia-favicon.png">
+    <link rel="shortcut icon" href="./mia-favicon.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -313,7 +313,9 @@
         .link-card:nth-child(5n):hover { border-color: rgba(192, 90, 46, 0.5); }
 
         .link-card.featured {
-            background: rgba(255,255,255,0.6);
+            background:
+                linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)),
+                rgba(255,255,255,0.6);
             border: 0.56px solid rgba(181,99,31,0.333);
         }
 
@@ -560,9 +562,9 @@
             white-space: nowrap;
             padding-left: 100%;
             animation: ticker 20s linear infinite;
-            font-size: 14px;
-            font-weight: 600;
-            letter-spacing: 0.3px;
+            font-size: 13.5px;
+            font-weight: 500;
+            color: #22201C;
         }
 
         @keyframes ticker {
@@ -765,8 +767,15 @@
             const isFeatured = link.id === 'matrix';
             return `
                 <a href="${link.url}" class="link-card ${isFeatured ? 'featured' : ''}" data-id="${link.id}" target="_blank">
-                    <button class="pin-button ${isPinned ? 'pinned' : ''}" onclick="event.preventDefault(); togglePin('${link.id}')">
-                        📌
+                    <button class="pin-button ${isPinned ? 'pinned' : ''}" onclick="event.preventDefault(); togglePin('${link.id}')" aria-label="Pin or unpin ${link.title}">
+                        <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <g transform="rotate(35 12 12)">
+                                <path d="M12 15.5 L12 22" stroke="#9AA7AE" stroke-width="1.8" stroke-linecap="round"/>
+                                <rect x="10.2" y="11.5" width="3.6" height="4.6" rx="1.4" fill="#DE5F96" stroke="#22201C" stroke-width="1.1"/>
+                                <circle cx="12" cy="7.6" r="6.2" fill="#F27BB4" stroke="#22201C" stroke-width="1.4"/>
+                                <circle cx="9.6" cy="5.6" r="1.9" fill="rgba(255,255,255,0.9)"/>
+                            </g>
+                        </svg>
                     </button>
                     <div class="link-icon">
                         ${iconContent}
