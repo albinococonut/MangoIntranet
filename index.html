@@ -640,7 +640,9 @@
             bottom: 0;
             left: 0;
             right: 0;
-            background: linear-gradient(180deg, rgba(255,255,255,0.90), rgba(251,247,240,0.84));
+            background:
+                linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)),
+                linear-gradient(180deg, rgba(255,255,255,0.90), rgba(251,247,240,0.84));
             backdrop-filter: blur(22px);
             -webkit-backdrop-filter: blur(22px);
             color: #22201C;
@@ -1009,10 +1011,7 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (data && typeof data.text === 'string' && data.text.trim()) {
-                        const line = data.text.trim();
-                        const heroLine = document.getElementById('matrixHeroLine');
-                        if (heroLine) heroLine.textContent = line;
-                        renderTicker(line);
+                        renderTicker(data.text.trim());
                         return;
                     }
                 }
