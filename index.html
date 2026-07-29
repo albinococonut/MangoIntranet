@@ -609,6 +609,36 @@
                 padding: 0 20px 100px;
             }
         }
+        /* Kudos nomination modal */
+        .kudos-overlay { position: fixed; inset: 0; background: rgba(40,34,26,0.4); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); z-index: 2000; display: none; align-items: flex-start; justify-content: center; padding: 4vh 16px; overflow-y: auto; }
+        .kudos-overlay.show { display: flex; }
+        .kudos-modal { background: linear-gradient(180deg, rgba(255,255,255,0.97), rgba(255,255,255,0.92)); border: 0.56px solid rgba(255,255,255,0.8); border-radius: 26px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 18px 48px -28px rgba(40,34,26,0.4), 0 2px 8px -4px rgba(40,34,26,0.1); max-width: 620px; width: 100%; padding: 26px 30px 28px; position: relative; margin: auto; }
+        .kudos-close { position: absolute; top: 14px; right: 16px; background: none; border: none; font-size: 24px; color: #938C81; cursor: pointer; line-height: 1; }
+        .kudos-close:hover { color: #22201C; }
+        .kudos-modal-head { display: flex; align-items: center; gap: 14px; margin-bottom: 4px; }
+        .kudos-modal-head img { height: 46px; }
+        .kudos-modal-title { font-family: 'Fraunces', Georgia, serif; font-size: 25px; font-weight: 500; letter-spacing: -0.02em; color: #22201C; }
+        .kudos-modal-sub { font-size: 13px; color: #5C564E; margin: 6px 0 6px; line-height: 1.5; }
+        .kudos-form label { display: block; font-size: 11.5px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: #938C81; margin: 12px 0 5px; }
+        .kudos-form input, .kudos-form select, .kudos-form textarea { width: 100%; padding: 11px 14px; border: 1px solid rgba(34,32,28,0.12); border-radius: 12px; background: rgba(255,255,255,0.85); font-family: 'Inter', -apple-system, system-ui, sans-serif; font-size: 13.5px; color: #22201C; }
+        .kudos-form select { border-radius: 9999px; font-weight: 600; font-size: 12.5px; border-color: rgba(34,32,28,0.2); }
+        .kudos-form input:hover, .kudos-form select:hover, .kudos-form textarea:hover { border-color: rgba(232,134,62,0.45); }
+        .kudos-form input:focus, .kudos-form select:focus, .kudos-form textarea:focus { outline: none; border-color: rgba(232,134,62,0.45); box-shadow: 0 0 0 2px rgba(232,134,62,0.12); }
+        .kudos-form textarea { min-height: 110px; resize: vertical; line-height: 1.6; }
+        .kudos-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0 14px; }
+        .kudos-count { text-align: right; font-size: 11px; color: #938C81; margin-top: 4px; }
+        .kudos-form .kudos-ack { display: flex; gap: 10px; align-items: flex-start; margin-top: 14px; font-size: 13px; color: #5C564E; text-transform: none; letter-spacing: normal; font-weight: 400; line-height: 1.5; cursor: pointer; }
+        .kudos-ack input[type="checkbox"] { width: 20px; height: 20px; accent-color: #E8863E; flex-shrink: 0; margin-top: 1px; }
+        .kudos-ack strong { color: #22201C; }
+        .kudos-submit { margin-top: 16px; width: 100%; display: inline-flex; align-items: center; justify-content: center; gap: 8px; background: rgba(255,255,255,0.6); border: 0.56px solid rgba(181,99,31,0.333); color: #B5631F; font-size: 14px; font-weight: 600; padding: 13px; border-radius: 9999px; cursor: pointer; font-family: 'Inter', sans-serif; transition: background 0.2s ease, border-color 0.2s ease; }
+        .kudos-submit::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #B5631F; }
+        .kudos-submit:hover:not(:disabled) { background: rgba(255,255,255,0.9); border-color: rgba(181,99,31,0.55); }
+        .kudos-submit:disabled { opacity: 0.45; cursor: not-allowed; }
+        .kudos-success { display: none; text-align: center; padding: 18px 0 8px; }
+        .kudos-success.show { display: block; }
+        .kudos-success img { height: 88px; margin-bottom: 12px; }
+        @media (max-width: 640px) { .kudos-row { grid-template-columns: 1fr; } }
+
     </style>
 </head>
 <body class="theme-luxury">
@@ -656,7 +686,7 @@
             <div class="appreciation-content">
                 <div class="appreciation-title">You Make the Difference</div>
                 <div class="appreciation-message" id="thankYouMessage"></div>
-                <a href="kudos/" class="appreciation-cta">Seen someone go above &amp; beyond? Nominate them for Mango Kudos</a>
+                <a href="#" class="appreciation-cta" onclick="event.preventDefault(); openKudosModal()">Seen someone go above &amp; beyond? Nominate them for Mango Kudos</a>
             </div>
         </div>
 
@@ -668,6 +698,46 @@
                         allow="autoplay; fullscreen; picture-in-picture" 
                         title="Mango Automotive">
                 </iframe>
+            </div>
+        </div>
+    </div>
+
+    <!-- Kudos nomination modal -->
+    <div class="kudos-overlay" id="kudosOverlay">
+        <div class="kudos-modal" role="dialog" aria-modal="true" aria-label="Mango Kudos nomination">
+            <button class="kudos-close" onclick="closeKudosModal()" aria-label="Close">&times;</button>
+            <div class="kudos-modal-head">
+                <img src="MIA%20original@2x.png" alt="Mia Mango">
+                <div class="kudos-modal-title">Mango Kudos</div>
+            </div>
+            <p class="kudos-modal-sub">Recognize a teammate who went truly above and beyond. One nomination per person per year. The best are shared company-wide, and quarterly winners receive a $100 Amazon gift card.</p>
+            <form class="kudos-form" id="kudosForm">
+                <div class="kudos-row">
+                    <div><label for="kNominatorName">Your Name</label><input type="text" id="kNominatorName" required placeholder="First and Last Name"></div>
+                    <div><label for="kNominatorEmail">Your Email</label><input type="email" id="kNominatorEmail" required placeholder="you@mangoautomotive.com"></div>
+                </div>
+                <div class="kudos-row">
+                    <div><label for="kNominatorLocation">Your Location</label><select id="kNominatorLocation" required>
+                            <option value="">Select your shop...</option>
+                            <option value="Cottonwood (Eagle Ranch)">Cottonwood (Eagle Ranch)</option>\n                            <option value="The Heights (Comanche)">The Heights (Comanche)</option>\n                            <option value="Downtown (Central Ave)">Downtown (Central Ave)</option>\n                            <option value="Las Cruces (Triviz Dr)">Las Cruces (Triviz Dr)</option>\n                            <option value="El Paso (Pellicano Dr)">El Paso (Pellicano Dr)</option>\n                            <option value="El Paso (Montana Ave)">El Paso (Montana Ave)</option>\n                            <option value="Yuma (Florence Ln)">Yuma (Florence Ln)</option>\n                            <option value="Corporate Team">Corporate Team</option>\n                            <option value="The Valley (Griegos Rd)">The Valley (Griegos Rd)</option>
+                        </select></div>
+                    <div><label for="kNomineeLocation">Their Location</label><select id="kNomineeLocation" required>
+                            <option value="">Select their shop...</option>
+                            <option value="Cottonwood (Eagle Ranch)">Cottonwood (Eagle Ranch)</option>\n                            <option value="The Heights (Comanche)">The Heights (Comanche)</option>\n                            <option value="Downtown (Central Ave)">Downtown (Central Ave)</option>\n                            <option value="Las Cruces (Triviz Dr)">Las Cruces (Triviz Dr)</option>\n                            <option value="El Paso (Pellicano Dr)">El Paso (Pellicano Dr)</option>\n                            <option value="El Paso (Montana Ave)">El Paso (Montana Ave)</option>\n                            <option value="Yuma (Florence Ln)">Yuma (Florence Ln)</option>\n                            <option value="Corporate Team">Corporate Team</option>\n                            <option value="The Valley (Griegos Rd)">The Valley (Griegos Rd)</option>
+                        </select></div>
+                </div>
+                <label for="kNomineeName">Who Are You Nominating?</label>
+                <input type="text" id="kNomineeName" required placeholder="First and Last Name">
+                <label for="kStory">The Full Story</label>
+                <textarea id="kStory" required placeholder="What was the situation? What did they do? Why was it above and beyond?"></textarea>
+                <div class="kudos-count" id="kCharCount">0 / 100 minimum characters</div>
+                <label class="kudos-ack"><input type="checkbox" id="kAck"> <span><strong>Make it count:</strong> this is for truly remarkable moments, and I only get one nomination per year.</span></label>
+                <button type="submit" class="kudos-submit" id="kSubmit" disabled>Submit Nomination</button>
+            </form>
+            <div class="kudos-success" id="kudosSuccess">
+                <img src="MIA%20original@2x.png" alt="Mia Mango celebrating">
+                <div class="kudos-modal-title">Nomination sent!</div>
+                <p class="kudos-modal-sub">Mia is doing her happy dance. Your nomination is on its way to the team. 🎉</p>
             </div>
         </div>
     </div>
@@ -748,6 +818,7 @@
                 'motovisuals': 'icons/motovisuals.png',
                 'matrix': 'icons/matrix.png',
                 'ringcentral': 'icons/ringcentral.png',
+                'edp': 'icons/mango-university.png',
                 'kudos': 'MIA%20original@2x.png'
             };
 
@@ -765,15 +836,17 @@
                     : `<img src="${faviconUrl}" alt="${link.title}">`;
             
             const isFeatured = link.id === 'matrix';
+            const isKudos = link.id === 'kudos';
             return `
-                <a href="${link.url}" class="link-card ${isFeatured ? 'featured' : ''}" data-id="${link.id}" target="_blank">
+                <a href="${isKudos ? '#' : link.url}" class="link-card ${isFeatured ? 'featured' : ''}" data-id="${link.id}" ${isKudos ? 'onclick="event.preventDefault(); openKudosModal()"' : 'target="_blank"'}>
                     <button class="pin-button ${isPinned ? 'pinned' : ''}" onclick="event.preventDefault(); togglePin('${link.id}')" aria-label="Pin or unpin ${link.title}">
                         <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <g transform="rotate(35 12 12)">
-                                <path d="M12 15.5 L12 22" stroke="#9AA7AE" stroke-width="1.8" stroke-linecap="round"/>
-                                <rect x="10.2" y="11.5" width="3.6" height="4.6" rx="1.4" fill="#DE5F96" stroke="#22201C" stroke-width="1.1"/>
-                                <circle cx="12" cy="7.6" r="6.2" fill="#F27BB4" stroke="#22201C" stroke-width="1.4"/>
-                                <circle cx="9.6" cy="5.6" r="1.9" fill="rgba(255,255,255,0.9)"/>
+                                <path d="M12 14.6 L12 21.5" stroke="#9AA7AE" stroke-width="1.7" stroke-linecap="round"/>
+                                <path d="M8.4 11.2 L15.6 11.2 L17 14.6 L7 14.6 Z" fill="#DE5F96" stroke="#22201C" stroke-width="1.2" stroke-linejoin="round"/>
+                                <rect x="10.5" y="7.6" width="3" height="4" fill="#DE5F96" stroke="#22201C" stroke-width="1.2"/>
+                                <rect x="6.6" y="2.6" width="10.8" height="5.4" rx="2.6" fill="#F27BB4" stroke="#22201C" stroke-width="1.3"/>
+                                <ellipse cx="9.6" cy="4.5" rx="1.7" ry="1" fill="rgba(255,255,255,0.9)"/>
                             </g>
                         </svg>
                     </button>
@@ -944,6 +1017,100 @@
             if (e.key === '3') window.open('https://app.shopgenie.io/dashboard/inbox', '_blank');
             if (e.key === '4') window.open('https://chromewebstore.google.com/detail/ppaiipibgjjnadokahpjakhbneodpfdm', '_blank');
         });
+
+
+        // ----- Kudos modal -----
+        function openKudosModal() {
+            document.getElementById('kudosOverlay').classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeKudosModal() {
+            document.getElementById('kudosOverlay').classList.remove('show');
+            document.body.style.overflow = '';
+        }
+        document.getElementById('kudosOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeKudosModal();
+        });
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') closeKudosModal();
+        });
+
+        const kFields = ['kNominatorName', 'kNominatorEmail', 'kNominatorLocation', 'kNomineeName', 'kNomineeLocation', 'kStory'];
+        function kValidate() {
+            const filled = kFields.every(id => document.getElementById(id).value.trim() !== '');
+            const storyOk = document.getElementById('kStory').value.trim().length >= 100;
+            const ack = document.getElementById('kAck').checked;
+            document.getElementById('kSubmit').disabled = !(filled && storyOk && ack);
+        }
+        kFields.forEach(id => document.getElementById(id).addEventListener('input', kValidate));
+        document.getElementById('kAck').addEventListener('change', kValidate);
+        document.getElementById('kStory').addEventListener('input', function() {
+            const len = this.value.trim().length;
+            document.getElementById('kCharCount').textContent = len < 100 ? `${len} / 100 minimum characters` : `${len} characters — looking good`;
+        });
+
+        document.getElementById('kudosForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+            const nominatorName = document.getElementById('kNominatorName').value;
+            const nominatorEmail = document.getElementById('kNominatorEmail').value;
+            const nominatorLocation = document.getElementById('kNominatorLocation').value;
+            const nomineeName = document.getElementById('kNomineeName').value;
+            const nomineeLocation = document.getElementById('kNomineeLocation').value;
+            const storyText = document.getElementById('kStory').value;
+            const btn = document.getElementById('kSubmit');
+            btn.textContent = 'Sending...';
+            btn.disabled = true;
+
+            const emailBody = `\u{1F96D} MANGO KUDOS NOMINATION
+\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501
+
+NOMINATED BY:
+Name: ${nominatorName}
+Email: ${nominatorEmail}
+Location: ${nominatorLocation}
+
+NOMINEE:
+Name: ${nomineeName}
+Location: ${nomineeLocation}
+
+THE STORY:
+${storyText}
+
+\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501
+Submitted: ${new Date().toLocaleString()}`;
+
+            try {
+                const response = await fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de',
+                        subject: `\u{1F96D} Mango Kudos: ${nomineeName} nominated by ${nominatorName}`,
+                        from_name: 'Mango Kudos',
+                        to: 'mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com',
+                        cc: 'hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com',
+                        message: emailBody,
+                        replyto: nominatorEmail
+                    })
+                });
+                if (response.ok) {
+                    document.getElementById('kudosForm').style.display = 'none';
+                    document.getElementById('kudosSuccess').classList.add('show');
+                } else {
+                    throw new Error('Submission failed');
+                }
+            } catch (error) {
+                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com?subject=${encodeURIComponent(`Mango Kudos: ${nomineeName} nominated by ${nominatorName}`)}&body=${encodeURIComponent(emailBody)}`;
+                window.location.href = mailtoLink;
+                setTimeout(() => {
+                    document.getElementById('kudosForm').style.display = 'none';
+                    document.getElementById('kudosSuccess').classList.add('show');
+                }, 500);
+            }
+        });
+
+        // Deep link: /?kudos=1 opens the nomination popup
+        if (new URLSearchParams(window.location.search).has('kudos')) openKudosModal();
 
         // Initialize
         rotateThankYou();
