@@ -93,6 +93,12 @@
         .count-pill { display: inline-flex; align-items: baseline; gap: 6px; background: rgba(255,255,255,0.7); border: 0.56px solid rgba(34,32,28,0.12); border-radius: 9999px; padding: 6px 14px; font-size: 12.5px; font-weight: 600; color: var(--ink); white-space: nowrap; }
         .count-pill .counter-number { font-size: 20px; line-height: 1; }
         .step-card .resources-section { margin-top: 0; }
+        .quarter-row { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+        .quarter-current { font-size: 13.5px; color: var(--ink-soft); }
+        .quarter-current strong { color: var(--ink); font-weight: 600; }
+        .change-quarter-btn { background: rgba(255,255,255,0.6); border: 0.56px solid rgba(34,32,28,0.15); color: var(--ink); font-family: var(--font-ui); font-size: 12px; font-weight: 600; padding: 7px 16px; border-radius: 9999px; cursor: pointer; transition: border-color 0.2s ease; }
+        .change-quarter-btn:hover { border-color: rgba(232,134,62,0.45); }
+        .quarter-row select { width: auto; min-width: 280px; }
         .step-card .quarter-selector { margin-bottom: 0; }
         .step-card .commitment-section { margin-top: 0; }
         .step-card .submit-section { margin-top: 22px; }
@@ -120,7 +126,7 @@
         .form-group { display: flex; flex-direction: column; }
         label { font-size: 12.5px; font-weight: 600; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.18em; }
         input, select { padding: 14px 18px; border: 1px solid rgba(34,32,28,0.12); border-radius: 14px; font-family: var(--font-ui); font-size: 1rem; color: var(--ink); transition: all 0.3s ease; background: rgba(255,255,255,0.7); }
-        select { border-radius: 9999px; font-size: 12.5px; font-weight: 600; padding: 14px 20px; cursor: pointer; }
+        select { border-radius: 9999px; font-size: 12.5px; font-weight: 600; padding: 14px 42px 14px 20px; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path d="M1 1.5 L6 6.5 L11 1.5" fill="none" stroke="%235C564E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'); background-repeat: no-repeat; background-position: right 16px center; }
         input:hover, select:hover { border-color: rgba(232,134,62,0.45); }
         input:focus, select:focus { outline: none; border-color: rgba(232,134,62,0.45); background: #fff; box-shadow: 0 0 0 2px rgba(232,134,62,0.12); }
         .quarter-selector select:focus { background: #fff; border-color: rgba(34,32,28,0.2); outline: none; }
@@ -155,6 +161,7 @@
         .course-cover.yale { background: linear-gradient(135deg, #00356B 0%, #001E3C 100%); }
         .course-cover .icon { font-size: 1.8rem; margin-bottom: 6px; }
         .course-cover span { font-size: 0.6rem; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px; line-height: 1.3; }
+        .resource-option { text-transform: none; letter-spacing: normal; font-weight: 400; }
         .resource-info { flex: 1; display: flex; flex-direction: column; }
         .resource-type { display: inline-flex; align-items: center; gap: 6px; font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; color: #B5631F; margin-bottom: 6px; }
         .resource-title { font-family: var(--font-display); font-weight: 500; font-size: 1.15rem; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 2px; line-height: 1.3; }
@@ -172,7 +179,7 @@
         .counter-warning::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 8px; vertical-align: 1px; }
         .counter-success { color: #3E8E5E; background: rgba(255,255,255,0.6); border: 0.56px solid rgba(62,142,94,0.33); border-radius: 9999px; padding: 6px 14px; font-size: 0.8rem; font-weight: 500; }
         .counter-success::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 8px; vertical-align: 1px; }
-        .commitment-section { background: rgba(232,134,62,0.07); border: 1px solid rgba(232,134,62,0.30); border-radius: 20px; padding: 28px; margin-top: 36px; position: relative; }
+        .commitment-section { background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)); border: 0.56px solid rgba(34,32,28,0.08); border-radius: 24px; padding: 24px; margin-top: 36px; position: relative; }
         .commitment-check { display: flex; align-items: flex-start; gap: 16px; cursor: pointer; margin-top: 8px; text-transform: none; letter-spacing: normal; font-size: 1rem; font-weight: 400; color: var(--ink); }
         .commitment-check input[type="checkbox"] { width: 26px; height: 26px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
         .commitment-text { font-size: 1rem; line-height: 1.7; color: var(--ink); }
@@ -222,7 +229,7 @@
         .format-btn:hover { color: var(--ink); }
         .format-btn.selected { background: #fff; color: var(--ink); box-shadow: 0 1px 4px rgba(40,34,26,0.12); }
         .format-btn.selected::before { content: '✓ '; }
-        .show-all-section { background: rgba(34,32,28,0.04); border: 1px solid var(--line); border-radius: 16px; padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
+        .show-all-section { background: rgba(255,255,255,0.55); border: 0.56px solid rgba(34,32,28,0.08); border-radius: 16px; padding: 12px 16px; margin-bottom: 24px; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; }
         .show-all-section.hidden { display: none; }
         .show-all-text { color: var(--ink-soft); font-size: 0.95rem; }
         .show-all-btn { background: rgba(255,255,255,0.8); border: 1px solid rgba(34,32,28,0.12); color: var(--ink); padding: 10px 20px; border-radius: 9999px; font-family: var(--font-ui); font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: all 0.2s ease; }
@@ -275,8 +282,7 @@
             <h2>Here's How It Works</h2>
             <ol>
                 <li><strong>Tell us who you are</strong> — Name, email, location, and role.</li>
-                <li><strong>Pick your quarter</strong> — Each quarter focuses on a different leadership superpower.</li>
-                <li><strong>Choose at least one book</strong> — or stack multiple. Go all-in on your growth.</li>
+                <li><strong>Choose at least one book</strong> — this quarter's picks are ready, or hit Change Quarter to browse other themes.</li>
                 <li><strong>Make it official</strong> — Check the commitment box and hit submit.</li>
                 <li><strong>Watch your mailbox</strong> — You'll receive a confirmation email, and your resources will be on the way!</li>
             </ol>
@@ -300,7 +306,7 @@
                     <div class="form-group">
                         <label for="location">Your Location</label>
                         <select id="location" name="location" required>
-                            <option value="">Select your shop...</option>
+                            <option value="">Pick your shop</option>
                             <option value="Cottonwood (Eagle Ranch)">Cottonwood (Eagle Ranch)</option>
                             <option value="The Heights (Comanche)">The Heights (Comanche)</option>
                             <option value="Downtown (Central Ave)">Downtown (Central Ave)</option>
@@ -315,7 +321,7 @@
                     <div class="form-group">
                         <label for="role">Your Role</label>
                         <select id="role" name="role" required>
-                            <option value="">Select your role...</option>
+                            <option value="">Pick your role</option>
                             <option value="Shop Manager">Shop Manager</option>
                             <option value="Advisor">Advisor</option>
                             <option value="Foreman">Foreman</option>
@@ -326,19 +332,16 @@
                 </div>
                 </div>
                 <div class="step-card">
-                <div class="step-head"><span class="step-num" id="stepNum2" data-n="2">2</span><div class="step-titles"><div class="step-title">Step 2 · Pick Your Focus</div><div class="step-sub">Each quarter builds a different leadership muscle</div></div></div>
-                <div class="quarter-selector">
-                    <select id="quarter" name="quarter" required aria-label="What do you want to focus on?">
+                <div class="step-head"><span class="step-num" id="stepNum3" data-n="2">2</span><div class="step-titles"><div class="step-title">Step 2 · Choose Your Books</div><div class="step-sub">Pick at least one — stack as many as you like</div></div><span class="count-pill"><span class="counter-number" id="selectionCount">0</span> selected</span></div>
+                <div class="quarter-row">
+                    <span class="quarter-current">This quarter: <strong id="quarterCurrentLabel">Ownership & Growth (Q3 2026)</strong></span>
+                    <button type="button" class="change-quarter-btn" id="changeQuarterBtn">Change Quarter</button>
+                    <select id="quarter" name="quarter" required aria-label="Pick your quarter" hidden>
                         <option value="Q1 2026" data-theme="Mindset & Optimism" data-deadline="March 31, 2026">Mindset & Optimism (Q1 2026)</option>
                         <option value="Q3 2026" data-theme="Ownership & Growth" data-deadline="September 30, 2026" selected>Ownership & Growth (Q3 2026)</option>
                         <option value="Q4 2026" data-theme="Action & Execution" data-deadline="December 31, 2026">Action & Execution (Q4 2026)</option>
                     </select>
-                    <div class="quarter-theme" id="quarterTheme">This Quarter's Focus: <strong>Mindset & Optimism</strong> — Build the mental foundation that drives everything else</div>
-                    <div class="quarter-note">You can select books from any quarter, but we recommend focusing on one theme.</div>
                 </div>
-                </div>
-                <div class="step-card">
-                <div class="step-head"><span class="step-num" id="stepNum3" data-n="3">3</span><div class="step-titles"><div class="step-title">Step 3 · Choose Your Books</div><div class="step-sub">Pick at least one — stack as many as you like</div></div><span class="count-pill"><span class="counter-number" id="selectionCount">0</span> selected</span></div>
                 <div class="resources-section">
                     
                     <div id="showAllSection" class="show-all-section hidden">
@@ -703,7 +706,7 @@
                 </div>
                 </div>
                 <div class="step-card">
-                <div class="step-head"><span class="step-num" id="stepNum4" data-n="4">4</span><div class="step-titles"><div class="step-title">Step 4 · Make It Official</div><div class="step-sub">Your pledge unlocks the submit button</div></div></div>
+                <div class="step-head"><span class="step-num" id="stepNum4" data-n="3">3</span><div class="step-titles"><div class="step-title">Step 3 · Make It Official</div><div class="step-sub">Your pledge unlocks the submit button</div></div></div>
                 <div class="commitment-section">
                     <label class="commitment-check">
                         <input type="checkbox" id="commitment" required>
@@ -756,7 +759,6 @@
     </div>
     <script>
         const quarterSelect = document.getElementById('quarter');
-        const quarterTheme = document.getElementById('quarterTheme');
         const commitmentCheck = document.getElementById('commitment');
         const submitBtn = document.getElementById('submitBtn');
         const selectionCount = document.getElementById('selectionCount');
@@ -768,7 +770,6 @@
         const quarterThemeText = document.getElementById('quarterThemeText');
         
         let showingAllBooks = false;
-        let quarterTouched = false;
         let currentTheme = '';
         
         // Store book formats: { checkboxValue: 'hardcopy' | 'audible' }
@@ -905,15 +906,18 @@
         });
 
         quarterSelect.addEventListener('change', function() {
-            quarterTouched = true;
-            updateStepStates();
             const selected = this.options[this.selectedIndex];
-            const theme = selected.dataset.theme;
-            currentTheme = theme;
+            currentTheme = selected.dataset.theme;
             showingAllBooks = false;
-            
-            quarterTheme.innerHTML = `This Quarter's Focus: <strong>${theme}</strong> — ${themeDescriptions[theme]}`;
-            filterCategories(theme, false);
+            document.getElementById('quarterCurrentLabel').textContent = selected.textContent;
+            quarterSelect.hidden = true;
+            document.getElementById('changeQuarterBtn').hidden = false;
+            filterCategories(currentTheme, false);
+        });
+        document.getElementById('changeQuarterBtn').addEventListener('click', function() {
+            this.hidden = true;
+            quarterSelect.hidden = false;
+            quarterSelect.focus();
         });
 
         function updateSelectionCount() {
@@ -1160,7 +1164,6 @@
         }
         function updateStepStates() {
             setStepDone(1, ['name', 'email', 'location', 'role'].every(id => document.getElementById(id).value.trim() !== ''));
-            setStepDone(2, quarterTouched);
             setStepDone(3, document.querySelectorAll('input[name="selections"]:checked').length > 0);
             setStepDone(4, document.getElementById('commitment').checked);
         }
@@ -1176,7 +1179,7 @@
         initFormatSelectors();
         currentTheme = quarterSelect.options[quarterSelect.selectedIndex].dataset.theme;
         quarterThemeText.textContent = currentTheme;
-        quarterTheme.innerHTML = `This Quarter's Focus: <strong>${currentTheme}</strong> — ${themeDescriptions[currentTheme]}`;
+        document.getElementById('quarterCurrentLabel').textContent = quarterSelect.options[quarterSelect.selectedIndex].textContent;
         filterCategories(currentTheme, false);
         updateSelectionCount();
         updateStepStates();
