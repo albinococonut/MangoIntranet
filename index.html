@@ -187,6 +187,108 @@
             font-variant-numeric: tabular-nums;
         }
 
+        /* Featured Mango Matrix hero (box-in-box) */
+        .matrix-hero {
+            display: block;
+            text-decoration: none;
+            color: #22201C;
+            background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82));
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            border: 0.56px solid rgba(255,255,255,0.8);
+            border-radius: 26px;
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.95),
+                0 18px 48px -28px rgba(40,34,26,0.22),
+                0 2px 8px -4px rgba(40,34,26,0.08);
+            padding: 12px;
+            margin-bottom: 18px;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+
+        .matrix-hero:hover {
+            transform: translateY(-2px);
+            box-shadow:
+                inset 0 1px 0 rgba(255,255,255,0.95),
+                0 22px 52px -28px rgba(40,34,26,0.28),
+                0 2px 8px -4px rgba(40,34,26,0.08);
+        }
+
+        .matrix-hero-inner {
+            background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1));
+            border: 0.56px solid rgba(34,32,28,0.08);
+            border-radius: 24px;
+            padding: 16px 22px;
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .matrix-hero-icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.75);
+            border: 0.56px solid rgba(34,32,28,0.08);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .matrix-hero-icon img {
+            width: 30px;
+            height: 30px;
+            object-fit: contain;
+        }
+
+        .matrix-hero-text {
+            flex: 1;
+            min-width: 0;
+        }
+
+        .matrix-hero-text .eyebrow {
+            margin-bottom: 2px;
+        }
+
+        .matrix-hero-line {
+            font-family: 'Fraunces', Georgia, serif;
+            font-size: 17px;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #22201C;
+            line-height: 1.35;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .matrix-hero-cta {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: rgba(255,255,255,0.6);
+            border: 0.56px solid rgba(181,99,31,0.333);
+            color: #B5631F;
+            font-size: 12.5px;
+            font-weight: 600;
+            padding: 10px 20px;
+            border-radius: 9999px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .matrix-hero-cta::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #B5631F;
+        }
+
+        @media (max-width: 768px) {
+            .matrix-hero-inner { flex-direction: column; align-items: flex-start; }
+        }
+
         /* Sections — outer frosted-glass cards (box-in-box level 1) */
         .section {
             background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82));
@@ -631,6 +733,18 @@
             </div>
         </div>
 
+        <!-- Featured: Mango Matrix -->
+        <a class="matrix-hero" href="https://matrix.mangoautomotive.com" target="_blank">
+            <div class="matrix-hero-inner">
+                <div class="matrix-hero-icon"><img src="icons/matrix.png" alt="Mango Matrix"></div>
+                <div class="matrix-hero-text">
+                    <div class="eyebrow">Mango Matrix · Today</div>
+                    <div class="matrix-hero-line" id="matrixHeroLine">Live shop numbers, Golden Mango standings, and today's story from across all eight shops.</div>
+                </div>
+                <span class="matrix-hero-cta">Open the Matrix</span>
+            </div>
+        </a>
+
         <!-- Quick Actions -->
         <div class="section">
             <div class="eyebrow">Pinned Shortcuts</div>
@@ -689,6 +803,7 @@
             { id: 'chatgpt', title: 'ChatGPT', url: 'https://chatgpt.com/' },
             { id: 'lyft', title: 'Lyft', url: 'https://account.lyft.com/auth/email?v=lyft-for-business&next=https%3A%2F%2Fbusiness.lyft.com%2Flogin' },
             { id: 'repairpal', title: 'RepairPal', url: 'https://repairpal.com/shop-dashboard' },
+            { id: 'ringcentral', title: 'RingCentral', url: 'https://service.ringcentral.com/application/adminHome/?post3rdPartyLogin=true' },
             { id: 'alldata', title: 'AllData', url: 'https://my.alldata.com/' },
             { id: 'motovisuals', title: 'Motovisuals', url: 'https://www.motovisuals.com/#!/bhome' },
             { id: 'aaa', title: 'AAA Portal', url: 'https://rsp.national.aaa.com/' },
@@ -744,6 +859,7 @@
                 'aaa': 'icons/aaa.png',
                 'motovisuals': 'icons/motovisuals.png',
                 'matrix': 'icons/matrix.png',
+                'ringcentral': 'icons/ringcentral.png',
                 'kudos': 'MIA%20original@2x.png'
             };
 
@@ -893,7 +1009,10 @@
                 if (response.ok) {
                     const data = await response.json();
                     if (data && typeof data.text === 'string' && data.text.trim()) {
-                        renderTicker(data.text.trim());
+                        const line = data.text.trim();
+                        const heroLine = document.getElementById('matrixHeroLine');
+                        if (heroLine) heroLine.textContent = line;
+                        renderTicker(line);
                         return;
                     }
                 }
