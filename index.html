@@ -497,21 +497,34 @@
         }
 
         .appreciation-cta {
-            display: inline-block;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
             margin-top: 24px;
-            background: #E8863E;
-            color: #ffffff;
+            background: rgba(255,255,255,0.6);
+            border: 0.56px solid rgba(181,99,31,0.333);
+            color: #B5631F;
             font-size: 14px;
-            font-weight: 700;
+            font-weight: 600;
             text-decoration: none;
-            padding: 13px 30px;
+            padding: 12px 26px;
             border-radius: 9999px;
-            box-shadow: 0 8px 20px -8px rgba(40,34,26,0.35);
-            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+        }
+
+        .appreciation-cta::before {
+            content: '';
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            background: #B5631F;
+            flex-shrink: 0;
         }
 
         .appreciation-cta:hover {
-            background: #d97a35;
+            background: rgba(255,255,255,0.85);
+            border-color: rgba(181,99,31,0.55);
+            transform: translateY(-1px);
         }
 
         .appreciation-cta:hover {

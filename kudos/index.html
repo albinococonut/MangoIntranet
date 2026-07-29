@@ -71,12 +71,12 @@
         header, main, footer, .reward-banner { position: relative; z-index: 1; }
         body { font-family: var(--font-ui); background: var(--cream); color: var(--ink); line-height: 1.6; min-height: 100vh; }
 
-        header { color: var(--ink); padding: 36px 24px 30px; text-align: center; position: relative; overflow: hidden; backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); background-image: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82)); }
-        header::after { content: ''; position: absolute; bottom: 0; left: 50%; transform: translateX(-50%); width: min(800px, calc(100% - 48px)); height: 1px; background: linear-gradient(90deg, transparent, rgba(232,134,62,0.45), transparent); }
+        header { color: var(--ink); padding: 16px 24px; text-align: left; position: relative; overflow: hidden; backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); background-image: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82)); }
+        header::after { content: ''; position: absolute; bottom: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, rgba(232,134,62,0.45), transparent); }
         header > * { position: relative; z-index: 1; }
 
-        .mia-container { margin-bottom: 20px; }
-        .mia-img { height: 120px; filter: drop-shadow(0 12px 28px rgba(40,34,26,0.18)); animation: wave 2s ease-in-out infinite; }
+        .header-row { max-width: 800px; margin: 0 auto; display: flex; align-items: center; gap: 18px; }
+        .mia-img { height: 64px; flex-shrink: 0; filter: drop-shadow(0 12px 28px rgba(40,34,26,0.18)); animation: wave 2s ease-in-out infinite; }
         @keyframes wave {
             0%, 100% { transform: rotate(-3deg); }
             50% { transform: rotate(3deg); }
@@ -87,8 +87,8 @@
         .pill .pill-dot { width: 6px; height: 6px; border-radius: 50%; flex-shrink: 0; }
         .pill-amber { background: rgba(255,255,255,0.6); border: 0.56px solid rgba(181,99,31,0.333); color: #B5631F; }
         .pill-amber .pill-dot { background: #B5631F; }
-        h1 { font-family: var(--font-display); font-size: clamp(2rem, 6vw, 3.2rem); font-weight: 500; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 12px; }
-        .header-subtitle { font-size: 1.1rem; color: var(--ink-secondary); max-width: 600px; margin: 0 auto; line-height: 1.7; }
+        h1 { font-family: var(--font-display); font-size: clamp(1.5rem, 3vw, 2rem); font-weight: 500; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 2px; }
+        .header-subtitle { font-size: 0.92rem; color: var(--ink-secondary); margin: 0; line-height: 1.5; }
 
         .reward-banner {
             background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82));
@@ -101,7 +101,7 @@
                 0 18px 48px -28px rgba(40,34,26,0.22),
                 0 2px 8px -4px rgba(40,34,26,0.08);
             padding: 14px;
-            max-width: 800px; margin: 28px auto 0; color: var(--ink); text-align: center;
+            max-width: 800px; margin: 20px auto 0; color: var(--ink); text-align: center;
         }
 
         .reward-inner {
@@ -114,7 +114,7 @@
         .reward-stat-caption { font-family: var(--font-ui); font-size: 12px; color: #938C81; margin-top: 4px; }
         .reward-banner .reward-text { margin-top: 14px; font-size: 0.95rem; font-weight: 400; color: var(--ink-secondary); }
 
-        main { max-width: 800px; margin: 0 auto; padding: 44px 24px 50px; }
+        main { max-width: 800px; margin: 0 auto; padding: 28px 24px 50px; }
 
         .intro-card { background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); border-radius: var(--card-radius); box-shadow: var(--card-shadow); padding: 36px; margin-bottom: 32px; }
         .intro-card h2 { font-family: var(--font-display); font-size: 25px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); margin-bottom: 16px; }
@@ -194,12 +194,13 @@
 <body class="theme-luxury">
     <div class="bg-orbs" aria-hidden="true"><div class="orb orb-blue"></div><div class="orb orb-gold"></div><div class="orb orb-amber"></div><div class="orb orb-teal"></div></div>
     <header>
-        <div class="mia-container">
+        <div class="header-row">
             <img src="MIA%20original@2x.png" alt="Mia Mango" class="mia-img">
+            <div class="header-text">
+                <h1>Mango Kudos</h1>
+                <p class="header-subtitle">Recognize a teammate who went above and beyond — Mia style!</p>
+            </div>
         </div>
-        <div class="kicker">Employee Recognition</div>
-        <h1>Mango Kudos</h1>
-        <p class="header-subtitle">Recognize a teammate who went above and beyond — Mia style!</p>
     </header>
     
     <div class="reward-banner">
