@@ -82,7 +82,23 @@
         .dot-pill::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
         .dot-pill-green { color: #3E8E5E; border: 0.56px solid rgba(62,142,94,0.33); }
         .dot-pill-amber { color: #B5631F; border: 0.56px solid rgba(181,99,31,0.333); }
-        .funded-pill { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)), rgba(255,255,255,0.7); border: 0.56px solid rgba(62,142,94,0.4); border-radius: 9999px; padding: 5px 12px; font-size: 11px; font-weight: 600; color: #3E8E5E; white-space: nowrap; vertical-align: 2px; margin-left: 6px; }
+        /* Step cards */
+        .step-card { background: rgba(255,255,255,0.55); border: 0.56px solid rgba(34,32,28,0.08); border-radius: 16px; padding: 20px 22px; margin-bottom: 16px; }
+        .step-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+        .step-num { width: 28px; height: 28px; border-radius: 50%; background: #fff; border: 1px solid rgba(34,32,28,0.15); display: flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 600; color: var(--ink); flex-shrink: 0; transition: all 0.25s ease; }
+        .step-num.done { background: #3E8E5E; border-color: #3E8E5E; color: #fff; }
+        .step-titles { flex: 1; min-width: 0; }
+        .step-title { font-family: var(--font-display); font-size: 18px; font-weight: 500; letter-spacing: -0.01em; color: var(--ink); line-height: 1.2; }
+        .step-sub { font-size: 12.5px; color: var(--muted); margin-top: 1px; }
+        .count-pill { display: inline-flex; align-items: baseline; gap: 6px; background: rgba(255,255,255,0.7); border: 0.56px solid rgba(34,32,28,0.12); border-radius: 9999px; padding: 6px 14px; font-size: 12.5px; font-weight: 600; color: var(--ink); white-space: nowrap; }
+        .count-pill .counter-number { font-size: 20px; line-height: 1; }
+        .step-card .resources-section { margin-top: 0; }
+        .step-card .quarter-selector { margin-bottom: 0; }
+        .step-card .commitment-section { margin-top: 0; }
+        .step-card .submit-section { margin-top: 22px; }
+        .submit-status { margin-bottom: 14px; }
+        .funded-row { margin-top: 8px; }
+        .funded-pill { display: inline-flex; align-items: center; gap: 6px; background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)), rgba(255,255,255,0.7); border: 0.56px solid rgba(62,142,94,0.4); border-radius: 9999px; padding: 5px 12px; font-size: 11px; font-weight: 600; color: #3E8E5E; white-space: nowrap; line-height: 1; }
         .watercolor-wash { background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)); border: 0.56px solid rgba(34,32,28,0.08); border-radius: 24px; padding: 24px; }
         main { max-width: 1000px; margin: 0 auto; padding: 50px 24px; }
         .instructions { border-radius: 26px; background: var(--card-bg); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: var(--card-border); box-shadow: var(--card-shadow); padding: 36px; margin-bottom: 32px; }
@@ -157,7 +173,6 @@
         .counter-success { color: #3E8E5E; background: rgba(255,255,255,0.6); border: 0.56px solid rgba(62,142,94,0.33); border-radius: 9999px; padding: 6px 14px; font-size: 0.8rem; font-weight: 500; }
         .counter-success::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; margin-right: 8px; vertical-align: 1px; }
         .commitment-section { background: rgba(232,134,62,0.07); border: 1px solid rgba(232,134,62,0.30); border-radius: 20px; padding: 28px; margin-top: 36px; position: relative; }
-        .commitment-section::before { content: 'Step 4 · Your Pledge'; position: absolute; top: -14px; left: 24px; background: #FBF7F0; color: #B5631F; border: 0.56px solid rgba(181,99,31,0.333); font-size: 0.72rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.14em; padding: 6px 16px; border-radius: 9999px; }
         .commitment-check { display: flex; align-items: flex-start; gap: 16px; cursor: pointer; margin-top: 8px; text-transform: none; letter-spacing: normal; font-size: 1rem; font-weight: 400; color: var(--ink); }
         .commitment-check input[type="checkbox"] { width: 26px; height: 26px; accent-color: var(--accent); cursor: pointer; flex-shrink: 0; margin-top: 2px; }
         .commitment-text { font-size: 1rem; line-height: 1.7; color: var(--ink); }
@@ -231,7 +246,6 @@
             .format-selector { margin-top: 8px; }
             .format-btn { padding: 5px 10px; font-size: 0.7rem; }
             .commitment-check { flex-direction: column; align-items: flex-start; }
-            .commitment-section::before { font-size: 0.62rem; padding: 5px 12px; }
             .quarter-selector { flex-direction: column; text-align: center; padding: 20px; }
             .quarter-selector select { width: 100%; min-width: unset; }
             .selection-counter { flex-direction: column; text-align: center; padding: 14px; }
@@ -250,7 +264,8 @@
             <img src="mu-logo.png" alt="Mango University crest" class="logo-img">
             <div class="header-text">
                 <h1>Mango University</h1>
-                <p class="header-subtitle">Great leaders aren't born — they're built. <strong>We're investing in YOU</strong> with world-class books to unlock your full potential. <span class="funded-pill"><svg width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6.6" fill="#F2CE70" stroke="#22201C" stroke-width="1.1"/><text x="8" y="11.2" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#22201C">$</text></svg>100% Company-Funded</span></p>
+                <p class="header-subtitle">Great leaders aren't born — they're built. <strong>We're investing in YOU</strong> with world-class books to unlock your full potential.</p>
+                <div class="funded-row"><span class="funded-pill"><svg width="14" height="14" viewBox="0 0 16 16" xmlns="http://www.w3.org/2000/svg"><circle cx="8" cy="8" r="6.6" fill="#F2CE70" stroke="#22201C" stroke-width="1.1"/><text x="8" y="11.2" text-anchor="middle" font-family="Inter, sans-serif" font-size="8.5" font-weight="700" fill="#22201C">$</text></svg>100% Company-Funded</span></div>
             </div>
         </div>
     </header>
@@ -271,7 +286,8 @@
         </div>
         <div class="form-container">
             <form id="selectionForm">
-                <div class="kicker">Step 1 · Who You Are</div>
+                <div class="step-card">
+                <div class="step-head"><span class="step-num" id="stepNum1" data-n="1">1</span><div class="step-titles"><div class="step-title">Who You Are</div><div class="step-sub">Name, email, shop, and role</div></div></div>
                 <div class="form-row">
                     <div class="form-group">
                         <label for="name">Your Name</label>
@@ -308,10 +324,11 @@
                         </select>
                     </div>
                 </div>
+                </div>
+                <div class="step-card">
+                <div class="step-head"><span class="step-num" id="stepNum2" data-n="2">2</span><div class="step-titles"><div class="step-title">Pick Your Focus</div><div class="step-sub">Each quarter builds a different leadership muscle</div></div></div>
                 <div class="quarter-selector">
-                    <div class="kicker">Step 2 · Pick Your Focus</div>
-                    <label for="quarter">What Do You Want to Focus On?</label>
-                    <select id="quarter" name="quarter" required>
+                    <select id="quarter" name="quarter" required aria-label="What do you want to focus on?">
                         <option value="Q1 2026" data-theme="Mindset & Optimism" data-deadline="March 31, 2026">Mindset & Optimism (Q1 2026)</option>
                         <option value="Q3 2026" data-theme="Ownership & Growth" data-deadline="September 30, 2026" selected>Ownership & Growth (Q3 2026)</option>
                         <option value="Q4 2026" data-theme="Action & Execution" data-deadline="December 31, 2026">Action & Execution (Q4 2026)</option>
@@ -319,10 +336,10 @@
                     <div class="quarter-theme" id="quarterTheme">This Quarter's Focus: <strong>Mindset & Optimism</strong> — Build the mental foundation that drives everything else</div>
                     <div class="quarter-note">You can select books from any quarter, but we recommend focusing on one theme.</div>
                 </div>
+                </div>
+                <div class="step-card">
+                <div class="step-head"><span class="step-num" id="stepNum3" data-n="3">3</span><div class="step-titles"><div class="step-title">Choose Your Books</div><div class="step-sub">Pick at least one — stack as many as you like</div></div><span class="count-pill"><span class="counter-number" id="selectionCount">0</span> selected</span></div>
                 <div class="resources-section">
-                    <div class="kicker">Step 3 · Choose Your Books</div>
-                    <h4 class="section-title">Build Your Learning Path</h4>
-                    <p class="section-subtitle">Choose <strong>at least one resource</strong> — or stack multiple for maximum growth!</p>
                     
                     <div id="showAllSection" class="show-all-section hidden">
                         <span class="show-all-text">These books specifically focus on the <strong id="quarterThemeText">Q1</strong> themes.</span>
@@ -683,15 +700,10 @@
                         <!-- ONLINE COURSES - Always visible -->
                     </div>
 
-                    <div class="selection-counter watercolor-wash">
-                        <div class="counter-stat">
-                            <span class="counter-number" id="selectionCount">0</span>
-                            <span class="counter-caption">resources selected</span>
-                        </div>
-                        <span class="counter-warning" id="selectionWarning">Please select at least one resource</span>
-                        <span class="counter-success" id="selectionSuccess" style="display:none;">Great choice! Ready to commit?</span>
-                    </div>
                 </div>
+                </div>
+                <div class="step-card">
+                <div class="step-head"><span class="step-num" id="stepNum4" data-n="4">4</span><div class="step-titles"><div class="step-title">Make It Official</div><div class="step-sub">Your pledge unlocks the submit button</div></div></div>
                 <div class="commitment-section">
                     <label class="commitment-check">
                         <input type="checkbox" id="commitment" required>
@@ -701,9 +713,11 @@
                     </label>
                 </div>
                 <div class="submit-section">
+                    <div class="submit-status"><span class="counter-warning" id="selectionWarning">Please select at least one resource</span> <span class="counter-success" id="selectionSuccess" style="display:none;">Great choice! Ready to commit?</span></div>
                     <button type="submit" class="submit-btn" id="submitBtn" disabled>Lock In My Commitment</button>
                     <div class="validation-message" id="validationMessage"></div>
                     <p class="submit-note"><strong>You'll receive a confirmation email</strong> once submitted. Your resources will be ordered within 48 hours!</p>
+                </div>
                 </div>
             </form>
             <div class="success-message" id="successMessage">
@@ -1135,6 +1149,26 @@
             confirmBtn.disabled = false;
         });
 
+        function setStepDone(n, done) {
+            const el = document.getElementById('stepNum' + n);
+            if (!el) return;
+            el.classList.toggle('done', done);
+            el.textContent = done ? '\u2713' : el.dataset.n;
+        }
+        function updateStepStates() {
+            setStepDone(1, ['name', 'email', 'location', 'role'].every(id => document.getElementById(id).value.trim() !== ''));
+            setStepDone(2, true);
+            setStepDone(3, document.querySelectorAll('input[name="selections"]:checked').length > 0);
+            setStepDone(4, document.getElementById('commitment').checked);
+        }
+        ['name', 'email', 'location', 'role'].forEach(id => {
+            const el = document.getElementById(id);
+            el.addEventListener('input', updateStepStates);
+            el.addEventListener('change', updateStepStates);
+        });
+        commitmentCheck.addEventListener('change', updateStepStates);
+        categoriesContainer.addEventListener('change', updateStepStates);
+
         // Initialize from the quarter dropdown's selected option
         initFormatSelectors();
         currentTheme = quarterSelect.options[quarterSelect.selectedIndex].dataset.theme;
@@ -1142,6 +1176,7 @@
         quarterTheme.innerHTML = `This Quarter's Focus: <strong>${currentTheme}</strong> — ${themeDescriptions[currentTheme]}`;
         filterCategories(currentTheme, false);
         updateSelectionCount();
+        updateStepStates();
     </script>
 </body>
 </html>
