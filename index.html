@@ -294,7 +294,8 @@
         }
 
         .link-card.dragging { opacity: 0.45; }
-        .link-card.drag-over { border-color: rgba(232,134,62,0.6); box-shadow: 0 0 0 2px rgba(232,134,62,0.15); }
+        .link-card.drop-before { box-shadow: -10px 0 0 -6px #E8863E; }
+        .link-card.drop-after { box-shadow: 10px 0 0 -6px #E8863E; }
 
         .link-card:hover {
             transform: translateY(-3px);
@@ -899,6 +900,34 @@
         }
 
         let draggedId = null;
+
+        function syncPinToSection(id, shouldBePinned) {
+            let pins = getPinnedLinks();
+            const isPinned = pins.includes(id);
+            if (shouldBePinned && !isPinned) {
+                pins.push(id);
+                setPinnedLinks(pins);
+            } else if (!shouldBePinned && isPinned) {
+                setPinnedLinks(pins.filter(x => x !== id));
+            }
+        }
+
+        // Section backgrounds accept drops too (append at end, adopt section's pin state)
+        ['quickActionsGrid', 'allLinksGrid'].forEach(gridId => {
+            const grid = document.getElementById(gridId);
+            grid.addEventListener('dragover', function(e) { e.preventDefault(); });
+            grid.addEventListener('drop', function(e) {
+                e.preventDefault();
+                if (!draggedId) return;
+                syncPinToSection(draggedId, gridId === 'quickActionsGrid');
+                const order = getLinkOrder();
+                const moved = order.splice(order.indexOf(draggedId), 1)[0];
+                order.push(moved);
+                setLinkOrder(order);
+                renderLinks();
+            });
+        });
+
         function attachDragHandlers() {
             document.querySelectorAll('.link-card').forEach(card => {
                 card.setAttribute('draggable', 'true');
@@ -909,25 +938,32 @@
                 });
                 card.addEventListener('dragend', function() {
                     this.classList.remove('dragging');
-                    document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+                    document.querySelectorAll('.drop-before, .drop-after').forEach(el => el.classList.remove('drop-before', 'drop-after'));
                     draggedId = null;
                 });
                 card.addEventListener('dragover', function(e) {
                     e.preventDefault();
                     e.dataTransfer.dropEffect = 'move';
-                    if (this.dataset.id !== draggedId) this.classList.add('drag-over');
+                    if (this.dataset.id === draggedId) return;
+                    const rect = this.getBoundingClientRect();
+                    const insertBefore = (e.clientX - rect.left) < rect.width / 2;
+                    this.classList.toggle('drop-before', insertBefore);
+                    this.classList.toggle('drop-after', !insertBefore);
                 });
                 card.addEventListener('dragleave', function() {
-                    this.classList.remove('drag-over');
+                    this.classList.remove('drop-before', 'drop-after');
                 });
                 card.addEventListener('drop', function(e) {
                     e.preventDefault();
                     e.stopPropagation();
                     const targetId = this.dataset.id;
+                    const insertBefore = this.classList.contains('drop-before');
+                    this.classList.remove('drop-before', 'drop-after');
                     if (!draggedId || draggedId === targetId) return;
+                    syncPinToSection(draggedId, !!this.closest('#quickActionsGrid'));
                     const order = getLinkOrder();
                     const moved = order.splice(order.indexOf(draggedId), 1)[0];
-                    order.splice(order.indexOf(targetId), 0, moved);
+                    order.splice(order.indexOf(targetId) + (insertBefore ? 0 : 1), 0, moved);
                     setLinkOrder(order);
                     renderLinks();
                 });
