@@ -293,6 +293,9 @@
             transform: scaleX(1);
         }
 
+        .link-card.dragging { opacity: 0.45; }
+        .link-card.drag-over { border-color: rgba(232,134,62,0.6); box-shadow: 0 0 0 2px rgba(232,134,62,0.15); }
+
         .link-card:hover {
             transform: translateY(-3px);
             box-shadow:
@@ -764,6 +767,7 @@
             { id: 'shopgenie', title: 'ShopGenie', url: 'https://app.shopgenie.io/dashboard/inbox' },
             { id: 'guava', title: 'Guava Coach', url: 'https://chromewebstore.google.com/detail/ppaiipibgjjnadokahpjakhbneodpfdm' },
             { id: 'chatgpt', title: 'ChatGPT', url: 'https://chatgpt.com/' },
+            { id: 'gmail', title: 'Gmail', url: 'https://mail.google.com' },
             { id: 'lyft', title: 'Lyft', url: 'https://account.lyft.com/auth/email?v=lyft-for-business&next=https%3A%2F%2Fbusiness.lyft.com%2Flogin' },
             { id: 'repairpal', title: 'RepairPal', url: 'https://repairpal.com/shop-dashboard' },
             { id: 'ringcentral', title: 'RingCentral', url: 'https://service.ringcentral.com/application/adminHome/?post3rdPartyLogin=true' },
@@ -778,6 +782,18 @@
         ];
 
         const DEFAULT_PINS = ['matrix', 'tekmetric', 'slack', 'shopgenie'];
+
+        function getLinkOrder() {
+            let order = [];
+            try { order = JSON.parse(localStorage.getItem('linkOrder')) || []; } catch (e) {}
+            order = order.filter(id => ALL_LINKS.some(l => l.id === id));
+            ALL_LINKS.forEach(l => { if (!order.includes(l.id)) order.push(l.id); });
+            return order;
+        }
+
+        function setLinkOrder(order) {
+            localStorage.setItem('linkOrder', JSON.stringify(order));
+        }
 
         function getPinnedLinks() {
             const stored = localStorage.getItem('pinnedLinks');
@@ -823,6 +839,7 @@
                 'motovisuals': 'icons/motovisuals.png',
                 'matrix': 'icons/matrix.png',
                 'ringcentral': 'icons/ringcentral.png',
+                'gmail': 'icons/gmail.png',
                 'edp': 'icons/mango-university.png',
                 'kudos': 'MIA%20original@2x.png'
             };
@@ -869,18 +886,52 @@
 
         function renderLinks() {
             const pinnedIds = getPinnedLinks();
+            const order = getLinkOrder();
+            const ordered = order.map(id => ALL_LINKS.find(l => l.id === id));
             const quickActionsGrid = document.getElementById('quickActionsGrid');
             const allLinksGrid = document.getElementById('allLinksGrid');
 
-            const pinnedLinks = ALL_LINKS.filter(link => pinnedIds.includes(link.id));
-            quickActionsGrid.innerHTML = pinnedLinks.map(link => createLinkCard(link, true)).join('');
-
-            const unpinnedLinks = ALL_LINKS.filter(link => !pinnedIds.includes(link.id));
-            // Sort alphabetically by title
-            unpinnedLinks.sort((a, b) => a.title.localeCompare(b.title));
-            allLinksGrid.innerHTML = unpinnedLinks.map(link => createLinkCard(link, false)).join('');
+            quickActionsGrid.innerHTML = ordered.filter(link => pinnedIds.includes(link.id)).map(link => createLinkCard(link, true)).join('');
+            allLinksGrid.innerHTML = ordered.filter(link => !pinnedIds.includes(link.id)).map(link => createLinkCard(link, false)).join('');
 
             attachClickHandlers();
+            attachDragHandlers();
+        }
+
+        let draggedId = null;
+        function attachDragHandlers() {
+            document.querySelectorAll('.link-card').forEach(card => {
+                card.setAttribute('draggable', 'true');
+                card.addEventListener('dragstart', function(e) {
+                    draggedId = this.dataset.id;
+                    this.classList.add('dragging');
+                    e.dataTransfer.effectAllowed = 'move';
+                });
+                card.addEventListener('dragend', function() {
+                    this.classList.remove('dragging');
+                    document.querySelectorAll('.drag-over').forEach(el => el.classList.remove('drag-over'));
+                    draggedId = null;
+                });
+                card.addEventListener('dragover', function(e) {
+                    e.preventDefault();
+                    e.dataTransfer.dropEffect = 'move';
+                    if (this.dataset.id !== draggedId) this.classList.add('drag-over');
+                });
+                card.addEventListener('dragleave', function() {
+                    this.classList.remove('drag-over');
+                });
+                card.addEventListener('drop', function(e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    const targetId = this.dataset.id;
+                    if (!draggedId || draggedId === targetId) return;
+                    const order = getLinkOrder();
+                    const moved = order.splice(order.indexOf(draggedId), 1)[0];
+                    order.splice(order.indexOf(targetId), 0, moved);
+                    setLinkOrder(order);
+                    renderLinks();
+                });
+            });
         }
 
         function attachClickHandlers() {
