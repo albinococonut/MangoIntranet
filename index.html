@@ -294,6 +294,24 @@
         }
 
         .link-card.dragging { opacity: 0.45; }
+
+        body.drag-active .link-grid { outline: 1.5px dashed rgba(34,32,28,0.18); outline-offset: 6px; border-radius: 10px; }
+        .link-grid.grid-target { outline-color: rgba(232,134,62,0.6); background: rgba(232,134,62,0.045); }
+        #quickActionsGrid.will-pin::after, #allLinksGrid.will-unpin::after {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 1.5px dashed rgba(232,134,62,0.6);
+            border-radius: 16px;
+            background: rgba(255,255,255,0.5);
+            font-size: 12.5px;
+            font-weight: 600;
+            color: #B5631F;
+            min-height: 58px;
+            pointer-events: none;
+        }
+        #quickActionsGrid.will-pin::after { content: 'Release to pin'; }
+        #allLinksGrid.will-unpin::after { content: 'Release to unpin'; }
         .link-card.drop-before { box-shadow: -10px 0 0 -6px #E8863E; }
         .link-card.drop-after { box-shadow: 10px 0 0 -6px #E8863E; }
 
@@ -866,9 +884,9 @@
                         <svg width="20" height="20" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                             <g transform="rotate(35 12 12)">
                                 <path d="M12 14.6 L12 21.5" stroke="#9AA7AE" stroke-width="1.7" stroke-linecap="round"/>
-                                <path d="M8.4 11.2 L15.6 11.2 L17 14.6 L7 14.6 Z" fill="currentColor" stroke="rgba(34,32,28,0.3)" stroke-width="1" stroke-linejoin="round"/>
-                                <rect x="10.5" y="7.6" width="3" height="4" fill="#DE5F96" stroke="rgba(34,32,28,0.3)" stroke-width="1"/>
-                                <rect x="6.6" y="2.6" width="10.8" height="5.4" rx="2.6" fill="currentColor" stroke="rgba(34,32,28,0.3)" stroke-width="1"/>
+                                <path d="M8.4 11.2 L15.6 11.2 L17 14.6 L7 14.6 Z" fill="currentColor"/>
+                                <rect x="10.5" y="7.6" width="3" height="4" fill="currentColor" opacity="0.75"/>
+                                <rect x="6.6" y="2.6" width="10.8" height="5.4" rx="2.6" fill="currentColor"/>
                                 <ellipse cx="9.6" cy="4.5" rx="1.7" ry="1" fill="rgba(255,255,255,0.9)"/>
                             </g>
                         </svg>
@@ -900,6 +918,19 @@
         }
 
         let draggedId = null;
+        let draggedFromPinned = false;
+
+        function setGridTarget(gridId) {
+            ['quickActionsGrid', 'allLinksGrid'].forEach(id => {
+                const g = document.getElementById(id);
+                const active = !!gridId && id === gridId;
+                const isPinnedGrid = id === 'quickActionsGrid';
+                const crossing = draggedFromPinned !== isPinnedGrid;
+                g.classList.toggle('grid-target', active);
+                g.classList.toggle('will-pin', active && isPinnedGrid && crossing);
+                g.classList.toggle('will-unpin', active && !isPinnedGrid && crossing);
+            });
+        }
 
         function syncPinToSection(id, shouldBePinned) {
             let pins = getPinnedLinks();
@@ -915,9 +946,17 @@
         // Section backgrounds accept drops too (append at end, adopt section's pin state)
         ['quickActionsGrid', 'allLinksGrid'].forEach(gridId => {
             const grid = document.getElementById(gridId);
-            grid.addEventListener('dragover', function(e) { e.preventDefault(); });
+            grid.addEventListener('dragover', function(e) {
+                e.preventDefault();
+                setGridTarget(gridId);
+            });
+            grid.addEventListener('dragleave', function(e) {
+                if (!grid.contains(e.relatedTarget)) setGridTarget(null);
+            });
             grid.addEventListener('drop', function(e) {
                 e.preventDefault();
+                document.body.classList.remove('drag-active');
+                setGridTarget(null);
                 if (!draggedId) return;
                 syncPinToSection(draggedId, gridId === 'quickActionsGrid');
                 const order = getLinkOrder();
@@ -933,12 +972,16 @@
                 card.setAttribute('draggable', 'true');
                 card.addEventListener('dragstart', function(e) {
                     draggedId = this.dataset.id;
+                    draggedFromPinned = !!this.closest('#quickActionsGrid');
+                    document.body.classList.add('drag-active');
                     this.classList.add('dragging');
                     e.dataTransfer.effectAllowed = 'move';
                 });
                 card.addEventListener('dragend', function() {
                     this.classList.remove('dragging');
                     document.querySelectorAll('.drop-before, .drop-after').forEach(el => el.classList.remove('drop-before', 'drop-after'));
+                    document.body.classList.remove('drag-active');
+                    setGridTarget(null);
                     draggedId = null;
                 });
                 card.addEventListener('dragover', function(e) {
