@@ -82,6 +82,21 @@
         .dot-pill::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
         .dot-pill-green { color: #3E8E5E; border: 0.56px solid rgba(62,142,94,0.33); }
         .dot-pill-amber { color: #B5631F; border: 0.56px solid rgba(181,99,31,0.333); }
+        /* Featured book hero */
+        .featured-hero { background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82)); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: 0.56px solid rgba(255,255,255,0.8); border-radius: 26px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 18px 48px -28px rgba(40,34,26,0.22), 0 2px 8px -4px rgba(40,34,26,0.08); padding: 12px; margin-bottom: 32px; }
+        .featured-hero-inner { background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)); border: 0.56px solid rgba(34,32,28,0.08); border-radius: 24px; padding: 24px 28px; display: flex; align-items: center; gap: 26px; }
+        .featured-hero-cover { height: 160px; border-radius: 10px; box-shadow: 0 14px 30px -12px rgba(40,34,26,0.4); flex-shrink: 0; }
+        .featured-hero-text { flex: 1; min-width: 0; }
+        .featured-hero-title { font-family: var(--font-display); font-size: 25px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); margin: 2px 0 2px; }
+        .featured-hero-author { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
+        .featured-hero-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 14px; }
+        .featured-hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
+        .featured-hero-cta { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.6); border: 0.56px solid rgba(181,99,31,0.333); color: #B5631F; font-family: var(--font-ui); font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 9999px; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease; }
+        .featured-hero-cta::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #B5631F; }
+        .featured-hero-cta:hover { background: rgba(255,255,255,0.9); border-color: rgba(181,99,31,0.55); }
+        .featured-hero-link { font-size: 13px; font-weight: 600; color: #B5631F; text-decoration: none; }
+        .featured-hero-link:hover { text-decoration: underline; }
+        @media (max-width: 640px) { .featured-hero-inner { flex-direction: column; text-align: center; } .featured-hero-actions { justify-content: center; } }
         /* Step cards */
         .step-card { background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)); border: 0.56px solid rgba(34,32,28,0.08); border-radius: 24px; padding: 24px; margin-bottom: 16px; }
         .step-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
@@ -277,6 +292,21 @@
         </div>
     </header>
     <main>
+        <div class="featured-hero">
+            <div class="featured-hero-inner">
+                <img src="https://images-na.ssl-images-amazon.com/images/P/0578345684.01.L.jpg" alt="It's Not About the Mangos book cover" class="featured-hero-cover">
+                <div class="featured-hero-text">
+                    <div class="kicker">This Quarter's Featured Book · Brian's Pick</div>
+                    <h2 class="featured-hero-title">It's Not About the Mangos</h2>
+                    <div class="featured-hero-author">Kent Coleman</div>
+                    <p class="featured-hero-desc">Put people first and the results follow. A leadership playbook that speaks Mango's language — and yes, it really is about more than the mangos.</p>
+                    <div class="featured-hero-actions">
+                        <button type="button" class="featured-hero-cta" id="featuredPickBtn">Add it to my picks</button>
+                        <a class="featured-hero-link" href="https://www.amazon.com/dp/0578345684?linkCode=ll1&tag=albinococon0c-20" target="_blank" rel="noopener">View on Amazon &rarr;</a>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="instructions">
             <div class="kicker">How It Works</div>
             <h2>Here's How It Works</h2>
@@ -1188,6 +1218,16 @@
         });
         commitmentCheck.addEventListener('change', updateStepStates);
         categoriesContainer.addEventListener('change', updateStepStates);
+
+        document.getElementById('featuredPickBtn').addEventListener('click', function() {
+            const cb = Array.from(document.querySelectorAll('input[name="selections"]')).find(i => i.value.startsWith("Book: It's Not About the Mangos"));
+            if (cb && !cb.checked) {
+                cb.checked = true;
+                cb.dispatchEvent(new Event('change', { bubbles: true }));
+            }
+            this.textContent = 'Added to your picks';
+            document.getElementById('stepNum3').closest('.step-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
 
         // Initialize from the quarter dropdown's selected option
         initFormatSelectors();
