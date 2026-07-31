@@ -741,7 +741,7 @@
             <form class="kudos-form" id="kudosForm">
                 <div class="kudos-row">
                     <div><label for="kNominatorName">Your Name</label><input type="text" id="kNominatorName" required placeholder="First and Last Name"></div>
-                    <div><label for="kNominatorEmail">Your Email</label><input type="email" id="kNominatorEmail" required placeholder="you@mangoautomotive.com"></div>
+                    <div><label for="kNominatorEmail">Your Email</label><input type="email" id="kNominatorEmail" required placeholder="you@mangoautomotive.com" pattern="[^@\s]+@[Mm]ango[Aa]utomotive\.com" title="Use your @mangoautomotive.com work email"></div>
                 </div>
                 <div class="kudos-row">
                     <div><label for="kNominatorLocation">Your Location</label><select id="kNominatorLocation" required>
@@ -1186,6 +1186,13 @@
 
         document.getElementById('kudosForm').addEventListener('submit', async function(e) {
             e.preventDefault();
+            const kEmailEl = document.getElementById('kNominatorEmail');
+            if (!/^[^@\s]+@mangoautomotive\.com$/i.test(kEmailEl.value.trim())) {
+                kEmailEl.setCustomValidity('Please use your @mangoautomotive.com work email');
+                kEmailEl.reportValidity();
+                kEmailEl.setCustomValidity('');
+                return;
+            }
             const nominatorName = document.getElementById('kNominatorName').value;
             const nominatorEmail = document.getElementById('kNominatorEmail').value;
             const nominatorLocation = document.getElementById('kNominatorLocation').value;

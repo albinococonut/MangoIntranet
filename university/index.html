@@ -82,21 +82,20 @@
         .dot-pill::before { content: ''; display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
         .dot-pill-green { color: #3E8E5E; border: 0.56px solid rgba(62,142,94,0.33); }
         .dot-pill-amber { color: #B5631F; border: 0.56px solid rgba(181,99,31,0.333); }
-        /* Featured book hero */
-        .featured-hero { background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82)); backdrop-filter: blur(22px); -webkit-backdrop-filter: blur(22px); border: 0.56px solid rgba(255,255,255,0.8); border-radius: 26px; box-shadow: inset 0 1px 0 rgba(255,255,255,0.95), 0 18px 48px -28px rgba(40,34,26,0.22), 0 2px 8px -4px rgba(40,34,26,0.08); padding: 12px; margin-bottom: 32px; }
-        .featured-hero-inner { background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)); border: 0.56px solid rgba(34,32,28,0.08); border-radius: 24px; padding: 24px 28px; display: flex; align-items: center; gap: 26px; }
-        .featured-hero-cover { height: 160px; border-radius: 10px; box-shadow: 0 14px 30px -12px rgba(40,34,26,0.4); flex-shrink: 0; }
+        /* Featured book hero (white chip inside the tinted books panel) */
+        .featured-hero { background: rgba(255,255,255,0.7); border: 0.56px solid rgba(34,32,28,0.08); border-radius: 16px; padding: 18px 22px; margin-bottom: 20px; display: flex; align-items: center; gap: 22px; }
+        .featured-hero-cover { height: 130px; border-radius: 8px; box-shadow: 0 12px 26px -12px rgba(40,34,26,0.4); flex-shrink: 0; }
         .featured-hero-text { flex: 1; min-width: 0; }
-        .featured-hero-title { font-family: var(--font-display); font-size: 25px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); margin: 2px 0 2px; }
-        .featured-hero-author { font-size: 13px; color: var(--muted); margin-bottom: 8px; }
-        .featured-hero-desc { font-size: 14px; color: var(--ink-soft); line-height: 1.6; margin-bottom: 14px; }
+        .featured-hero-title { font-family: var(--font-display); font-size: 22px; font-weight: 500; letter-spacing: -0.02em; color: var(--ink); margin: 2px 0 2px; }
+        .featured-hero-author { font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+        .featured-hero-desc { font-size: 13.5px; color: var(--ink-soft); line-height: 1.55; margin-bottom: 12px; }
         .featured-hero-actions { display: flex; align-items: center; gap: 16px; flex-wrap: wrap; }
-        .featured-hero-cta { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.6); border: 0.56px solid rgba(181,99,31,0.333); color: #B5631F; font-family: var(--font-ui); font-size: 13px; font-weight: 600; padding: 10px 22px; border-radius: 9999px; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease; }
+        .featured-hero-cta { display: inline-flex; align-items: center; gap: 8px; background: rgba(255,255,255,0.75); border: 0.56px solid rgba(181,99,31,0.333); color: #B5631F; font-family: var(--font-ui); font-size: 13px; font-weight: 600; padding: 9px 20px; border-radius: 9999px; cursor: pointer; transition: background 0.2s ease, border-color 0.2s ease; }
         .featured-hero-cta::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: #B5631F; }
-        .featured-hero-cta:hover { background: rgba(255,255,255,0.9); border-color: rgba(181,99,31,0.55); }
+        .featured-hero-cta:hover { background: #fff; border-color: rgba(181,99,31,0.55); }
         .featured-hero-link { font-size: 13px; font-weight: 600; color: #B5631F; text-decoration: none; }
         .featured-hero-link:hover { text-decoration: underline; }
-        @media (max-width: 640px) { .featured-hero-inner { flex-direction: column; text-align: center; } .featured-hero-actions { justify-content: center; } }
+        @media (max-width: 640px) { .featured-hero { flex-direction: column; text-align: center; } .featured-hero-actions { justify-content: center; } }
         /* Step cards */
         .step-card { background: linear-gradient(160deg, rgba(95,169,214,0.1), rgba(242,206,112,0.08) 55%, rgba(232,134,62,0.1)); border: 0.56px solid rgba(34,32,28,0.08); border-radius: 24px; padding: 24px; margin-bottom: 16px; }
         .step-head { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
@@ -141,7 +140,7 @@
         .form-group { display: flex; flex-direction: column; }
         label { font-size: 12.5px; font-weight: 600; color: var(--muted); margin-bottom: 8px; text-transform: uppercase; letter-spacing: 0.18em; }
         input, select { padding: 14px 18px; border: 1px solid rgba(34,32,28,0.12); border-radius: 14px; font-family: var(--font-ui); font-size: 1rem; color: var(--ink); transition: all 0.3s ease; background: rgba(255,255,255,0.7); }
-        select { border-radius: 9999px; font-size: 12.5px; font-weight: 600; padding: 14px 42px 14px 20px; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path d="M1 1.5 L6 6.5 L11 1.5" fill="none" stroke="%235C564E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'); background-repeat: no-repeat; background-position: right 16px center; }
+        select { border-radius: 9999px; font-size: 1rem; font-weight: 400; padding: 14px 42px 14px 20px; cursor: pointer; appearance: none; -webkit-appearance: none; background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="12" height="8" viewBox="0 0 12 8"><path d="M1 1.5 L6 6.5 L11 1.5" fill="none" stroke="%235C564E" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>'); background-repeat: no-repeat; background-position: right 16px center; }
         input:hover, select:hover { border-color: rgba(232,134,62,0.45); }
         input:focus, select:focus { outline: none; border-color: rgba(232,134,62,0.45); background: #fff; box-shadow: 0 0 0 2px rgba(232,134,62,0.12); }
         .quarter-selector select:focus { background: #fff; border-color: rgba(34,32,28,0.2); outline: none; }
@@ -292,21 +291,6 @@
         </div>
     </header>
     <main>
-        <div class="featured-hero">
-            <div class="featured-hero-inner">
-                <img src="https://images-na.ssl-images-amazon.com/images/P/0578345684.01.L.jpg" alt="It's Not About the Mangos book cover" class="featured-hero-cover">
-                <div class="featured-hero-text">
-                    <div class="kicker">This Quarter's Featured Book · Brian's Pick</div>
-                    <h2 class="featured-hero-title">It's Not About the Mangos</h2>
-                    <div class="featured-hero-author">Kent Coleman</div>
-                    <p class="featured-hero-desc">Put people first and the results follow. A leadership playbook that speaks Mango's language — and yes, it really is about more than the mangos.</p>
-                    <div class="featured-hero-actions">
-                        <button type="button" class="featured-hero-cta" id="featuredPickBtn">Add it to my picks</button>
-                        <a class="featured-hero-link" href="https://www.amazon.com/dp/0578345684?linkCode=ll1&tag=albinococon0c-20" target="_blank" rel="noopener">View on Amazon &rarr;</a>
-                    </div>
-                </div>
-            </div>
-        </div>
         <div class="instructions">
             <div class="kicker">How It Works</div>
             <h2>Here's How It Works</h2>
@@ -330,9 +314,11 @@
                         <input type="text" id="name" name="name" required placeholder="First and Last Name">
                     </div>
                     <div class="form-group">
-                        <label for="email">Work Email</label>
-                        <input type="email" id="email" name="email" required placeholder="you@mangoautomotive.com">
+                        <label for="email">Mango Email Address</label>
+                        <input type="email" id="email" name="email" required placeholder="you@mangoautomotive.com" pattern="[^@\s]+@[Mm]ango[Aa]utomotive\.com" title="Use your @mangoautomotive.com work email">
                     </div>
+                </div>
+                <div class="form-row">
                     <div class="form-group">
                         <label for="location">Your Location</label>
                         <select id="location" name="location" required>
@@ -377,6 +363,20 @@
                     <div id="showAllSection" class="show-all-section hidden">
                         <span class="show-all-text">These books specifically focus on the <strong id="quarterThemeText">Q1</strong> themes.</span>
                         <button type="button" class="show-all-btn" id="showAllBtn">Show all available books instead</button>
+                    </div>
+
+                    <div class="featured-hero">
+                        <img src="https://images-na.ssl-images-amazon.com/images/P/0578345684.01.L.jpg" alt="It's Not About the Mangos book cover" class="featured-hero-cover">
+                        <div class="featured-hero-text">
+                            <div class="kicker">This Quarter's Featured Book · Brian's Pick</div>
+                            <h2 class="featured-hero-title">It's Not About the Mangos</h2>
+                            <div class="featured-hero-author">Kent Coleman</div>
+                            <p class="featured-hero-desc">Put people first and the results follow. A leadership playbook that speaks Mango's language.</p>
+                            <div class="featured-hero-actions">
+                                <button type="button" class="featured-hero-cta" id="featuredPickBtn">Add it to my picks</button>
+                                <a class="featured-hero-link" href="https://www.amazon.com/dp/0578345684?linkCode=ll1&tag=albinococon0c-20" target="_blank" rel="noopener">View on Amazon &rarr;</a>
+                            </div>
+                        </div>
                     </div>
 
                     <div id="categoriesContainer">
@@ -1054,6 +1054,13 @@
 
         document.getElementById('selectionForm').addEventListener('submit', function(e) {
             e.preventDefault();
+            const emailEl = document.getElementById('email');
+            if (!/^[^@\s]+@mangoautomotive\.com$/i.test(emailEl.value.trim())) {
+                emailEl.setCustomValidity('Please use your @mangoautomotive.com work email');
+                emailEl.reportValidity();
+                emailEl.setCustomValidity('');
+                return;
+            }
             showConfirmationModal();
         });
 
@@ -1226,7 +1233,6 @@
                 cb.dispatchEvent(new Event('change', { bubbles: true }));
             }
             this.textContent = 'Added to your picks';
-            document.getElementById('stepNum3').closest('.step-card').scrollIntoView({ behavior: 'smooth', block: 'start' });
         });
 
         // Initialize from the quarter dropdown's selected option
