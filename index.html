@@ -1090,10 +1090,10 @@
             const looped = text + ' • ';
             tickerDiv.textContent = looped + looped;
 
-            // Calculate duration for constant speed (60px per second)
+            // Calculate duration for constant speed (38px per second)
             setTimeout(() => {
                 const textWidth = tickerDiv.scrollWidth / 2;
-                const duration = textWidth / 60;
+                const duration = textWidth / 38;
                 tickerDiv.style.animationDuration = `${duration}s`;
             }, 50);
         }
