@@ -481,6 +481,43 @@
             height: 100%;
         }
 
+        /* Transfer numbers post-it */
+        .transfer-note {
+            width: 400px;
+            max-width: 100%;
+            background: linear-gradient(180deg, rgba(242,206,112,0.5), rgba(242,206,112,0.28)), rgba(255,255,251,0.92);
+            border: 0.56px solid rgba(181,99,31,0.25);
+            border-radius: 6px;
+            box-shadow: 0 16px 30px -18px rgba(40,34,26,0.4);
+            transform: rotate(-1.4deg);
+            padding: 16px 20px 18px;
+            margin: 0 0 26px 4px;
+        }
+
+        .transfer-note .eyebrow {
+            color: rgba(34,32,28,0.55);
+            margin-bottom: 10px;
+        }
+
+        .transfer-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 7px 22px;
+        }
+
+        .transfer-row {
+            display: flex;
+            justify-content: space-between;
+            gap: 10px;
+            font-size: 12.5px;
+            color: #22201C;
+        }
+
+        .transfer-ext {
+            font-weight: 700;
+            font-variant-numeric: tabular-nums;
+        }
+
         /* Team Appreciation Callout */
         .appreciation-section {
             background: linear-gradient(180deg, rgba(255,255,255,0.94), rgba(255,255,255,0.82));
@@ -705,6 +742,21 @@
             <div class="eyebrow">All Links</div>
             <div class="link-grid" id="allLinksGrid">
                 <!-- Dynamically populated -->
+            </div>
+        </div>
+
+        <!-- Transfer numbers post-it -->
+        <div class="transfer-note">
+            <div class="eyebrow">Transfer Numbers</div>
+            <div class="transfer-grid">
+                <div class="transfer-row"><span>Cottonwood</span><span class="transfer-ext">11100</span></div>
+                <div class="transfer-row"><span>Heights</span><span class="transfer-ext">22200</span></div>
+                <div class="transfer-row"><span>Downtown</span><span class="transfer-ext">33300</span></div>
+                <div class="transfer-row"><span>Pellicano</span><span class="transfer-ext">44400</span></div>
+                <div class="transfer-row"><span>Las Cruces</span><span class="transfer-ext">55500</span></div>
+                <div class="transfer-row"><span>Yuma</span><span class="transfer-ext">66600</span></div>
+                <div class="transfer-row"><span>Montana</span><span class="transfer-ext">77700</span></div>
+                <div class="transfer-row"><span>Valley</span><span class="transfer-ext">99900</span></div>
             </div>
         </div>
 
