@@ -483,26 +483,21 @@
 
         /* Transfer numbers post-it */
         .transfer-note {
-            grid-column: span 2;
+            grid-column: span 1;
             align-self: center;
-            justify-self: stretch;
-            width: auto;
+            justify-self: center;
+            width: 225px;
             max-width: 100%;
             background: linear-gradient(180deg, rgba(242,206,112,0.5), rgba(242,206,112,0.28)), rgba(255,255,251,0.92);
             border: 0.56px solid rgba(181,99,31,0.25);
             border-radius: 6px;
             box-shadow: 0 16px 30px -18px rgba(40,34,26,0.4);
-            transform: rotate(-1.4deg);
-            padding: 14px 20px 16px;
+            padding: 16px 18px;
             margin: 0;
         }
 
-        @media (max-width: 968px) {
-            .transfer-note { grid-column: span 2; }
-        }
-        @media (max-width: 640px) {
-            .transfer-note { grid-column: span 1; }
-        }
+        .transfer-note.note-a { transform: rotate(-2deg); }
+        .transfer-note.note-b { transform: rotate(1.6deg); }
 
         .transfer-note .eyebrow {
             color: rgba(34,32,28,0.55);
@@ -511,8 +506,8 @@
 
         .transfer-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 7px 22px;
+            grid-template-columns: 1fr;
+            gap: 8px;
         }
 
         .transfer-row {
@@ -745,13 +740,18 @@
             <div class="link-grid" id="quickActionsGrid">
                 <!-- Dynamically populated -->
             </div>
-        <div class="transfer-note">
+        <div class="transfer-note note-a">
             <div class="eyebrow">Transfer Numbers</div>
             <div class="transfer-grid">
                 <div class="transfer-row"><span>Cottonwood</span><span class="transfer-ext">11100</span></div>
                 <div class="transfer-row"><span>Heights</span><span class="transfer-ext">22200</span></div>
                 <div class="transfer-row"><span>Downtown</span><span class="transfer-ext">33300</span></div>
                 <div class="transfer-row"><span>Pellicano</span><span class="transfer-ext">44400</span></div>
+            </div>
+        </div>
+        <div class="transfer-note note-b">
+            <div class="eyebrow">Transfer Numbers</div>
+            <div class="transfer-grid">
                 <div class="transfer-row"><span>Las Cruces</span><span class="transfer-ext">55500</span></div>
                 <div class="transfer-row"><span>Yuma</span><span class="transfer-ext">66600</span></div>
                 <div class="transfer-row"><span>Montana</span><span class="transfer-ext">77700</span></div>
@@ -963,7 +963,7 @@
             `;
         }
 
-        const transferNoteEl = document.querySelector('.transfer-note');
+        const transferNoteEls = Array.from(document.querySelectorAll('.transfer-note'));
 
         function renderLinks() {
             const pinnedIds = getPinnedLinks();
@@ -973,7 +973,7 @@
             const allLinksGrid = document.getElementById('allLinksGrid');
 
             quickActionsGrid.innerHTML = ordered.filter(link => pinnedIds.includes(link.id)).map(link => createLinkCard(link, true)).join('');
-            quickActionsGrid.appendChild(transferNoteEl);
+            transferNoteEls.forEach(el => quickActionsGrid.appendChild(el));
             allLinksGrid.innerHTML = ordered.filter(link => !pinnedIds.includes(link.id)).map(link => createLinkCard(link, false)).join('');
 
             attachClickHandlers();
