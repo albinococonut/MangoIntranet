@@ -1285,26 +1285,33 @@ ${storyText}
 Submitted: ${new Date().toLocaleString()}`;
 
             try {
-                const response = await fetch('https://api.web3forms.com/submit', {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify({
-                        access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de',
-                        subject: `\u{1F96D} Mango Kudos: ${nomineeName} nominated by ${nominatorName}`,
-                        from_name: 'Mango Kudos',
-                        to: 'mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com',
-                        message: emailBody,
-                        replyto: nominatorEmail
+                const kudosRecipients = [
+                    'mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com',
+                    'hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com'
+                ];
+                const sends = await Promise.allSettled(kudosRecipients.map(rcpt =>
+                    fetch('https://api.web3forms.com/submit', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify({
+                            access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de',
+                            subject: `\u{1F96D} Mango Kudos: ${nomineeName} nominated by ${nominatorName}`,
+                            from_name: 'Mango Kudos',
+                            to: rcpt,
+                            message: emailBody,
+                            replyto: nominatorEmail
+                        })
                     })
-                });
-                if (response.ok) {
+                ));
+                const primaryOk = sends[0].status === 'fulfilled' && sends[0].value.ok;
+                if (primaryOk) {
                     document.getElementById('kudosForm').style.display = 'none';
                     document.getElementById('kudosSuccess').classList.add('show');
                 } else {
                     throw new Error('Submission failed');
                 }
             } catch (error) {
-                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com?subject=${encodeURIComponent(`Mango Kudos: ${nomineeName} nominated by ${nominatorName}`)}&body=${encodeURIComponent(emailBody)}`;
+                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com?subject=${encodeURIComponent(`Mango Kudos: ${nomineeName} nominated by ${nominatorName}`)}&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = mailtoLink;
                 setTimeout(() => {
                     document.getElementById('kudosForm').style.display = 'none';

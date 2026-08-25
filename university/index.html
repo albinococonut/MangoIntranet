@@ -1166,11 +1166,24 @@
                         subject: `${quarter} Development Commitment - ${name} (${location})`, 
                         from_name: 'Mango University', 
                         to: 'mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com', 
-                        cc: 'bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com',
                         message: emailBody, 
                         replyto: email 
                     })
                 });
+
+                // Independent copy to the bills channel (direct send, not CC)
+                fetch('https://api.web3forms.com/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de',
+                        subject: `${quarter} Development Commitment - ${name} (${location})`,
+                        from_name: 'Mango University',
+                        to: 'bills-aaaahwnch4lxmallyvecqnnhvm@mangoautomotive.slack.com',
+                        message: emailBody,
+                        replyto: email
+                    })
+                }).catch(() => {});
                 await fetch('https://api.web3forms.com/submit', { 
                     method: 'POST', 
                     headers: { 'Content-Type': 'application/json' }, 
