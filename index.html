@@ -773,7 +773,7 @@
             <div class="appreciation-content">
                 <div class="appreciation-title">You Make the Difference</div>
                 <div class="appreciation-message" id="thankYouMessage"></div>
-                <a href="#" class="appreciation-cta" onclick="event.preventDefault(); openKudosModal()">Seen someone go above &amp; beyond? Nominate them for Mango Kudos</a>
+                <a href="#" class="appreciation-cta" onclick="event.preventDefault(); openKudosModal()">Seen someone go above &amp; beyond? Give them a Shout Out</a>
             </div>
         </div>
 
@@ -791,11 +791,11 @@
 
     <!-- Kudos nomination modal -->
     <div class="kudos-overlay" id="kudosOverlay">
-        <div class="kudos-modal" role="dialog" aria-modal="true" aria-label="Mango Kudos nomination">
+        <div class="kudos-modal" role="dialog" aria-modal="true" aria-label="Shout Outs nomination">
             <button class="kudos-close" onclick="closeKudosModal()" aria-label="Close">&times;</button>
             <div class="kudos-modal-head">
                 <img src="MIA%20original@2x.png" alt="Mia Mango">
-                <div class="kudos-modal-title">Mango Kudos</div>
+                <div class="kudos-modal-title">Shout Outs</div>
             </div>
             <p class="kudos-modal-sub">Recognize a teammate who went truly above and beyond. One nomination per person per year. The best are shared company-wide, and quarterly winners receive a $100 Amazon gift card.</p>
             <form class="kudos-form" id="kudosForm">
@@ -856,7 +856,7 @@
             { id: 'sops', title: 'Service Advisor SOPs', url: 'https://mangoautomotive.notion.site/SOPs-for-SAs-451f7f4172a54f04be34be19c67daeca' },
             { id: 'handbook', title: 'Employee Handbook', url: 'https://www.notion.so/mangoautomotive/Policies-Handbook-10de8f2d40b74400bad9e3f4a84b9c19' },
             { id: 'edp', title: 'Mango University', url: 'https://intranet.mangoautomotive.com/university/' },
-            { id: 'kudos', title: 'Mango Kudos', url: 'https://intranet.mangoautomotive.com/kudos/' },
+            { id: 'kudos', title: 'Shout Outs', url: 'https://intranet.mangoautomotive.com/kudos/' },
             { id: 'matrix', title: 'Mango Matrix', url: 'https://matrix.mangoautomotive.com' }
         ];
 
@@ -1266,7 +1266,7 @@
             btn.textContent = 'Sending...';
             btn.disabled = true;
 
-            const emailBody = `\u{1F96D} MANGO KUDOS NOMINATION
+            const emailBody = `\u{1F96D} SHOUT OUT NOMINATION
 \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501
 
 NOMINATED BY:
@@ -1295,8 +1295,8 @@ Submitted: ${new Date().toLocaleString()}`;
                         headers: { 'Content-Type': 'application/json' },
                         body: JSON.stringify({
                             access_key: 'eb5c7659-543a-4d25-98bf-795530dad2de',
-                            subject: `\u{1F96D} Mango Kudos: ${nomineeName} nominated by ${nominatorName}`,
-                            from_name: 'Mango Kudos',
+                            subject: `\u{1F96D} Shout Out: ${nomineeName} nominated by ${nominatorName}`,
+                            from_name: 'Shout Outs',
                             to: rcpt,
                             message: emailBody,
                             replyto: nominatorEmail
@@ -1311,7 +1311,7 @@ Submitted: ${new Date().toLocaleString()}`;
                     throw new Error('Submission failed');
                 }
             } catch (error) {
-                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com?subject=${encodeURIComponent(`Mango Kudos: ${nomineeName} nominated by ${nominatorName}`)}&body=${encodeURIComponent(emailBody)}`;
+                const mailtoLink = `mailto:mighty-mangos-aaaaneg6xdi7jdvpeabqnagzle@mangoautomotive.slack.com,hr-aaaamuu6zfzupiarlamwk34wsu@mangoautomotive.slack.com?subject=${encodeURIComponent(`Shout Out: ${nomineeName} nominated by ${nominatorName}`)}&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = mailtoLink;
                 setTimeout(() => {
                     document.getElementById('kudosForm').style.display = 'none';
