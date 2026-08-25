@@ -496,8 +496,17 @@
             margin: 12px 0 6px;
         }
 
-        .transfer-note.note-a { transform: rotate(-1.2deg); }
-        .transfer-note.note-b { transform: rotate(1deg); }
+        /* Notes occupy their own dedicated grid row so tiles never stretch to match them */
+        .transfer-note.note-a { transform: rotate(-1.2deg); grid-column: 1 / 3; justify-self: end; }
+        .transfer-note.note-b { transform: rotate(1deg); grid-column: 3 / 5; justify-self: start; }
+
+        @media (max-width: 968px) {
+            .transfer-note.note-a { grid-column: 1 / 2; justify-self: center; }
+            .transfer-note.note-b { grid-column: 2 / 3; justify-self: center; }
+        }
+        @media (max-width: 640px) {
+            .transfer-note.note-a, .transfer-note.note-b { grid-column: 1 / 2; justify-self: center; }
+        }
 
         .transfer-note .eyebrow {
             color: rgba(34,32,28,0.55);
@@ -842,7 +851,7 @@
 
         const ALL_LINKS = [
             { id: 'tekmetric', title: 'Tekmetric', url: 'https://shop.tekmetric.com' },
-            { id: 'slack', title: 'Slack', url: 'https://MangoAutmomotive.slack.com' },
+            { id: 'slack', title: 'Slack', url: 'https://mangoautomotive.slack.com/' },
             { id: 'shopgenie', title: 'ShopGenie', url: 'https://app.shopgenie.io/dashboard/inbox' },
             { id: 'guava', title: 'Guava Coach', url: 'https://chromewebstore.google.com/detail/ppaiipibgjjnadokahpjakhbneodpfdm' },
             { id: 'chatgpt', title: 'ChatGPT', url: 'https://chatgpt.com/' },
@@ -1211,7 +1220,7 @@
         // Keyboard shortcuts
         document.addEventListener('keydown', (e) => {
             if (e.key === '1') window.open('https://shop.tekmetric.com', '_blank');
-            if (e.key === '2') window.open('https://MangoAutmomotive.slack.com', '_blank');
+            if (e.key === '2') window.open('https://mangoautomotive.slack.com/', '_blank');
             if (e.key === '3') window.open('https://app.shopgenie.io/dashboard/inbox', '_blank');
             if (e.key === '4') window.open('https://chromewebstore.google.com/detail/ppaiipibgjjnadokahpjakhbneodpfdm', '_blank');
         });
