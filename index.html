@@ -809,8 +809,7 @@
                     <div><label for="kNominatorName">Your Name</label><input type="text" id="kNominatorName" required placeholder="First and Last Name"></div>
                     <div><label for="kNominatorEmail">Your Email</label><input type="email" id="kNominatorEmail" required placeholder="you@mangoautomotive.com" pattern="[^@\s]+@[Mm]ango[Aa]utomotive\.com" title="Use your @mangoautomotive.com work email"></div>
                 </div>
-                <div class="kudos-row">
-                    <div><label for="kNominatorLocation">Your Location</label><select id="kNominatorLocation" required>
+                <label for="kNominatorLocation">Your Location</label><select id="kNominatorLocation" required>
                             <option value="">Pick your shop</option>
                             <option value="Cottonwood (Eagle Ranch)">Cottonwood (Eagle Ranch)</option>
                             <option value="The Heights (Comanche)">The Heights (Comanche)</option>
@@ -821,7 +820,9 @@
                             <option value="Yuma (Florence Ln)">Yuma (Florence Ln)</option>
                             <option value="The Valley (Griegos Rd)">The Valley (Griegos Rd)</option>
                             <option value="Corporate Team">Corporate Team</option>
-                        </select></div>
+                        </select>
+                <div class="kudos-row">
+                    <div><label for="kNomineeName">Who Are You Nominating?</label><input type="text" id="kNomineeName" required placeholder="First and Last Name"></div>
                     <div><label for="kNomineeLocation">Their Location</label><select id="kNomineeLocation" required>
                             <option value="">Pick their shop</option>
                             <option value="Cottonwood (Eagle Ranch)">Cottonwood (Eagle Ranch)</option>
@@ -835,8 +836,6 @@
                             <option value="Corporate Team">Corporate Team</option>
                         </select></div>
                 </div>
-                <label for="kNomineeName">Who Are You Nominating?</label>
-                <input type="text" id="kNomineeName" required placeholder="First and Last Name">
                 <label for="kStory">The Full Story</label>
                 <textarea id="kStory" required placeholder="What was the situation? What did they do? Why was it above and beyond?"></textarea>
                 <div class="kudos-count" id="kCharCount">0 / 100 minimum characters</div>
